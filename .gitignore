@@ -1,0 +1,20 @@
+# autogen grpc source
+chunkdemo.grpc.pb*
+chunkdemo.pb.*
+
+# emacs temp and backup files
+*~
+#*#
+
+# python
+*.pyc
+*__pycache__/
+
+# cmake
+cmake/
+
+# autogen python source
+chunkdemo_pb2*
+
+# VSCode settings files
+.vscode

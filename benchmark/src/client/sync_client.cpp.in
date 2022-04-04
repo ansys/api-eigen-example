@@ -1,0 +1,36 @@
+#include <cstdio>
+#include <cstdint>
+#include <vector>
+#include <chrono>
+#include <functional>
+
+#include <grpcpp/grpcpp.h>
+
+#include <types_lookup.hpp>
+#include "clientlib.hpp"
+#include "measurelib.hpp"
+
+using namespace send_array;
+
+int main() {
+    grpc::ChannelArguments args;
+    args.SetMaxReceiveMessageSize(-1);
+    args.SetString(GRPC_ARG_OPTIMIZATION_TARGET, "throughput");
+
+    std::string target_str = "localhost:50000";
+    auto channel = grpc::CreateCustomChannel(
+        target_str,
+        grpc::InsecureChannelCredentials(),
+        args
+    );
+
+    MeasurementParameters measurment_params = {4, 10, 100000, 10000000}; // TODO: reactivate full measurements
+    // MeasurementParameters measurment_params = {2, 3, 10000, 1000000};
+
+    print_measurement_header();
+
+    {% for dtype, _ in data_types %}
+    ArrayServiceClient<ArrayService{{dtype | capitalize}}> client_{{dtype}}(channel);
+    run_all_measurements(client_{{dtype}}, measurment_params, [](){return 1;}, "const_1");
+    {% endfor %}
+}

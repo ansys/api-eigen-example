@@ -1,0 +1,45 @@
+// Demonstrates the serialization of an array from server to client
+// using gRPC
+
+syntax = "proto3";
+package chunkdemo;
+
+message Empty {}
+
+enum DataType{
+  INTEGER = 0;
+  DOUBLE = 1;
+}
+
+message RepeatedInts{
+repeated sfixed32 ints = 1;
+}
+
+message Chunk{
+  bytes payload = 1;
+}
+
+message StreamRequest{
+  int32 chunk_size = 1;
+  DataType array_type = 3;
+}
+
+message PopulateArrayRequest{
+  int32 array_size = 1;
+  DataType array_type = 2;
+}
+
+service ChunkDemo{
+  // Create an array within the server
+  rpc PopulateArray(PopulateArrayRequest) returns (Empty);
+
+  // Send a stream of byte payloads containing the array
+  rpc DownloadArray(StreamRequest) returns (stream Chunk);
+
+  // Send an array by combining streaming and repeated ints
+  rpc DownloadArrayChunkedRepeated(StreamRequest) returns (stream RepeatedInts);
+
+  // Send the array to the client using repeated ints
+  rpc DownloadArraySlow(StreamRequest) returns (RepeatedInts);
+
+}

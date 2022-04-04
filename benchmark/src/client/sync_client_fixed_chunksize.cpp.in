@@ -1,0 +1,54 @@
+#include <cstdio>
+#include <cstdint>
+#include <vector>
+#include <chrono>
+#include <random>
+#include <functional>
+
+#include <grpcpp/grpcpp.h>
+
+#include <types_lookup.hpp>
+#include "clientlib.hpp"
+#include "measurelib.hpp"
+
+using namespace send_array;
+
+int main(int argc, char *argv[]) {
+    grpc::ChannelArguments args;
+    args.SetMaxReceiveMessageSize(-1);
+    args.SetString(GRPC_ARG_OPTIMIZATION_TARGET, "throughput");
+
+    if(argc > 1) {
+        int compression_level = std::stoi(argv[1]);
+        args.SetCompressionAlgorithm(grpc_compression_algorithm::GRPC_COMPRESS_GZIP);
+        args.SetInt(GRPC_COMPRESSION_CHANNEL_DEFAULT_LEVEL, compression_level);
+    }
+
+    std::string target_str = "localhost:50000";
+    auto channel = grpc::CreateCustomChannel(
+        target_str,
+        grpc::InsecureChannelCredentials(),
+        args
+    );
+
+    std::minstd_rand random_engine;
+
+    MeasurementParameters measurment_params = {4, 10, 1000000, 10000000};
+    // MeasurementParameters measurment_params = {2, 3, 10000, 1000000}; // TODO: reactivate full measurements
+
+    print_measurement_header();
+
+    {% for dtype, cpp_type in data_types %}
+    ArrayServiceClient<ArrayService{{dtype | capitalize}}> client_{{dtype}}(channel);
+    run_fixed_chunksize_measurements(client_{{dtype}}, measurment_params, std::size_t(1) << 19, [](){return 1;}, "const_1");
+    {% if dtype in ('double', 'float') %}
+    auto uniform_dist_{{dtype}} = std::uniform_real_distribution<{{ cpp_type }}>();
+    run_fixed_chunksize_measurements(client_{{dtype}}, measurment_params, std::size_t(1) << 19, [&](){return std::fmod(uniform_dist_{{dtype}}(random_engine), (1 << 10));}, "random_small");
+    {% else %}
+    auto uniform_dist_{{dtype}} = std::uniform_int_distribution<{{ cpp_type }}>();
+    run_fixed_chunksize_measurements(client_{{dtype}}, measurment_params, std::size_t(1) << 19, [&](){return uniform_dist_{{dtype}}(random_engine) % (1 << 10);}, "random_small");
+    {% endif %}
+    run_fixed_chunksize_measurements(client_{{dtype}}, measurment_params, std::size_t(1) << 19, [&](){return uniform_dist_{{dtype}}(random_engine);}, "uniform_random");
+
+    {% endfor %}
+}
