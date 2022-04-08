@@ -1,13 +1,20 @@
 import json
 import os
 from io import UnsupportedOperation
-from typing import List
 
 import click
 import numpy as np
 from flask import Flask, request
 
 from restdb.db import get_db, init_app_db
+
+#
+#
+# It is necessary to define the environment variable FLASK_APP pointing to this same file
+#
+# For running the app, just call "flask run"
+#
+#
 
 
 def create_app():
@@ -24,10 +31,10 @@ def create_app():
         In case no JSON-format request body was provided.
     RuntimeError
         In case no 'value' is provided within the request body.
-        UnsupportedOperation
-            In case the given argument is not a string.
-        UnsupportedOperation
-            In case the given type is not in the ALLOWED_TYPES tuple.
+    UnsupportedOperation
+        In case the given argument is not a string.
+    UnsupportedOperation
+        In case the given type is not in the ALLOWED_TYPES tuple.
     """
     # Create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -38,9 +45,6 @@ def create_app():
 
     # Teardown previous DB and initialize it!
     init_app_db(app)
-
-    # When this script is run, deploy the application in 0.0.0.0:5000
-    app.run(host="0.0.0.0", port=5000)
 
     ALLOWED_TYPES = (
         "vector",
@@ -204,3 +208,11 @@ def create_app():
         return str_type
 
     return app
+
+
+if __name__ == "__main__":
+    # Create the app
+    app = create_app()
+
+    # When this script is run, deploy the application in 0.0.0.0:5000
+    app.run(host="0.0.0.0", port=5000)
