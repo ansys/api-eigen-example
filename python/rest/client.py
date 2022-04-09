@@ -3,6 +3,9 @@ import json
 import numpy as np
 import requests
 
+_EXP_DTYPE = np.dtype("float64")
+"""The expected dtype for the numpy arrays."""
+
 
 class DemoRESTClient:
     """This class acts as a client to the service provided by the API REST server
@@ -71,7 +74,7 @@ class DemoRESTClient:
         arg_dim = self.__check_args(arg1, arg2)
 
         # Perform the server-related operations
-        return self.__perform_operation(arg1, np.negative(arg2), arg_dim, "add")
+        return self.__perform_operation(arg1, arg2, arg_dim, "add")
 
     def substract(self, arg1, arg2):
         """Perform the "substract" operation of two numpy.ndarrays using the Eigen library
@@ -150,11 +153,11 @@ class DemoRESTClient:
             If the dimensions of the arguments are not handled by the destination server.
         """
         # Ensure that both arg1 and arg2 are np.ndarrays
-        if (isinstance(arg1, np.ndarray) is not True) or (arg1.dtype is not np.float64):
+        if (isinstance(arg1, np.ndarray) is not True) or (arg1.dtype is not _EXP_DTYPE):
             raise RuntimeError(
                 "First argument is not a numpy.ndarray of dtype numpy.float64. Check inputs."
             )
-        if (isinstance(arg2, np.ndarray) is not True) or (arg2.dtype is not np.float64):
+        if (isinstance(arg2, np.ndarray) is not True) or (arg2.dtype is not _EXP_DTYPE):
             raise RuntimeError(
                 "Second argument is not a numpy.ndarray of dtype numpy.float64. Check inputs."
             )
@@ -227,7 +230,7 @@ class DemoRESTClient:
         # Perform the post request
         response = requests.post(
             self._host + ":" + str(self._port) + "/" + resource,
-            data=json.dumps({"value": arg}),
+            json={"value": arg.tolist()},
             auth=(self._user, self._pwd),
         )
 
@@ -265,7 +268,7 @@ class DemoRESTClient:
         # Perform the get request
         response = requests.get(
             self._host + ":" + str(self._port) + "/" + ops + "/" + resource,
-            data=json.dumps({"id1": id1, "id2": id2}),
+            json={"id1": id1, "id2": id2},
             auth=(self._user, self._pwd),
         )
 
@@ -276,7 +279,7 @@ class DemoRESTClient:
             )
 
         # If everything went well... extract the result of the operation
-        result_aslist = self.__get_val(json.loads(response.text), "result")
+        result_aslist = json.loads(self.__get_val(json.loads(response.text), "result"))
 
         # From the JSON response, when parsed, the result will be considered as a simple
         # Python object (double, list of doubles...). Convert it to a numpy.ndarray object

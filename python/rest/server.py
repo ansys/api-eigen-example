@@ -7,7 +7,7 @@ import demo_eigen_wrapper
 import numpy as np
 from flask import Flask, request
 
-from restdb.db import get_db, init_app_db
+from python.rest.restdb.db import get_db, init_app_db
 
 #
 #
@@ -430,4 +430,4 @@ if __name__ == "__main__":
     app = create_app()
 
     # When this script is run, deploy the application in 0.0.0.0:5000
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="127.0.0.1", port=5000)
