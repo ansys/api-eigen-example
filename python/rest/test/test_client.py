@@ -202,3 +202,10 @@ def test_client_errors(testing_client):
             str(e_info.value)
             == "Could not connect to server... Check server status or connection details."
         )
+        # Test unreachable function otherwise by accessing it directly... the previous operation
+        # is going to fail in the __post_resource(...) method.
+        error_client.__get_ops_resource(1, 2, "add", "Vectors")
+        assert (
+            str(e_info.value)
+            == "Could not connect to server... Check server status or connection details."
+        )
