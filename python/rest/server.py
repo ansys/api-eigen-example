@@ -181,6 +181,8 @@ def create_app():
             In case no JSON-format request body was provided.
         RuntimeError
             In case no 'value' is provided within the request body.
+        RuntimeError
+            In case an error was encountered when transforming 'value' into numpy.ndarray.
         """
         # Check the argument of this method
         str_type = __check_value(type, ALLOWED_TYPES)
@@ -210,8 +212,8 @@ def create_app():
             np.array(value, dtype=np.float64)
         except ValueError as error:
             click.echo(error)
-            click.echo(
-                "Error encountered when transforming input string into numpy nd.array"
+            raise RuntimeError(
+                "Error encountered when transforming input string into numpy nd.array."
             )
 
         # Store the value as a string inside the database
