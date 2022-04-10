@@ -17,7 +17,7 @@ class DemoRESTClient:
     # PUBLIC METHODS for Client operations
     # =================================================================================================
 
-    def __init__(self, host, port, user=None, pwd=None):
+    def __init__(self, host, port, user=None, pwd=None, client=None):
         """The class initializer method.
 
         Parameters
@@ -30,11 +30,21 @@ class DemoRESTClient:
             The username to be used in basic authentication, by default None.
         pwd : str, optional
             The password to be used in basic authentication, by default None
+        client : FlaskClient
+            The Flask client (to be used only for testing purposes).
         """
         self._host = host
         self._port = port
         self._user = user
         self._pwd = pwd
+
+        # Depending if we are testing or not... it may be needed to pass the
+        # FlaskClient directly...
+        if client is not None:
+            self._use_test_client = True
+            self._client = client
+        else:
+            self._use_test_client = False
 
     def get_connection_details(self):
         """Get a simple summary of the connection details."""
@@ -228,11 +238,18 @@ class DemoRESTClient:
             If the Client failed to post the argument to the destination server.
         """
         # Perform the post request
-        response = requests.post(
-            self._host + ":" + str(self._port) + "/" + resource,
-            json={"value": arg.tolist()},
-            auth=(self._user, self._pwd),
-        )
+        if not self._use_test_client:
+            response = requests.post(
+                self._host + ":" + str(self._port) + "/" + resource,
+                json={"value": arg.tolist()},
+                auth=(self._user, self._pwd),
+            )
+        else:
+            response = self._client.post(
+                "/" + resource,
+                json={"value": arg.tolist()},
+                auth=(self._user, self._pwd),
+            )
 
         # Check that the status of the response is correct
         if response.status_code != 201:
@@ -266,11 +283,18 @@ class DemoRESTClient:
             If the Client failed to perform the operation in the destination server.
         """
         # Perform the get request
-        response = requests.get(
-            self._host + ":" + str(self._port) + "/" + ops + "/" + resource,
-            json={"id1": id1, "id2": id2},
-            auth=(self._user, self._pwd),
-        )
+        if not self._use_test_client:
+            response = requests.get(
+                self._host + ":" + str(self._port) + "/" + ops + "/" + resource,
+                json={"id1": id1, "id2": id2},
+                auth=(self._user, self._pwd),
+            )
+        else:
+            response = self._client.get(
+                "/" + ops + "/" + resource,
+                json={"id1": id1, "id2": id2},
+                auth=(self._user, self._pwd),
+            )
 
         # Check that the status of the response is correct
         if response.status_code != 200:

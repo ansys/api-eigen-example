@@ -1,22 +1,26 @@
 import numpy as np
-
+import pytest
 from python.rest.client import DemoRESTClient
-
-# If you just run these tests... it will crash, for sure.
-#
-# At the moment, you have to deploy manually the server first. From the root directory
-# of the project run:
-#
-# $ export FLASK_APP=python/rest/server.py
-# $ flask run
-#
-# And then you will be able to run these tests successfully
+from python.rest.server import create_app
 
 
-def test_client_add_vectors():
+@pytest.fixture(scope="module")
+def testing_client():
+    # Create the app
+    app = create_app()
+    app.testing = True
+
+    # Create a test client using the Flask application configured for testing
+    with app.test_client() as testing_client:
+        # Establish an application context
+        with app.app_context():
+            yield testing_client  # this is where the testing happens!
+
+
+def test_client_add_vectors(testing_client):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
-    client = DemoRESTClient("http://127.0.0.1", 5000)
+    client = DemoRESTClient(None, None, client=testing_client)
 
     vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
     vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
@@ -29,10 +33,10 @@ def test_client_add_vectors():
     assert vec_add[3] == 4
 
 
-def test_client_substract_vectors():
+def test_client_substract_vectors(testing_client):
     """Unit test to verify that the client gets the expected response
     when performing the substraction of two numpy arrays (as vectors)."""
-    client = DemoRESTClient("http://127.0.0.1", 5000)
+    client = DemoRESTClient(None, None, client=testing_client)
 
     vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
     vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
@@ -45,10 +49,10 @@ def test_client_substract_vectors():
     assert vec_subst[3] == 4
 
 
-def test_client_multiply_vectors():
+def test_client_multiply_vectors(testing_client):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
-    client = DemoRESTClient("http://127.0.0.1", 5000)
+    client = DemoRESTClient(None, None, client=testing_client)
 
     vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
     vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
@@ -58,10 +62,10 @@ def test_client_multiply_vectors():
     assert vec_mult == 19
 
 
-def test_client_add_matrices():
+def test_client_add_matrices(testing_client):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
-    client = DemoRESTClient("http://127.0.0.1", 5000)
+    client = DemoRESTClient(None, None, client=testing_client)
 
     mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
     mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
@@ -74,10 +78,10 @@ def test_client_add_matrices():
     assert mat_add[1, 1] == 4
 
 
-def test_client_substract_matrices():
+def test_client_substract_matrices(testing_client):
     """Unit test to verify that the client gets the expected response
     when performing the substraction of two numpy arrays (as matrices)."""
-    client = DemoRESTClient("http://127.0.0.1", 5000)
+    client = DemoRESTClient(None, None, client=testing_client)
 
     mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
     mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
@@ -90,10 +94,10 @@ def test_client_substract_matrices():
     assert mat_subst[1, 1] == 4
 
 
-def test_client_multiply_matrices():
+def test_client_multiply_matrices(testing_client):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
-    client = DemoRESTClient("http://127.0.0.1", 5000)
+    client = DemoRESTClient(None, None, client=testing_client)
 
     mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
     mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
