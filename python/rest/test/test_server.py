@@ -101,6 +101,7 @@ def test_server_ops_matrices(testing_client):
 
 
 def test_server_main_error_cases(testing_client):
+    """Testing of main error-case scenarios when directly interacting with the server."""
     # Test 1: check that the POST request contains a JSON body
     with pytest.raises(RuntimeError) as e_info:
         testing_client.post("/Matrices")
