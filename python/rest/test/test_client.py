@@ -1,4 +1,3 @@
-import sys
 import numpy as np
 import pytest
 from python.rest.client import DemoRESTClient
