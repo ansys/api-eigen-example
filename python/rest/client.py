@@ -48,6 +48,12 @@ class DemoRESTClient:
 
     def get_connection_details(self):
         """Get a simple summary of the connection details."""
+
+        # Check that we are not using a test client
+        if self._use_test_client:
+            print("Using a test client. Unnecessary info.")
+            return
+
         # First, print the basic details of the connection
         print(
             "Connection to host "
@@ -235,20 +241,27 @@ class DemoRESTClient:
         Raises
         ------
         RuntimeError
+            If the Client failed to connect to the destination server.
+        RuntimeError
             If the Client failed to post the argument to the destination server.
         """
         # Perform the post request
-        if not self._use_test_client:
-            response = requests.post(
-                self._host + ":" + str(self._port) + "/" + resource,
-                json={"value": arg.tolist()},
-                auth=(self._user, self._pwd),
-            )
-        else:
-            response = self._client.post(
-                "/" + resource,
-                json={"value": arg.tolist()},
-                auth=(self._user, self._pwd),
+        try:
+            if not self._use_test_client:
+                response = requests.post(
+                    self._host + ":" + str(self._port) + "/" + resource,
+                    json={"value": arg.tolist()},
+                    auth=(self._user, self._pwd),
+                )
+            else:
+                response = self._client.post(
+                    "/" + resource,
+                    json={"value": arg.tolist()},
+                    auth=(self._user, self._pwd),
+                )
+        except (requests.exceptions.ConnectionError):
+            raise RuntimeError(
+                "Could not connect to server... Check server status or connection details."
             )
 
         # Check that the status of the response is correct
@@ -280,20 +293,27 @@ class DemoRESTClient:
         Raises
         ------
         RuntimeError
+            If the Client failed to connect to the destination server.
+        RuntimeError
             If the Client failed to perform the operation in the destination server.
         """
         # Perform the get request
-        if not self._use_test_client:
-            response = requests.get(
-                self._host + ":" + str(self._port) + "/" + ops + "/" + resource,
-                json={"id1": id1, "id2": id2},
-                auth=(self._user, self._pwd),
-            )
-        else:
-            response = self._client.get(
-                "/" + ops + "/" + resource,
-                json={"id1": id1, "id2": id2},
-                auth=(self._user, self._pwd),
+        try:
+            if not self._use_test_client:
+                response = requests.get(
+                    self._host + ":" + str(self._port) + "/" + ops + "/" + resource,
+                    json={"id1": id1, "id2": id2},
+                    auth=(self._user, self._pwd),
+                )
+            else:
+                response = self._client.get(
+                    "/" + ops + "/" + resource,
+                    json={"id1": id1, "id2": id2},
+                    auth=(self._user, self._pwd),
+                )
+        except (requests.exceptions.ConnectionError):
+            raise RuntimeError(
+                "Could not connect to server... Check server status or connection details."
             )
 
         # Check that the status of the response is correct
