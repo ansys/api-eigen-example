@@ -58,7 +58,7 @@ jobs:
           restore-keys: |
             Python-${{ runner.os }}-${{ matrix.python-version }}
 
-      # - name: Window pip cache
+      # - name: Windows pip cache
       #   uses: actions/cache@v2
       #   if: ${{ runner.os == 'Windows' }}
       #   with:
@@ -123,4 +123,44 @@ jobs:
         with:
           name: HTML-Coverage
           path: cov_html
+          retention-days: 7
+
+  build_test:
+    name: Build Documentation
+    needs: testimport
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Linux pip cache
+        uses: actions/cache@v2
+        if: ${{ runner.os == 'Linux' }}
+        with:
+          path: ~/.cache/pip
+          key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
+          restore-keys: |
+            Python-${{ runner.os }}-${{ matrix.python-version }}
+
+      - name: Install project requirements
+        run: |
+          sudo apt install libeigen3-dev
+          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+          pip install -r requirements/requirements_build.txt .
+          pip install -r requirements/requirements_docs.txt
+
+      - name: Build documentation
+        run: |
+          make -C doc html
+          
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: HTML-Documentation
+          path: doc/_build/html
           retention-days: 7
