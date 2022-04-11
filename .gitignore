@@ -16,6 +16,9 @@ coverage.xml
 # doc
 doc/_build
 doc/build_errors.txt
+doc/source/examples
+doc/source/**/_autosummary
+
 
 # cmake
 cmake/
