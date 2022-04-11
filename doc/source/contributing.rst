@@ -56,7 +56,7 @@ API Eigen Examples is compliant with `PyAnsys Development Code Style Guide
 by making use of `pre-commit <https://pre-commit.com/>`_. Install this tool and
 activate it executing the following commands:
 
-.. code:: bash
+.. code::
 
    python -m pip install pre-commit
    pre-commit install
@@ -64,7 +64,7 @@ activate it executing the following commands:
 Then, you can make used of the available configuration file ``.pre-commit-config.yml``,
 which will be automatically detected by pre-commit:
 
-.. code:: bash
+.. code::
 
    pre-commit run --all-files --show-diff-on-failure
 
