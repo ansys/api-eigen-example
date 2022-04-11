@@ -16,7 +16,7 @@ The API Eigen example package is a simple project which intends to show PyAnsys
 users and developers the differences existing between API REST communication protocol
 and the well-known gRPC protocol, extensively used through the PyAnsys community.
 
-The main goal of this demo is to expose the `Eigen library <https://eigen.tuxfamily.org/index.php?title=Main_Page>`
+The main goal of this demo is to expose the `Eigen library <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
 to end users via a client-server interaction, which may be implemented using API REST or gRPC communication protocols.
 
 The server will expose certain functionalities of the Eigen Library, such as adding and
