@@ -1,0 +1,9 @@
+pybind11-global==2.9.2
+demo_eigen_wrapper==0.0.1
+Click>=7.0
+Flask==2.1.1
+ninja==1.10.2.3
+numpy==1.22.3
+pytest==7.1.1
+requests==2.22.0
+setuptools==45.2.0

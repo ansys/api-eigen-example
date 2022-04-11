@@ -1,0 +1,4 @@
+ninja==1.10.2.3
+numpy==1.22.3
+setuptools==45.2.0
+pybind11-global==2.9.2
