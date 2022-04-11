@@ -37,7 +37,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        # os: [windows-latest, ubuntu-latest]
+        os: [ubuntu-latest]
         python-version: ['3.7', '3.8', '3.9']
 
     steps:
@@ -57,14 +58,14 @@ jobs:
           restore-keys: |
             Python-${{ runner.os }}-${{ matrix.python-version }}
 
-      - name: Window pip cache
-        uses: actions/cache@v2
-        if: ${{ runner.os == 'Windows' }}
-        with:
-          path: ~\AppData\Local\pip\Cache
-          key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
-          restore-keys: |
-            Python-${{ runner.os }}-${{ matrix.python-version }}
+      # - name: Window pip cache
+      #   uses: actions/cache@v2
+      #   if: ${{ runner.os == 'Windows' }}
+      #   with:
+      #     path: ~\AppData\Local\pip\Cache
+      #     key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
+      #     restore-keys: |
+      #       Python-${{ runner.os }}-${{ matrix.python-version }}
 
       - name: Install eigen library
         run: |
