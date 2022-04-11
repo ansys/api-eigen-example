@@ -166,13 +166,13 @@ jobs:
           retention-days: 7
 
       # used for documentation deployment
-      - name: Get Bot Application Token
+      - name: Get Application Token
         # if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
         id: get_workflow_token
         uses: peter-murray/workflow-application-token-action@v1
         with:
-          application_id: ${{ secrets.BOT_APPLICATION_ID }}
-          application_private_key: ${{ secrets.BOT_APPLICATION_PRIVATE_KEY }}
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
 
       - name: Deploy documentation
         # if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
