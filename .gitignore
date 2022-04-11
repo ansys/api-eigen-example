@@ -13,6 +13,10 @@ chunkdemo.pb.*
 .coverage
 coverage.xml
 
+# doc
+doc/_build
+doc/build_errors.txt
+
 # cmake
 cmake/
 
