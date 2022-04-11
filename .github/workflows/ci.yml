@@ -79,7 +79,6 @@ jobs:
           pip install -r requirements/requirements_build.txt .
 
       - name: Test import
-        working-directory: tests
         run: |
           python -c "from python.rest.client import DemoRESTClient; cli = DemoRESTClient("0.0.0.0", 5000); cli.get_connection_details()"
 
