@@ -1,10 +1,9 @@
-from io import UnsupportedOperation
 import json
 import os
 
 import click
 import demo_eigen_wrapper
-from flask import Flask, request
+from flask import Flask, jsonify, request
 import numpy as np
 
 from python.rest.restdb.db import get_db, init_app_db
@@ -39,13 +38,13 @@ def create_app():
 
     Raises
     ------
-    RuntimeError
+    InvalidUsage
         In case no JSON-format request body was provided.
-    RuntimeError
+    InvalidUsage
         In case no 'value' is provided within the request body.
-    UnsupportedOperation
+    InvalidUsage
         In case the given argument is not a string.
-    UnsupportedOperation
+    InvalidUsage
         In case the given type is not in the ALLOWED_TYPES tuple.
     """
     # Create and configure the app
@@ -156,6 +155,40 @@ def create_app():
         # Return a successful response with the ID of the created object
         return response_body, 200
 
+    class InvalidUsage(Exception):
+        """Server error class for the API REST Server.
+
+        Parameters
+        ----------
+        Exception : class
+            The class from which it inherits
+
+        Returns
+        -------
+        InvalidUsage
+            Internal server error.
+        """
+
+        status_code = 400
+
+        def __init__(self, message, status_code=None, payload=None):
+            Exception.__init__(self)
+            self.message = message
+            if status_code is not None:
+                self.status_code = status_code
+            self.payload = payload
+
+        def to_dict(self):
+            rv = dict(self.payload or ())
+            rv["message"] = self.message
+            return rv
+
+    @app.errorhandler(InvalidUsage)
+    def handle_invalid_usage(error):
+        response = jsonify(error.to_dict())
+        response.status_code = error.status_code
+        return response
+
     # =================================================================================================
     # PRIVATE METHODS for Server interaction
     # =================================================================================================
@@ -177,11 +210,11 @@ def create_app():
 
         Raises
         ------
-        RuntimeError
+        InvalidUsage
             In case no JSON-format request body was provided.
-        RuntimeError
+        InvalidUsage
             In case no 'value' is provided within the request body.
-        RuntimeError
+        InvalidUsage
             In case an error was encountered when transforming 'value' into numpy.ndarray.
         """
         # Check the argument of this method
@@ -193,7 +226,7 @@ def create_app():
         # First check that the request content is in application/json format and
         # that there are at least some contents within.
         if body is None:
-            raise RuntimeError(
+            raise InvalidUsage(
                 "No JSON-format (i.e. application/json) body was provided in the request."
             )
 
@@ -202,7 +235,7 @@ def create_app():
 
         # Check that the object has been indeed provided in the request body
         if value is None:
-            raise RuntimeError(
+            raise InvalidUsage(
                 "No " + str_type + " has been provided. Expected key: 'value'."
             )
 
@@ -212,7 +245,7 @@ def create_app():
             np.array(value, dtype=np.float64)
         except ValueError as error:
             click.echo(error)
-            raise RuntimeError(
+            raise InvalidUsage(
                 "Error encountered when transforming input string into numpy.ndarray."
             )
 
@@ -260,9 +293,9 @@ def create_app():
 
         Raises
         ------
-        RuntimeError
+        InvalidUsage
             In case no JSON-format request body was provided.
-        RuntimeError
+        InvalidUsage
             In case no 'id's are provided within the request body.
         """
         # Check the arguments of this method
@@ -275,7 +308,7 @@ def create_app():
         # First check that the request content is in application/json format and
         # that there are at least some contents within.
         if body is None:
-            raise RuntimeError(
+            raise InvalidUsage(
                 "No JSON-format (i.e. application/json) body was provided in the request."
             )
 
@@ -285,7 +318,7 @@ def create_app():
 
         # Check that the object IDs have been indeed provided in the request body
         if id1 is None or id2 is None:
-            raise RuntimeError(
+            raise InvalidUsage(
                 "Arguments for "
                 + str_ops
                 + " operation with "
@@ -322,14 +355,14 @@ def create_app():
 
         Raises
         ------
-        UnsupportedOperation
+        InvalidUsage
             In case the given argument is not a string.
-        UnsupportedOperation
+        InvalidUsage
             In case the given type is not in the ALLOWED_* tuple.
         """
         # Check that the provided input is a string
         if isinstance(value, str) == False:
-            raise UnsupportedOperation(
+            raise InvalidUsage(
                 "The input to __check_value(...) should be a str. Check your implementation."
             )
 
@@ -338,7 +371,7 @@ def create_app():
 
         # Check as well that the provided value is one of the allowed values
         if str_value not in allowed_values:
-            raise UnsupportedOperation(
+            raise InvalidUsage(
                 str_value.capitalize()
                 + " is not one of the allowed values (i.e. ["
                 + ", ".join(allowed_values)
@@ -381,7 +414,7 @@ def create_app():
             str_value1 = cur.fetchone()[0]
         except TypeError as error:
             click.echo(error)
-            raise RuntimeError(
+            raise InvalidUsage(
                 "Unexpected error... No values in the DB for id "
                 + str(id1)
                 + " and type "
@@ -399,7 +432,7 @@ def create_app():
             str_value2 = cur.fetchone()[0]
         except TypeError as error:
             click.echo(error)
-            raise RuntimeError(
+            raise InvalidUsage(
                 "Unexpected error... No values in the DB for id "
                 + str(id2)
                 + " and type "
