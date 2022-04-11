@@ -1,11 +1,9 @@
 import time
 
-import numpy as np
-import grpc
-
+from chunkdemo_pb2 import PopulateArrayRequest, StreamRequest
 from chunkdemo_pb2_grpc import ChunkDemoStub
-from chunkdemo_pb2 import StreamRequest, PopulateArrayRequest
-
+import grpc
+import numpy as np
 
 # chunk sizes for streaming and file streaming
 DEFAULT_CHUNKSIZE = 256 * 1024  # 256 kB

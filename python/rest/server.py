@@ -1,11 +1,11 @@
+from io import UnsupportedOperation
 import json
 import os
-from io import UnsupportedOperation
 
 import click
 import demo_eigen_wrapper
-import numpy as np
 from flask import Flask, request
+import numpy as np
 
 from python.rest.restdb.db import get_db, init_app_db
 

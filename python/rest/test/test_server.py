@@ -1,6 +1,8 @@
 import json
+
 import numpy as np
 import pytest
+
 from python.rest.server import create_app
 
 

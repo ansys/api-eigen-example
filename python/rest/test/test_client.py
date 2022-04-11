@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from python.rest.client import DemoRESTClient
 from python.rest.server import create_app
 

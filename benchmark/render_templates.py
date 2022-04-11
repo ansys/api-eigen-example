@@ -1,6 +1,5 @@
-import sys
-
 import pathlib
+import sys
 
 import jinja2
 
