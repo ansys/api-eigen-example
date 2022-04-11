@@ -31,6 +31,7 @@ However, feel free to interact directly by your own means with the server (e.g. 
 can also be easily performed using CURL commands).
 
 This demo project contains basically 4 different examples:
+
 - A Python REST API demo using both client-server features, which has
   a wrapping over the Eigen library using pybind11.
 - [IN PROGRESS] A C++ REST API demo using both client-server features, 
