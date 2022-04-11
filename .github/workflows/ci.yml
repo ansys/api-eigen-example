@@ -125,7 +125,7 @@ jobs:
           path: cov_html
           retention-days: 7
 
-  build_test:
+  build_doc:
     name: Build Documentation
     needs: testimport
     runs-on: ubuntu-latest
