@@ -69,6 +69,7 @@ jobs:
 
       - name: Install eigen library
         run: |
+          sudo apt update
           sudo apt install libeigen3-dev
 
       - name: Install demo-eigen-wrapper
@@ -108,6 +109,11 @@ jobs:
           restore-keys: |
             Python-${{ runner.os }}-${{ matrix.python-version }}
       
+      - name: Install packages
+        run: |
+          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+          pip install -r requirements/requirements_build.txt .
+
       - name: Unit Testing
         run: |
           pytest -v --cov=python --cov-report html:cov_html --cov-report xml
