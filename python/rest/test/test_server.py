@@ -125,7 +125,7 @@ def test_server_main_error_cases(testing_client):
         testing_client.post("/Matrices", json={"value": "a string"})
         assert (
             str(e_info.value)
-            == "Error encountered when transforming input string into numpy nd.array."
+            == "Error encountered when transforming input string into numpy.ndarray."
         )
 
     # We will know perform some actual posts to test the operation error cases

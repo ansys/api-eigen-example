@@ -34,15 +34,15 @@ def test_client_add_vectors(testing_client):
     assert vec_add[3] == 4
 
 
-def test_client_substract_vectors(testing_client):
+def test_client_subtract_vectors(testing_client):
     """Unit test to verify that the client gets the expected response
-    when performing the substraction of two numpy arrays (as vectors)."""
+    when performing the subtraction of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
     vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
     vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
 
-    vec_subst = client.substract(vec_1, vec_2)
+    vec_subst = client.subtract(vec_1, vec_2)
 
     assert vec_subst[0] == -4
     assert vec_subst[1] == -2
@@ -79,15 +79,15 @@ def test_client_add_matrices(testing_client):
     assert mat_add[1, 1] == 4
 
 
-def test_client_substract_matrices(testing_client):
+def test_client_subtract_matrices(testing_client):
     """Unit test to verify that the client gets the expected response
-    when performing the substraction of two numpy arrays (as matrices)."""
+    when performing the subtraction of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
     mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
     mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
 
-    mat_subst = client.substract(mat_1, mat_2)
+    mat_subst = client.subtract(mat_1, mat_2)
 
     assert mat_subst[0, 0] == -4
     assert mat_subst[0, 1] == -2
@@ -154,7 +154,7 @@ def test_client_errors(testing_client):
     client = DemoRESTClient(None, None, client=testing_client)
     error_client = DemoRESTClient("http://127.0.0.1", 5000)
 
-    # Test 1: Check that as input arguments, a numpy nd.array is given (for arg1)
+    # Test 1: Check that as input arguments, a numpy.ndarray is given (for arg1)
     with pytest.raises(RuntimeError) as e_info:
         client.add("myArg1", "myArg2")
         assert (
@@ -162,7 +162,7 @@ def test_client_errors(testing_client):
             == "First argument is not a numpy.ndarray of dtype numpy.float64. Check inputs."
         )
 
-    # Test 2: Check that as input arguments, a numpy nd.array is given (for arg2)
+    # Test 2: Check that as input arguments, a numpy.ndarray is given (for arg2)
     with pytest.raises(RuntimeError) as e_info:
         client.add(np.empty(0), "myArg2")
         assert (
@@ -170,7 +170,7 @@ def test_client_errors(testing_client):
             == "Second argument is not a numpy.ndarray of dtype numpy.float64. Check inputs."
         )
 
-    # Test 3: Check that as input arguments, a numpy nd.array of dtype float64 is given (for arg2)
+    # Test 3: Check that as input arguments, a numpy.ndarray of dtype float64 is given (for arg2)
     with pytest.raises(RuntimeError) as e_info:
         client.add(np.empty(0, dtype=np.int64), "myArg2")
         assert (

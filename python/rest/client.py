@@ -86,14 +86,14 @@ class DemoRESTClient:
         numpy.ndarray
             The result of the addition of arg1 and arg2 (i.e. arg1 + arg2).
         """
-        # Check that the provided arguments are inline with the handled paramters by our service
+        # Check that the provided arguments are inline with the handled parameters by our service
         arg_dim = self.__check_args(arg1, arg2)
 
         # Perform the server-related operations
         return self.__perform_operation(arg1, arg2, arg_dim, "add")
 
-    def substract(self, arg1, arg2):
-        """Perform the "substract" operation of two numpy.ndarrays using the Eigen library
+    def subtract(self, arg1, arg2):
+        """Perform the "subtract" operation of two numpy.ndarrays using the Eigen library
         (C++), which is exposed via the destination RESTful server.
 
         Parameters
@@ -106,9 +106,9 @@ class DemoRESTClient:
         Returns
         -------
         numpy.ndarray
-            The result of the substraction of arg1 and arg2 (i.e. arg1 - arg2).
+            The result of the subtraction of arg1 and arg2 (i.e. arg1 - arg2).
         """
-        # Check that the provided arguments are inline with the handled paramters by our service
+        # Check that the provided arguments are inline with the handled parameters by our service
         arg_dim = self.__check_args(arg1, arg2)
 
         # This operation is not even required to be implemented in the server side...
@@ -131,7 +131,7 @@ class DemoRESTClient:
         numpy.ndarray
             The result of the multiplication of arg1 and arg2 (i.e. arg1 * arg2).
         """
-        # Check that the provided arguments are inline with the handled paramters by our service
+        # Check that the provided arguments are inline with the handled parameters by our service
         arg_dim = self.__check_args(arg1, arg2)
 
         # Perform the server-related operations
@@ -283,7 +283,7 @@ class DemoRESTClient:
         ops : str
             The type of operation to be performed.
         resource : str
-            The type of resource involved in the reqeusted operation.
+            The type of resource involved in the requested operation.
 
         Returns
         -------

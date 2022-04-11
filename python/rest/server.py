@@ -206,14 +206,14 @@ def create_app():
                 "No " + str_type + " has been provided. Expected key: 'value'."
             )
 
-        # Check that the recently parsed "value" can be transformed into a numpy nd.array...
+        # Check that the recently parsed "value" can be transformed into a numpy.ndarray...
         # Otherwise, throw exception
         try:
             np.array(value, dtype=np.float64)
         except ValueError as error:
             click.echo(error)
             raise RuntimeError(
-                "Error encountered when transforming input string into numpy nd.array."
+                "Error encountered when transforming input string into numpy.ndarray."
             )
 
         # Store the value as a string inside the database
