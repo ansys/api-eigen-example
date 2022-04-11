@@ -10,6 +10,8 @@ chunkdemo.pb.*
 *.pyc
 *__pycache__/
 *.pytest*
+.coverage
+coverage.xml
 
 # cmake
 cmake/
