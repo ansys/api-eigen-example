@@ -28,17 +28,13 @@ for example.
 The client is intended to aid the end-users since it provides them with the tools for
 communicating with the server without needing to know the specifics of the protocol implemented.
 However, feel free to interact directly by your own means with the server (e.g. API REST communication 
-can also be easily performed using CURL commands)
+can also be easily performed using CURL commands).
 
 This demo project contains basically 4 different examples:
-- A Python REST API demo using both client-server features, which has a wrapping over
-  the Eigen library using pybind11.
-- [IN PROGRESS] A C++ REST API demo using both client-server features, with direct interaction
-  with the Eigen Library on the server side.
-- [IN PROGRESS] A Python gRPC demo using both client-server features, which has a wrapping over
-  the Eigen library using pybind11.
-- [IN PROGRESS] A C++ gRPC demo using both client-server features, with direct interaction
-  with the Eigen Library on the server side.
+- A Python REST API demo using both client-server features, which has a wrapping over the Eigen library using pybind11.
+- [IN PROGRESS] A C++ REST API demo using both client-server features, with direct interaction with the Eigen Library on the server side.
+- [IN PROGRESS] A Python gRPC demo using both client-server features, which has a wrapping over the Eigen library using pybind11.
+- [IN PROGRESS] A C++ gRPC demo using both client-server features, with direct interaction with the Eigen Library on the server side.
 
 Features
 --------
