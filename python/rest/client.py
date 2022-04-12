@@ -323,7 +323,7 @@ class DemoRESTClient:
             )
 
         # If everything went well... extract the result of the operation
-        result_aslist = json.loads(self.__get_val(json.loads(response.text), "result"))
+        result_aslist = self.__get_val(json.loads(response.text), "result")
 
         # From the JSON response, when parsed, the result will be considered as a simple
         # Python object (double, list of doubles...). Convert it to a numpy.ndarray object

@@ -40,7 +40,7 @@ def test_server_ops_vectors(testing_client):
     # Perform the addition operation and check its status
     response_add = testing_client.get("/add/Vectors", json={"id1": id_1, "id2": id_2})
     assert response_add.status_code == 200
-    value = json.loads(json.loads(response_add.text)["vector-addition"]["result"])
+    value = json.loads(response_add.text)["vector-addition"]["result"]
 
     # Check the values of the operation's response.
     np.testing.assert_allclose(value, np.array([6, 6, 5, 4]))
@@ -50,7 +50,7 @@ def test_server_ops_vectors(testing_client):
         "/multiply/Vectors", json={"id1": id_1, "id2": id_2}
     )
     assert response_mul.status_code == 200
-    value = json.loads(json.loads(response_mul.text)["vector-multiplication"]["result"])
+    value = json.loads(response_mul.text)["vector-multiplication"]["result"]
 
     # Check the values of the operation's response
     assert value == 19
@@ -77,7 +77,7 @@ def test_server_ops_matrices(testing_client):
     # Perform the addition operation and check its status
     response_add = testing_client.get("/add/Matrices", json={"id1": id_1, "id2": id_2})
     assert response_add.status_code == 200
-    value = json.loads(json.loads(response_add.text)["matrix-addition"]["result"])
+    value = json.loads(response_add.text)["matrix-addition"]["result"]
 
     # Check the values of the operation's response
     np.testing.assert_allclose(value, np.array([[6, 6], [5, 4]]))
@@ -87,7 +87,7 @@ def test_server_ops_matrices(testing_client):
         "/multiply/Matrices", json={"id1": id_1, "id2": id_2}
     )
     assert response_mul.status_code == 200
-    value = json.loads(json.loads(response_mul.text)["matrix-multiplication"]["result"])
+    value = json.loads(response_mul.text)["matrix-multiplication"]["result"]
 
     # Check the values of the operation's response
     np.testing.assert_allclose(value, np.array([[9, 4], [23, 12]]))

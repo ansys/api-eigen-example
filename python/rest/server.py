@@ -329,11 +329,9 @@ def create_app():
         # Once the inputs have been verified... perform the operation
         value = __perform_operation(str_type, str_ops, id1, id2)
 
-        # Transform the result into a JSON string and ...
-        str_value = json.dumps(value)
 
-        # ... return the body of the response
-        return json.dumps({str_type + "-" + str_ops: {"result": str_value}})
+        # ... and return the body of the response
+        return json.dumps({str_type + "-" + str_ops: {"result": value}})
 
     def __check_value(value, allowed_values):
         """Sanity-check method to ensure that the provided value is in the ALLOWED_* tuple
