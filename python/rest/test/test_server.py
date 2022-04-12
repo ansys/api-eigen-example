@@ -42,11 +42,8 @@ def test_server_ops_vectors(testing_client):
     assert response_add.status_code == 200
     value = json.loads(json.loads(response_add.text)["vector-addition"]["result"])
 
-    # Check the values of the operation's response
-    assert value[0] == 6
-    assert value[1] == 6
-    assert value[2] == 5
-    assert value[3] == 4
+    # Check the values of the operation's response.
+    np.testing.assert_allclose(value, np.array([6, 6, 5, 4]))
 
     # Perform the multiplication operation and check its status
     response_mul = testing_client.get(
@@ -83,10 +80,7 @@ def test_server_ops_matrices(testing_client):
     value = json.loads(json.loads(response_add.text)["matrix-addition"]["result"])
 
     # Check the values of the operation's response
-    assert value[0][0] == 6
-    assert value[0][1] == 6
-    assert value[1][0] == 5
-    assert value[1][1] == 4
+    np.testing.assert_allclose(value, np.array([[6, 6], [5, 4]]))
 
     # Perform the multiplication operation and check its status
     response_mul = testing_client.get(
@@ -96,10 +90,7 @@ def test_server_ops_matrices(testing_client):
     value = json.loads(json.loads(response_mul.text)["matrix-multiplication"]["result"])
 
     # Check the values of the operation's response
-    assert value[0][0] == 9
-    assert value[0][1] == 4
-    assert value[1][0] == 23
-    assert value[1][1] == 12
+    np.testing.assert_allclose(value, np.array([[9,4], [23, 12]]))
 
 
 def test_server_main_error_cases(testing_client):

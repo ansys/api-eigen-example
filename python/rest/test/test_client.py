@@ -27,11 +27,7 @@ def test_client_add_vectors(testing_client):
     vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
 
     vec_add = client.add(vec_1, vec_2)
-
-    assert vec_add[0] == 6
-    assert vec_add[1] == 6
-    assert vec_add[2] == 5
-    assert vec_add[3] == 4
+    np.testing.assert_allclose(vec_add, np.array([6, 6, 5, 4]))
 
 
 def test_client_subtract_vectors(testing_client):
@@ -42,12 +38,9 @@ def test_client_subtract_vectors(testing_client):
     vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
     vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
 
-    vec_subst = client.subtract(vec_1, vec_2)
+    vec_subt = client.subtract(vec_1, vec_2)
 
-    assert vec_subst[0] == -4
-    assert vec_subst[1] == -2
-    assert vec_subst[2] == 1
-    assert vec_subst[3] == 4
+    np.testing.assert_allclose(vec_subt, np.array([-4, -2, 1, 4]))
 
 
 def test_client_multiply_vectors(testing_client):
@@ -73,10 +66,7 @@ def test_client_add_matrices(testing_client):
 
     mat_add = client.add(mat_1, mat_2)
 
-    assert mat_add[0, 0] == 6
-    assert mat_add[0, 1] == 6
-    assert mat_add[1, 0] == 5
-    assert mat_add[1, 1] == 4
+    np.testing.assert_allclose(mat_add, np.array([[6, 6], [5, 4]]))
 
 
 def test_client_subtract_matrices(testing_client):
@@ -87,12 +77,9 @@ def test_client_subtract_matrices(testing_client):
     mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
     mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
 
-    mat_subst = client.subtract(mat_1, mat_2)
+    mat_subt = client.subtract(mat_1, mat_2)
 
-    assert mat_subst[0, 0] == -4
-    assert mat_subst[0, 1] == -2
-    assert mat_subst[1, 0] == 1
-    assert mat_subst[1, 1] == 4
+    np.testing.assert_allclose(mat_subt, np.array([[-4, -2], [1, 4]]))
 
 
 def test_client_multiply_matrices(testing_client):
@@ -105,10 +92,7 @@ def test_client_multiply_matrices(testing_client):
 
     mat_mult = client.multiply(mat_1, mat_2)
 
-    assert mat_mult[0, 0] == 9
-    assert mat_mult[0, 1] == 4
-    assert mat_mult[1, 0] == 23
-    assert mat_mult[1, 1] == 12
+    np.testing.assert_allclose(mat_mult, np.array([[9,4], [23, 12]]))
 
 
 def test_client_connection_details(capsys, testing_client):
