@@ -329,7 +329,6 @@ def create_app():
         # Once the inputs have been verified... perform the operation
         value = __perform_operation(str_type, str_ops, id1, id2)
 
-
         # ... and return the body of the response
         return json.dumps({str_type + "-" + str_ops: {"result": value}})
 
