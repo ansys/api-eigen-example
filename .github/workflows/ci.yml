@@ -133,15 +133,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # used for documentation deployment
-      - name: Get Bot Application Token
-        # if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-        id: get_workflow_token
-        uses: peter-murray/workflow-application-token-action@v1
-        with:
-          application_id: ${{ secrets.BOT_APPLICATION_ID }}
-          application_private_key: ${{ secrets.BOT_APPLICATION_PRIVATE_KEY }}
-
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -174,12 +165,12 @@ jobs:
           path: doc/_build/html
           retention-days: 7
 
-      - name: Deploy documentation
-        # if: github.event_name == 'push' && contains(github.ref, 'refs/tags')
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+      - name: Deploy documentation to gh-pages
+        # if: github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          repository-name: ansys/api-eigen-examples-docs
-          token: ${{ steps.get_workflow_token.outputs.token }}
-          BRANCH: gh-pages
-          FOLDER: doc/_build/html
-          CLEAN: true
+          token: ${{ secrets.github_token }}
+          branch: gh-pages
+          folder: doc/_build/html
+          clean: true
+          single-commit: true
