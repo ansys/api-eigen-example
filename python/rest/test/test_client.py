@@ -92,7 +92,7 @@ def test_client_multiply_matrices(testing_client):
 
     mat_mult = client.multiply(mat_1, mat_2)
 
-    np.testing.assert_allclose(mat_mult, np.array([[9,4], [23, 12]]))
+    np.testing.assert_allclose(mat_mult, np.array([[9, 4], [23, 12]]))
 
 
 def test_client_connection_details(capsys, testing_client):

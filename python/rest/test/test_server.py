@@ -90,7 +90,7 @@ def test_server_ops_matrices(testing_client):
     value = json.loads(json.loads(response_mul.text)["matrix-multiplication"]["result"])
 
     # Check the values of the operation's response
-    np.testing.assert_allclose(value, np.array([[9,4], [23, 12]]))
+    np.testing.assert_allclose(value, np.array([[9, 4], [23, 12]]))
 
 
 def test_server_main_error_cases(testing_client):
