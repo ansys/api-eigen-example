@@ -166,7 +166,7 @@ jobs:
           retention-days: 7
 
       - name: Deploy documentation to gh-pages
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           token: ${{ secrets.github_token }}
