@@ -11,7 +11,7 @@ docker image build -t python-rest-client:latest -f docker/python-rest-client/Doc
 docker image build -t python-rest-server:latest -f docker/python-rest-server/Dockerfile
 ```
 
-In case you wanted to accesss the Docker-compose demo, please do as follows:
+In case you wanted to access the Docker-compose demo, please do as follows:
 ```
 cd docker/python-rest
 docker-compose up -d && docker-compose logs
