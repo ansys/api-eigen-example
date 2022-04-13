@@ -1,0 +1,176 @@
+name: GitHub Actions
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  stylecheck:
+    name: Style Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: 3.9
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Run pre-commit
+        run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
+
+  testimport:
+    name: Smoke Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # os: [windows-latest, ubuntu-latest]
+        os: [ubuntu-latest]
+        python-version: ['3.7', '3.8', '3.9']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Linux pip cache
+        uses: actions/cache@v2
+        if: ${{ runner.os == 'Linux' }}
+        with:
+          path: ~/.cache/pip
+          key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
+          restore-keys: |
+            Python-${{ runner.os }}-${{ matrix.python-version }}
+
+      # - name: Windows pip cache
+      #   uses: actions/cache@v2
+      #   if: ${{ runner.os == 'Windows' }}
+      #   with:
+      #     path: ~\AppData\Local\pip\Cache
+      #     key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
+      #     restore-keys: |
+      #       Python-${{ runner.os }}-${{ matrix.python-version }}
+
+      - name: Install eigen library
+        run: |
+          sudo apt update
+          sudo apt install libeigen3-dev
+
+      - name: Install demo-eigen-wrapper
+        run: |
+          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+
+      - name: Install api-eigen-example
+        run: |
+          pip install -r requirements/requirements_build.txt .
+
+      - name: Test import
+        run: |
+          python -c "from python.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
+
+  build_test:
+    name: Build and Unit Testing
+    needs: testimport
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install OS packages
+        run: |
+          sudo apt install libeigen3-dev
+
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
+          restore-keys: |
+            Python-${{ runner.os }}-${{ matrix.python-version }}
+      
+      - name: Install packages
+        run: |
+          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+          pip install -r requirements/requirements_build.txt .
+
+      - name: Unit Testing
+        run: |
+          pytest -v --cov=python --cov-report html:cov_html --cov-report xml
+
+      - name: Upload Coverage Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: HTML-Coverage
+          path: cov_html
+          retention-days: 7
+
+  build_doc:
+    name: Build Documentation
+    needs: testimport
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Linux pip cache
+        uses: actions/cache@v2
+        if: ${{ runner.os == 'Linux' }}
+        with:
+          path: ~/.cache/pip
+          key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
+          restore-keys: |
+            Python-${{ runner.os }}-${{ matrix.python-version }}
+
+      - name: Install project requirements
+        run: |
+          sudo apt install libeigen3-dev
+          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+          pip install -r requirements/requirements_build.txt .
+          pip install -r requirements/requirements_docs.txt
+
+      - name: Build documentation
+        run: |
+          make -C doc html
+          
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: HTML-Documentation
+          path: doc/_build/html
+          retention-days: 7
+
+      - name: Deploy documentation to gh-pages
+        if: github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          token: ${{ secrets.github_token }}
+          branch: gh-pages
+          folder: doc/_build/html
+          clean: true
+          single-commit: true
