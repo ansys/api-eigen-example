@@ -24,3 +24,5 @@ docker-compose up -d && docker-compose logs
 # Access it with your desired web-browser
 firefox http://127.0.0.1:8888/?token=...
 ```
+
+Feel free to play around with the ```demo.ipynb``` Jupyter Notebook =)
