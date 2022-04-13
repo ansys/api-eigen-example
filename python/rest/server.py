@@ -195,9 +195,9 @@ def create_app():
         Returns
         -------
         Response
-            The HTTP response with the error information and associated Status Code. 
+            The HTTP response with the error information and associated Status Code.
         """
-        
+
         response = jsonify(error.to_dict())
         response.status_code = error.status_code
         return response

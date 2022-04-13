@@ -6,6 +6,6 @@ services:
 
   client:
     image: python-rest-client:latest
-    # We need to export the client port so that we can acess the Jupyter NB
+    # We need to export the client port so that we can access the Jupyter NB
     ports:
       - 8888:8888
