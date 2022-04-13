@@ -185,6 +185,19 @@ def create_app():
 
     @app.errorhandler(InvalidUsage)
     def handle_invalid_usage(error):
+        """Handler for error messages to generate adequate HTTP response.
+
+        Parameters
+        ----------
+        error : InvalidUsage
+            The incoming error which has been raised
+
+        Returns
+        -------
+        Response
+            The HTTP response with the error information and associated Status Code. 
+        """
+        
         response = jsonify(error.to_dict())
         response.status_code = error.status_code
         return response
