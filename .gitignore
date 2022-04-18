@@ -1,7 +1,6 @@
 # autogen grpc source
 chunkdemo.grpc.pb*
 chunkdemo.pb.*
-grpcdemo_pb2*
 
 # emacs temp and backup files
 *~
