@@ -13,7 +13,7 @@ from python.grpc.client import DemoGRPCClient
 
 @pytest.fixture(scope="module")
 def grpc_add_to_server():
-    from protos.src.python.grpcdemo_pb2_grpc import add_GRPCDemoServicer_to_server
+    from grpcdemo_pb2_grpc import add_GRPCDemoServicer_to_server
 
     return add_GRPCDemoServicer_to_server
 
@@ -27,7 +27,7 @@ def grpc_servicer():
 
 @pytest.fixture(scope="module")
 def grpc_stub(grpc_channel):
-    from protos.src.python.grpcdemo_pb2_grpc import GRPCDemoStub
+    from grpcdemo_pb2_grpc import GRPCDemoStub
 
     return GRPCDemoStub(grpc_channel)
 
