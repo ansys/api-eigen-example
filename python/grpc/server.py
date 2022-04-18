@@ -9,7 +9,7 @@ import grpcdemo_pb2
 import grpcdemo_pb2_grpc
 import numpy as np
 
-NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
+__NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
 
 
 def check_data_type(dtype, new_dtype):
@@ -107,7 +107,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 
         # Finally, return the Vector message
         return grpcdemo_pb2.Vector(
-            data_type=NP_DTYPE_TO_DATATYPE[dtype],
+            data_type=__NP_DTYPE_TO_DATATYPE[dtype],
             vector_size=size[0],
             vector_as_a_chunk=result.tobytes(),
         )
@@ -144,7 +144,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 
         # Finally, return the Vector message
         return grpcdemo_pb2.Vector(
-            data_type=NP_DTYPE_TO_DATATYPE[dtype],
+            data_type=__NP_DTYPE_TO_DATATYPE[dtype],
             vector_size=1,
             vector_as_a_chunk=result.tobytes(),
         )
