@@ -38,7 +38,7 @@ def grpc_stub(grpc_channel):
 
 
 @pytest.mark.skip(reason="Not valid yet")
-def test_add_vectors(grpc_stub):
+def test_add_vectors_with_grpc(grpc_stub):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
 
