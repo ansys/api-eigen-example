@@ -1,14 +1,13 @@
 """The Python implementation of the gRPC API Eigen example server."""
 
-import logging
 from concurrent import futures
+import logging
 
 import demo_eigen_wrapper
-import numpy as np
-
 import grpc
 import grpcdemo_pb2
 import grpcdemo_pb2_grpc
+import numpy as np
 
 NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
 
