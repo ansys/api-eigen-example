@@ -5,8 +5,11 @@ import logging
 
 import demo_eigen_wrapper
 import grpc
-from .grpcdemo_pb2 import Vector, Matrix, DataType
-from .grpcdemo_pb2_grpc import GRPCDemoServicer, add_GRPCDemoServicer_to_server
+from python.grpc.generated.grpcdemo_pb2 import Vector, Matrix, DataType
+from python.grpc.generated.grpcdemo_pb2_grpc import (
+    GRPCDemoServicer,
+    add_GRPCDemoServicer_to_server,
+)
 import numpy as np
 
 __NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
