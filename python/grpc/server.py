@@ -14,6 +14,25 @@ NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
 
 
 def check_data_type(dtype, new_dtype):
+    """Auxiliary method to check if the new data type is the same as the previous one or not.
+
+    Parameters
+    ----------
+    dtype : numpy.type
+        The type of the numpy arrays processed.
+    new_dtype : numpy.type
+        The type of the numpy array being processed.
+
+    Returns
+    -------
+    numpy.type
+        The type of the numpy array.
+
+    Raises
+    ------
+    RuntimeError
+        In case there is already a dtype, and it does not match that of the new_dtype argument.
+    """
     if dtype is None:
         return new_dtype
     elif dtype != new_dtype:
@@ -25,6 +44,25 @@ def check_data_type(dtype, new_dtype):
 
 
 def check_size(size, new_size):
+    """Auxiliary method to check if the new parsed size is the same as the previous one or not.
+
+    Parameters
+    ----------
+    size : tuple
+        The size of the numpy arrays processed.
+    new_size : _type_
+        The size of the numpy array being processed.
+
+    Returns
+    -------
+    tuple
+        The size of the numpy array.
+
+    Raises
+    ------
+    RuntimeError
+        In case there is already a size, and it does not match that of the new_size argument.
+    """
     if size is None:
         return new_size
     elif size != new_size:
