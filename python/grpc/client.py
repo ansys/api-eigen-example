@@ -7,7 +7,7 @@ from grpcdemo_pb2_grpc import GRPCDemoStub
 class DemoGRPCClient:
     """The API Eigen Example client class for interacting via gRPC."""
 
-    def __init__(self, ip="127.0.0.1", port=50000, timeout=1):
+    def __init__(self, ip="127.0.0.1", port=50051, timeout=1):
         """Initialize connection to the API Eigen server"""
         self._stub = None
         self._channel_str = "%s:%d" % (ip, port)
