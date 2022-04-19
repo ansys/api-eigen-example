@@ -1,6 +1,5 @@
-import pytest
-
 import numpy as np
+import pytest
 
 from python.grpc.client import DemoGRPCClient
 
