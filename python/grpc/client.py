@@ -1,10 +1,10 @@
 import time
 
 import grpc
-from python.grpc.generated.grpcdemo_pb2 import DataType, Matrix, Vector
-from python.grpc.generated.grpcdemo_pb2_grpc import GRPCDemoStub
 import numpy as np
 
+from python.grpc.generated.grpcdemo_pb2 import DataType, Vector
+from python.grpc.generated.grpcdemo_pb2_grpc import GRPCDemoStub
 from python.grpc.server import __NP_DTYPE_TO_DATATYPE
 
 
