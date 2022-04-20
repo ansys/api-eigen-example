@@ -12,14 +12,14 @@ import python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
 import python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
 
-def check_data_type(type, new_type):
+def check_data_type(dtype, new_dtype):
     """Auxiliary method to check if the new data type is the same as the previous one or not.
 
     Parameters
     ----------
-    type : numpy.type
+    dtype : numpy.type
         The type of the numpy arrays processed.
-    new_type : numpy.type
+    new_dtype : numpy.type
         The type of the numpy array being processed.
 
     Returns
@@ -32,14 +32,14 @@ def check_data_type(type, new_type):
     RuntimeError
         In case there is already a type, and it does not match that of the new_type argument.
     """
-    if type is None:
-        return new_type
-    elif type != new_type:
+    if dtype is None:
+        return new_dtype
+    elif dtype != new_dtype:
         raise RuntimeError(
             "Error while processing data types... Input arguments are of different nature (i.e. int32, float64)."
         )
     else:
-        return type
+        return dtype
 
 
 def check_size(size, new_size):
@@ -113,25 +113,25 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
             The flipped Vector message.
         """
         # Check the data type of the incoming vector
-        type = None
+        dtype = None
         size = None
         if request.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
-            type = check_data_type(type, np.int32)
+            dtype = check_data_type(dtype, np.int32)
         elif request.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
-            type = check_data_type(type, np.float64)
+            dtype = check_data_type(dtype, np.float64)
 
         # Check the size of the incoming vector
         size = check_size(size, (request.vector_size,))
 
         # Deserialize the numpy array
-        nparray = np.frombuffer(request.vector_as_chunk, dtype=type)
+        nparray = np.frombuffer(request.vector_as_chunk, dtype=dtype)
 
         # Flip it
         nparray_flipped = np.flip(nparray)
 
         # Finally, return the Vector message
         return grpcdemo_pb2.Vector(
-            data_type=constants.NP_DTYPE_TO_DATATYPE[type],
+            data_type=constants.NP_DTYPE_TO_DATATYPE[dtype],
             vector_size=size[0],
             vector_as_chunk=nparray_flipped.tobytes(),
         )
@@ -152,18 +152,21 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
             The Vector message.
         """
         # Process the input messages
-        type, size, vector_list = self._get_vectors(request_iterator)
+        dtype, size, vector_list = self._get_vectors(request_iterator)
 
         # Create an empty array with the input arguments characteristics (dtype, size)
-        result = np.empty(size, dtype=type)
+        result = np.zeros(size, dtype=dtype)
 
         # Add all provided vectors using the Eigen library
         for vector in vector_list:
-            result = demo_eigen_wrapper.add_vectors(result, vector)
+            # Casting is needed due to interface with Eigen library... Not the desired approach,
+            # but works. Ideally, we would want to pass vector directly, but errors appear
+            cast_vector = np.array(vector, dtype=dtype)
+            result = demo_eigen_wrapper.add_vectors(result, cast_vector)
 
         # Finally, return the Vector message
         return grpcdemo_pb2.Vector(
-            data_type=constants.NP_DTYPE_TO_DATATYPE[type],
+            data_type=constants.NP_DTYPE_TO_DATATYPE[dtype],
             vector_size=size[0],
             vector_as_chunk=result.tobytes(),
         )
@@ -184,7 +187,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
             The Vector message.
         """
         # Process the input messages
-        type, _, vector_list = self._get_vectors(request_iterator)
+        dtype, _, vector_list = self._get_vectors(request_iterator)
 
         # Check that the Vector list contains a maximum of two vectors
         if len(vector_list) != 2:
@@ -195,12 +198,20 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
             )
 
         # Perform the dot product of the provided vectors using the Eigen library
-        result = demo_eigen_wrapper.multiply_vectors(*vector_list)
-        result = np.array(result, dtype=type)
+        # Casting is needed due to interface with Eigen library... Not the desired approach,
+        # but works. Ideally, we would want to pass vector directly, but errors appear
+        vec_1 = np.array(vector_list[0], dtype=dtype)
+        vec_2 = np.array(vector_list[1], dtype=dtype)
+        result = demo_eigen_wrapper.multiply_vectors(vec_1, vec_2)
+        
+        
+        
+        # Return the result as a numpy.ndarray
+        result = np.array(result, dtype=dtype)
 
         # Finally, return the Vector message
         return grpcdemo_pb2.Vector(
-            data_type=constants.NP_DTYPE_TO_DATATYPE[type],
+            data_type=constants.NP_DTYPE_TO_DATATYPE[dtype],
             vector_size=1,
             vector_as_chunk=result.tobytes(),
         )
@@ -227,7 +238,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
             The type of data, the size of the vectors and the list of vectors to be processed.
         """
         # Initialize the auxiliary variables and output vector list
-        type = None
+        dtype = None
         size = None
         vector_list = []
 
@@ -235,22 +246,22 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         for vector in request_iterator:
             # Check the data type of the incoming vector
             if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
-                type = check_data_type(type, np.int32)
+                dtype = check_data_type(dtype, np.int32)
             elif vector.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
-                type = check_data_type(type, np.float64)
+                dtype = check_data_type(dtype, np.float64)
 
             # Check the size of the incoming vector
             size = check_size(size, (vector.vector_size,))
 
             # Deserialize the numpy array
-            nparray = np.frombuffer(vector.vector_as_chunk, dtype=type)
+            nparray = np.frombuffer(vector.vector_as_chunk, dtype=dtype)
             # nparray.reshape(size) ---> This is to be used for matrices only
 
             # Add the array to the list
             vector_list.append(nparray)
 
         # Return the input vector list (as a list of numpy.ndarray)
-        return type, size, vector_list
+        return dtype, size, vector_list
 
 
 def serve():

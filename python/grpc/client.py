@@ -63,7 +63,7 @@ class DemoGRPCClient:
     def add_vectors(self, *args):
         """Method to add numpy.ndarray vectors using the Eigen library on the server side."""
         # Build the stream (i.e. generator)
-        vector_iterator = self._generate_vector_stream(args)
+        vector_iterator = self._generate_vector_stream(*args)
 
         # Call the server method and retrieve the result
         vector_addition = self._stub.AddVectors(vector_iterator)
@@ -76,7 +76,7 @@ class DemoGRPCClient:
     def multiply_vectors(self, *args):
         """Method to perform dot product of numpy.ndarray vectors using the Eigen library on the server side."""
         # Build the stream (i.e. generator)
-        vector_iterator = self._generate_vector_stream(args)
+        vector_iterator = self._generate_vector_stream(*args)
 
         # Call the server method and retrieve the result
         vector_mult = self._stub.MultiplyVectors(vector_iterator)
@@ -108,10 +108,10 @@ class DemoGRPCClient:
 
     def _read_nparray_from_vector(self, vector):
         # Convert Vector message to a numpy.ndarray to continue nominal operations (outside the client)
-        type = None
+        dtype = None
         if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
-            type = np.int32
+            dtype = np.int32
         elif vector.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
-            type = np.float64
+            dtype = np.float64
 
-        return np.frombuffer(vector.vector_as_chunk, dtype=type)
+        return np.frombuffer(vector.vector_as_chunk, dtype=dtype)

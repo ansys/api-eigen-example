@@ -61,7 +61,6 @@ def test_flip_vector(grpc_stub):
     np.testing.assert_allclose(vec_flip, np.flip(vec_1))
 
 
-@pytest.mark.skip(reason="Not valid yet")
 def test_add_vectors(grpc_stub):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
@@ -73,3 +72,31 @@ def test_add_vectors(grpc_stub):
 
     vec_add = client.add_vectors(vec_1, vec_2)
     np.testing.assert_allclose(vec_add, np.array([6, 6, 5, 4]))
+    
+def test_add_four_vectors(grpc_stub):
+    """Unit test to verify that the client gets the expected response
+    when performing the addition of four numpy arrays (as vectors).
+    
+    This is only possible with the gRPC demo."""
+
+    client = DemoGRPCClient(test=grpc_stub)
+
+    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
+    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+    vec_3 = np.array([-5, -4, -2, 0], dtype=np.float64)
+    vec_4 = np.array([-1, -2, -3, -4], dtype=np.float64)
+
+    vec_add = client.add_vectors(vec_1, vec_2, vec_3, vec_4)
+    np.testing.assert_allclose(vec_add, np.array([0., 0., 0., 0.]))
+
+def test_multiply_vectors(grpc_stub):
+    """Unit test to verify that the client gets the expected response
+    when performing the multiplication of two numpy arrays (as vectors)."""
+
+    client = DemoGRPCClient(test=grpc_stub)
+
+    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
+    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+
+    vec_mult = client.multiply_vectors(vec_1, vec_2)
+    np.testing.assert_allclose(vec_mult, np.array([19.0]))
