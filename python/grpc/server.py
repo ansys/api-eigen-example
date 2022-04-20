@@ -7,11 +7,8 @@ import demo_eigen_wrapper
 import grpc
 import numpy as np
 
-from python.grpc.generated.grpcdemo_pb2 import DataType, Vector
-from python.grpc.generated.grpcdemo_pb2_grpc import (
-    GRPCDemoServicer,
-    add_GRPCDemoServicer_to_server,
-)
+import python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
+import python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
 __NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
 
@@ -76,7 +73,7 @@ def check_size(size, new_size):
         return size
 
 
-class GRPCDemoServicer(GRPCDemoServicer):
+class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
     """Provides methods that implement functionality of API Eigen Example server."""
 
     def __init__(self) -> None:
@@ -110,7 +107,7 @@ class GRPCDemoServicer(GRPCDemoServicer):
             result = demo_eigen_wrapper.add_vectors(result, vector)
 
         # Finally, return the Vector message
-        return Vector(
+        return grpcdemo_pb2.Vector(
             data_type=__NP_DTYPE_TO_DATATYPE[dtype],
             vector_size=size[0],
             vector_as_a_chunk=result.tobytes(),
@@ -147,7 +144,7 @@ class GRPCDemoServicer(GRPCDemoServicer):
         result = np.array(result, dtype=dtype)
 
         # Finally, return the Vector message
-        return Vector(
+        return grpcdemo_pb2.Vector(
             data_type=__NP_DTYPE_TO_DATATYPE[dtype],
             vector_size=1,
             vector_as_a_chunk=result.tobytes(),
@@ -182,9 +179,9 @@ class GRPCDemoServicer(GRPCDemoServicer):
         # Iterate over all incoming vectors
         for vector in request_iterator:
             # Check the data type of the incoming vector
-            if vector.data_type == DataType.Value("INTEGER"):
+            if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
                 dtype = check_data_type(dtype, np.int32)
-            elif vector.data_type == DataType.Value("DOUBLE"):
+            elif vector.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
                 dtype = check_data_type(dtype, np.float64)
 
             # Check the size of the incoming vector
@@ -204,7 +201,7 @@ class GRPCDemoServicer(GRPCDemoServicer):
 def serve():
     """Provides method to deploy the API Eigen Example server."""
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    add_GRPCDemoServicer_to_server(GRPCDemoServicer(), server)
+    grpcdemo_pb2_grpc.add_GRPCDemoServicer_to_server(GRPCDemoServicer(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
     server.wait_for_termination()
