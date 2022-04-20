@@ -86,6 +86,32 @@ class DemoGRPCClient:
 
         return nparray
 
+    def add_matrices(self, *args):
+        """Method to add numpy.ndarray matrices using the Eigen library on the server side."""
+        # Build the stream (i.e. generator)
+        matrix_iterator = self._generate_matrix_stream(*args)
+
+        # Call the server method and retrieve the result
+        matrix_addition = self._stub.AddMatrices(matrix_iterator)
+
+        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        nparray = self._read_nparray_from_matrix(matrix_addition)
+
+        return nparray
+
+    def multiply_matrices(self, *args):
+        """Method to perform the product of numpy.ndarray matrices using the Eigen library on the server side."""
+        # Build the stream (i.e. generator)
+        matrix_iterator = self._generate_matrix_stream(*args)
+
+        # Call the server method and retrieve the result
+        matrix_mult = self._stub.MultiplyMatrices(matrix_iterator)
+
+        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        nparray = self._read_nparray_from_matrix(matrix_mult)
+
+        return nparray
+
     def _generate_vector_stream(self, *args):
         # Loop over all input arguments
         for arg in args:
@@ -115,3 +141,44 @@ class DemoGRPCClient:
             dtype = np.float64
 
         return np.frombuffer(vector.vector_as_chunk, dtype=dtype)
+
+    def _generate_matrix_stream(self, *args):
+        # Loop over all input arguments
+        for arg in args:
+            # Perform some argument input sanity checks
+            if type(arg) is not np.ndarray:
+                raise RuntimeError("Invalid argument. Only numpy.ndarrays allowed.")
+            elif arg.dtype.type not in constants.NP_DTYPE_TO_DATATYPE.keys():
+                raise RuntimeError(
+                    "Invalid argument. Only numpy.ndarrays of type int32 and float64 allowed."
+                )
+            elif arg.ndim != 2:
+                raise RuntimeError("Invalid argument. Only 2D numpy.ndarrays allowed.")
+
+            # If sanity checks went fine... yield the corresponding Matrix message
+            yield grpcdemo_pb2.Matrix(
+                data_type=constants.NP_DTYPE_TO_DATATYPE[arg.dtype.type],
+                matrix_rows=arg.shape[0],
+                matrix_cols=arg.shape[1],
+                matrix_as_chunk=arg.tobytes(),
+            )
+
+    def _read_nparray_from_matrix(self, matrix):
+        # Convert Matrix message to a numpy.ndarray to continue nominal operations (outside the client)
+        dtype = None
+        if matrix.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
+            dtype = np.int32
+        elif matrix.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
+            dtype = np.float64
+
+        # Load into a 1D numpy array....
+        nparray = np.frombuffer(matrix.matrix_as_chunk, dtype=dtype)
+
+        # ... and reshape it according to the Matrix message vefore returning it
+        return np.reshape(
+            nparray,
+            (
+                matrix.matrix_rows,
+                matrix.matrix_cols,
+            ),
+        )
