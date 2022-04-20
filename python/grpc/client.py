@@ -3,9 +3,9 @@ import time
 import grpc
 import numpy as np
 
-from python.grpc.generated.grpcdemo_pb2 import DataType, Vector
-from python.grpc.generated.grpcdemo_pb2_grpc import GRPCDemoStub
-from python.grpc.server import __NP_DTYPE_TO_DATATYPE
+import python.grpc.constants as constants
+import python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
+import python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
 
 class DemoGRPCClient:
@@ -23,7 +23,7 @@ class DemoGRPCClient:
 
         self.channel = grpc.insecure_channel(self._channel_str)
         self._state = grpc.channel_ready_future(self.channel)
-        self._stub = GRPCDemoStub(self.channel)
+        self._stub = grpcdemo_pb2_grpc.GRPCDemoStub(self.channel)
 
         # Verify connection
         tstart = time.time()
@@ -34,6 +34,31 @@ class DemoGRPCClient:
             raise IOError("Unable to connect to server at %s" % self._channel_str)
         else:
             print("Connected to server at %s:%d" % (ip, port))
+
+    def request_greeting(self, name):
+        # Build the greeting request
+        request = grpcdemo_pb2.HelloRequest(name=name)
+
+        # Send the request
+        response = self._stub.SayHello(request)
+
+        # Show the server's response
+        print("The server answered: " + response.message)
+
+    def flip_vector(self, vector):
+        # Build the stream (i.e. generator)
+        vector_gen = self._generate_vector_stream(vector)
+
+        # Retrieve only the first element - vector is a single numpy.ndarray (or should be!)
+        request = next(vector_gen)
+
+        # Call the server method and retrieve the result
+        vec_flip = self._stub.FlipVector(request)
+
+        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        nparray = self._read_nparray_from_vector(vec_flip)
+
+        return nparray
 
     def add_vectors(self, *args):
         """Method to add numpy.ndarray vectors using the Eigen library on the server side."""
@@ -67,7 +92,7 @@ class DemoGRPCClient:
             # Perform some argument input sanity checks
             if type(arg) is not np.ndarray:
                 raise RuntimeError("Invalid argument. Only numpy.ndarrays allowed.")
-            elif arg.dtype not in __NP_DTYPE_TO_DATATYPE.keys():
+            elif arg.dtype.type not in constants.NP_DTYPE_TO_DATATYPE.keys():
                 raise RuntimeError(
                     "Invalid argument. Only numpy.ndarrays of type int32 and float64 allowed."
                 )
@@ -75,18 +100,18 @@ class DemoGRPCClient:
                 raise RuntimeError("Invalid argument. Only 1D numpy.ndarrays allowed.")
 
             # If sanity checks went fine... yield the corresponding Vector message
-            yield Vector(
-                data_type=__NP_DTYPE_TO_DATATYPE[arg.dtype],
+            yield grpcdemo_pb2.Vector(
+                data_type=constants.NP_DTYPE_TO_DATATYPE[arg.dtype.type],
                 vector_size=arg.shape[0],
-                vector_as_a_chunk=arg.tobytes(),
+                vector_as_chunk=arg.tobytes(),
             )
 
     def _read_nparray_from_vector(self, vector):
         # Convert Vector message to a numpy.ndarray to continue nominal operations (outside the client)
-        dtype = None
-        if vector.data_type == DataType.Value("INTEGER"):
-            dtype = np.int32
-        elif vector.data_type == DataType.Value("DOUBLE"):
-            dtype = np.float64
+        type = None
+        if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
+            type = np.int32
+        elif vector.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
+            type = np.float64
 
-        return np.frombuffer(vector.vector_as_chunk, dtype=dtype)
+        return np.frombuffer(vector.vector_as_chunk, dtype=type)

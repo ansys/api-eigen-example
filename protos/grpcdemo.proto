@@ -29,6 +29,17 @@ message Matrix {
     bytes matrix_as_chunk = 4;
 }
 
+// The request message containing the user's name.
+message HelloRequest {
+    string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+    string message = 1;
+}
+
+
 // ================================================================================
 // DEMO SERVICE for API Eigen Example
 // ================================================================================
@@ -36,11 +47,22 @@ message Matrix {
 // Interface exported by the server. Different to REST... we do not require to post
 // (i.e. store) in the end server the Objects of the interface (e.g. Vector, Matrix)
 service GRPCDemo {
-    // Vector-related methods
+
+    // Sends a greeting
+    rpc SayHello (HelloRequest) returns (HelloReply) {}
+
+    // Flips a vector [A, B, C, D] --> [D, C, B, A]
+    rpc FlipVector(Vector) returns (Vector) {}
+
+    // Adds two vectors
     rpc AddVectors(stream Vector) returns (Vector) {}
+
+    // Vector dot product
     rpc MultiplyVectors(stream Vector) returns (Vector) {}
 
-    // Matrix-related methods
+    // Adds two matrices
     rpc AddMatrices(stream Matrix) returns (Matrix) {}
+
+    // Multiplies two matrices
     rpc MultiplyMatrices(stream Matrix) returns (Matrix) {}
 }

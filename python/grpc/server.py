@@ -7,20 +7,19 @@ import demo_eigen_wrapper
 import grpc
 import numpy as np
 
+import python.grpc.constants as constants
 import python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
 import python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
-__NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
 
-
-def check_data_type(dtype, new_dtype):
+def check_data_type(type, new_type):
     """Auxiliary method to check if the new data type is the same as the previous one or not.
 
     Parameters
     ----------
-    dtype : numpy.type
+    type : numpy.type
         The type of the numpy arrays processed.
-    new_dtype : numpy.type
+    new_type : numpy.type
         The type of the numpy array being processed.
 
     Returns
@@ -31,16 +30,16 @@ def check_data_type(dtype, new_dtype):
     Raises
     ------
     RuntimeError
-        In case there is already a dtype, and it does not match that of the new_dtype argument.
+        In case there is already a type, and it does not match that of the new_type argument.
     """
-    if dtype is None:
-        return new_dtype
-    elif dtype != new_dtype:
+    if type is None:
+        return new_type
+    elif type != new_type:
         raise RuntimeError(
             "Error while processing data types... Input arguments are of different nature (i.e. int32, float64)."
         )
     else:
-        return dtype
+        return type
 
 
 def check_size(size, new_size):
@@ -81,6 +80,62 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         # TODO : is it required to store the input vectors in a DB?
         super().__init__()
 
+    def SayHello(self, request, context):
+        """Greeter method - to test if the server works correctly and is up and running.
+
+        Parameters
+        ----------
+        request : HelloRequest
+            The greeting request send by the client.
+        context : grpc.ServicerContext
+            Provides RPC-specific information.
+
+        Returns
+        -------
+        grpcdemo_pb2.HelloReply
+            The greeting reply by the server.
+        """
+        return grpcdemo_pb2.HelloReply(message="Hello, %s!" % request.name)
+
+    def FlipVector(self, request, context):
+        """Simple flipping method which inverts a given Vector.
+
+        Parameters
+        ----------
+        request : grpcdemo_pb2.Vector
+            The input Vector message.
+        context : grpc.ServicerContext
+            Provides RPC-specific information.
+
+        Returns
+        -------
+        grpcdemo_pb2.Vector
+            The flipped Vector message.
+        """
+        # Check the data type of the incoming vector
+        type = None
+        size = None
+        if request.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
+            type = check_data_type(type, np.int32)
+        elif request.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
+            type = check_data_type(type, np.float64)
+
+        # Check the size of the incoming vector
+        size = check_size(size, (request.vector_size,))
+
+        # Deserialize the numpy array
+        nparray = np.frombuffer(request.vector_as_chunk, dtype=type)
+
+        # Flip it
+        nparray_flipped = np.flip(nparray)
+
+        # Finally, return the Vector message
+        return grpcdemo_pb2.Vector(
+            data_type=constants.NP_DTYPE_TO_DATATYPE[type],
+            vector_size=size[0],
+            vector_as_chunk=nparray_flipped.tobytes(),
+        )
+
     def AddVectors(self, request_iterator, context):
         """gRPC method for allowing the addition of Vectors.
 
@@ -97,10 +152,10 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
             The Vector message.
         """
         # Process the input messages
-        dtype, size, vector_list = self._get_vectors(request_iterator)
+        type, size, vector_list = self._get_vectors(request_iterator)
 
         # Create an empty array with the input arguments characteristics (dtype, size)
-        result = np.empty(size, dtype=dtype)
+        result = np.empty(size, dtype=type)
 
         # Add all provided vectors using the Eigen library
         for vector in vector_list:
@@ -108,9 +163,9 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 
         # Finally, return the Vector message
         return grpcdemo_pb2.Vector(
-            data_type=__NP_DTYPE_TO_DATATYPE[dtype],
+            data_type=constants.NP_DTYPE_TO_DATATYPE[type],
             vector_size=size[0],
-            vector_as_a_chunk=result.tobytes(),
+            vector_as_chunk=result.tobytes(),
         )
 
     def MultiplyVectors(self, request_iterator, context):
@@ -129,7 +184,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
             The Vector message.
         """
         # Process the input messages
-        dtype, _, vector_list = self._get_vectors(request_iterator)
+        type, _, vector_list = self._get_vectors(request_iterator)
 
         # Check that the Vector list contains a maximum of two vectors
         if len(vector_list) != 2:
@@ -141,13 +196,13 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 
         # Perform the dot product of the provided vectors using the Eigen library
         result = demo_eigen_wrapper.multiply_vectors(*vector_list)
-        result = np.array(result, dtype=dtype)
+        result = np.array(result, dtype=type)
 
         # Finally, return the Vector message
         return grpcdemo_pb2.Vector(
-            data_type=__NP_DTYPE_TO_DATATYPE[dtype],
+            data_type=constants.NP_DTYPE_TO_DATATYPE[type],
             vector_size=1,
-            vector_as_a_chunk=result.tobytes(),
+            vector_as_chunk=result.tobytes(),
         )
 
     def AddMatrices(self, request_iterator, context):
@@ -172,7 +227,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
             The type of data, the size of the vectors and the list of vectors to be processed.
         """
         # Initialize the auxiliary variables and output vector list
-        dtype = None
+        type = None
         size = None
         vector_list = []
 
@@ -180,22 +235,22 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         for vector in request_iterator:
             # Check the data type of the incoming vector
             if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
-                dtype = check_data_type(dtype, np.int32)
+                type = check_data_type(type, np.int32)
             elif vector.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
-                dtype = check_data_type(dtype, np.float64)
+                type = check_data_type(type, np.float64)
 
             # Check the size of the incoming vector
             size = check_size(size, (vector.vector_size,))
 
             # Deserialize the numpy array
-            nparray = np.frombuffer(vector.vector_as_chunk, dtype=dtype)
+            nparray = np.frombuffer(vector.vector_as_chunk, dtype=type)
             # nparray.reshape(size) ---> This is to be used for matrices only
 
             # Add the array to the list
             vector_list.append(nparray)
 
         # Return the input vector list (as a list of numpy.ndarray)
-        return dtype, size, vector_list
+        return type, size, vector_list
 
 
 def serve():

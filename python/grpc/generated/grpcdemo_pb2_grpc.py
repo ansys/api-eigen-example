@@ -20,6 +20,16 @@ class GRPCDemoStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.SayHello = channel.unary_unary(
+                '/grpcdemo.GRPCDemo/SayHello',
+                request_serializer=grpcdemo__pb2.HelloRequest.SerializeToString,
+                response_deserializer=grpcdemo__pb2.HelloReply.FromString,
+                )
+        self.FlipVector = channel.unary_unary(
+                '/grpcdemo.GRPCDemo/FlipVector',
+                request_serializer=grpcdemo__pb2.Vector.SerializeToString,
+                response_deserializer=grpcdemo__pb2.Vector.FromString,
+                )
         self.AddVectors = channel.stream_unary(
                 '/grpcdemo.GRPCDemo/AddVectors',
                 request_serializer=grpcdemo__pb2.Vector.SerializeToString,
@@ -51,28 +61,44 @@ class GRPCDemoServicer(object):
     (i.e. store) in the end server the Objects of the interface (e.g. Vector, Matrix)
     """
 
+    def SayHello(self, request, context):
+        """Sends a greeting
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def FlipVector(self, request, context):
+        """Flips a vector [A, B, C, D] --> [D, C, B, A]
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def AddVectors(self, request_iterator, context):
-        """Vector-related methods
+        """Adds two vectors
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def MultiplyVectors(self, request_iterator, context):
-        """Missing associated documentation comment in .proto file."""
+        """Vector dot product
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def AddMatrices(self, request_iterator, context):
-        """Matrix-related methods
+        """Adds two matrices
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def MultiplyMatrices(self, request_iterator, context):
-        """Missing associated documentation comment in .proto file."""
+        """Multiplies two matrices
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -80,6 +106,16 @@ class GRPCDemoServicer(object):
 
 def add_GRPCDemoServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'SayHello': grpc.unary_unary_rpc_method_handler(
+                    servicer.SayHello,
+                    request_deserializer=grpcdemo__pb2.HelloRequest.FromString,
+                    response_serializer=grpcdemo__pb2.HelloReply.SerializeToString,
+            ),
+            'FlipVector': grpc.unary_unary_rpc_method_handler(
+                    servicer.FlipVector,
+                    request_deserializer=grpcdemo__pb2.Vector.FromString,
+                    response_serializer=grpcdemo__pb2.Vector.SerializeToString,
+            ),
             'AddVectors': grpc.stream_unary_rpc_method_handler(
                     servicer.AddVectors,
                     request_deserializer=grpcdemo__pb2.Vector.FromString,
@@ -115,6 +151,40 @@ class GRPCDemo(object):
     Interface exported by the server. Different to REST... we do not require to post
     (i.e. store) in the end server the Objects of the interface (e.g. Vector, Matrix)
     """
+
+    @staticmethod
+    def SayHello(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcdemo.GRPCDemo/SayHello',
+            grpcdemo__pb2.HelloRequest.SerializeToString,
+            grpcdemo__pb2.HelloReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def FlipVector(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcdemo.GRPCDemo/FlipVector',
+            grpcdemo__pb2.Vector.SerializeToString,
+            grpcdemo__pb2.Vector.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def AddVectors(request_iterator,

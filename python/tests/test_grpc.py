@@ -36,8 +36,33 @@ def grpc_stub(grpc_channel):
 # ================================================================================
 
 
+def test_greeting(capsys, grpc_stub):
+    """Unit test to verify that the client gets the expected response
+    when performing a simple greeting request."""
+
+    client = DemoGRPCClient(test=grpc_stub)
+
+    client.request_greeting("Michael")
+
+    captured = capsys.readouterr()
+    assert captured.out == "The server answered: Hello, Michael!\n"
+
+
+def test_flip_vector(grpc_stub):
+    """Unit test to verify that the client gets the expected response
+    when performing a simple vector-flipping request."""
+
+    client = DemoGRPCClient(test=grpc_stub)
+
+    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
+
+    vec_flip = client.flip_vector(vec_1)
+
+    np.testing.assert_allclose(vec_flip, np.flip(vec_1))
+
+
 @pytest.mark.skip(reason="Not valid yet")
-def test_add_vectors_with_grpc(grpc_stub):
+def test_add_vectors(grpc_stub):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
 
