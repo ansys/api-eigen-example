@@ -34,6 +34,10 @@ class DemoGRPCClient:
             raise IOError("Unable to connect to server at %s" % self._channel_str)
         else:
             print("Connected to server at %s:%d" % (ip, port))
+            
+    # =================================================================================================
+    # PUBLIC METHODS for Client operations
+    # =================================================================================================
 
     def request_greeting(self, name):
         # Build the greeting request
@@ -111,6 +115,10 @@ class DemoGRPCClient:
         nparray = self._read_nparray_from_matrix(matrix_mult)
 
         return nparray
+
+    # =================================================================================================
+    # PRIVATE METHODS for Client operations
+    # =================================================================================================
 
     def _generate_vector_stream(self, *args):
         # Loop over all input arguments
