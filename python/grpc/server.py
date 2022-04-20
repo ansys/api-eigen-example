@@ -385,7 +385,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 
             # Deserialize the numpy array (and reshape!... otherwise, 1D array)
             nparray = np.frombuffer(matrix.matrix_as_chunk, dtype=dtype)
-            nparray.reshape(size)
+            nparray = np.reshape(nparray, size)
 
             # Add the array to the list
             matrix_list.append(nparray)

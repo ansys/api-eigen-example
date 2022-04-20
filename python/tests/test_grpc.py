@@ -102,3 +102,30 @@ def test_multiply_vectors(grpc_stub):
 
     vec_mult = client.multiply_vectors(vec_1, vec_2)
     np.testing.assert_allclose(vec_mult, np.array([19.0]))
+
+
+def test_add_matrices(grpc_stub):
+    """Unit test to verify that the client gets the expected response
+    when performing the addition of two numpy arrays (as matrices)."""
+
+    client = DemoGRPCClient(test=grpc_stub)
+
+    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
+    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+
+    mat_add = client.add_matrices(mat_1, mat_2)
+
+    np.testing.assert_allclose(mat_add, np.array([[6, 6], [5, 4]]))
+
+
+def test_multiply_matrices(grpc_stub):
+    """Unit test to verify that the client gets the expected response
+    when performing the multiplication of two numpy arrays (as matrices)."""
+    client = DemoGRPCClient(test=grpc_stub)
+
+    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
+    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+
+    mat_mult = client.multiply_matrices(mat_1, mat_2)
+
+    np.testing.assert_allclose(mat_mult, np.array([[9, 4], [23, 12]]))
