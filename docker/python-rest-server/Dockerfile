@@ -8,7 +8,7 @@ ADD python /server/python
 RUN mkdir /server/instance
 
 # Next in line, we will install our requirements
-RUN apt-get update -y && apt-get install cmake libeigen3-dev pip -y
+RUN apt-get update -y && apt-get install cmake libeigen3-dev pip curl sqlite3 -y
 RUN pip install -r requirements/requirements_eigen_wrapper.txt
 RUN pip install python/eigen-wrapper
 RUN pip install -r requirements/requirements_build.txt

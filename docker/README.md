@@ -7,8 +7,8 @@ For this case scenario, there are 2 Docker containers, which have to be built th
 
 In order to build them, run from the root directory of the repository the following command:
 ```
-docker image build -t python-rest-client:latest -f docker/python-rest-client/Dockerfile
-docker image build -t python-rest-server:latest -f docker/python-rest-server/Dockerfile
+docker image build -t python-rest-client:latest -f docker/python-rest-client/Dockerfile .
+docker image build -t python-rest-server:latest -f docker/python-rest-server/Dockerfile .
 ```
 
 In case you wanted to access the Docker-compose demo, please do as follows:

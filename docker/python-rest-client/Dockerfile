@@ -6,7 +6,7 @@ WORKDIR /client
 ADD requirements /client/requirements
 
 # Next in line, we will install our requirements
-RUN apt-get update -y && apt-get install pip -y
+RUN apt-get update -y && apt-get install pip curl -y
 RUN sed -e '/demo_eigen_wrapper/ s/^#*/#/' -i /client/requirements/requirements_build.txt
 RUN pip install -r requirements/requirements_build.txt
 RUN pip install ipykernel jupyterlab notebook
