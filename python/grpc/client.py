@@ -34,7 +34,7 @@ class DemoGRPCClient:
             raise IOError("Unable to connect to server at %s" % self._channel_str)
         else:
             print("Connected to server at %s:%d" % (ip, port))
-            
+
     # =================================================================================================
     # PUBLIC METHODS for Client operations
     # =================================================================================================

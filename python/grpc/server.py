@@ -11,10 +11,10 @@ import python.grpc.constants as constants
 import python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
 import python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
-
 # =================================================================================================
 # AUXILIARY METHODS for Server operations
 # =================================================================================================
+
 
 def check_data_type(dtype, new_dtype):
     """Auxiliary method to check if the new data type is the same as the previous one or not.
@@ -83,7 +83,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         """No special init is required for the server... Unless we wanted to store the data in a DB. This is to be determined."""
         # TODO : is it required to store the input vectors in a DB?
         super().__init__()
-        
+
     # =================================================================================================
     # PUBLIC METHODS for Server operations
     # =================================================================================================
@@ -397,6 +397,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 # =================================================================================================
 # SERVING METHODS for Server operations
 # =================================================================================================
+
 
 def serve():
     """Provides method to deploy the API Eigen Example server."""
