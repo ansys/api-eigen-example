@@ -19,4 +19,4 @@ ADD docker/python-rest-client/demo.ipynb /client/demo.ipynb
 EXPOSE 8888
 
 # Define our container entry command - Basically run the Jupyter Notebook
-CMD ["jupyter", "notebook", "--ip", "0.0.0.0", "--allow-root"]
+CMD ["jupyter-lab", "--ip", "0.0.0.0", "--allow-root"]
