@@ -72,11 +72,12 @@ def test_add_vectors(grpc_stub):
 
     vec_add = client.add_vectors(vec_1, vec_2)
     np.testing.assert_allclose(vec_add, np.array([6, 6, 5, 4]))
-    
+
+
 def test_add_four_vectors(grpc_stub):
     """Unit test to verify that the client gets the expected response
     when performing the addition of four numpy arrays (as vectors).
-    
+
     This is only possible with the gRPC demo."""
 
     client = DemoGRPCClient(test=grpc_stub)
@@ -87,7 +88,8 @@ def test_add_four_vectors(grpc_stub):
     vec_4 = np.array([-1, -2, -3, -4], dtype=np.float64)
 
     vec_add = client.add_vectors(vec_1, vec_2, vec_3, vec_4)
-    np.testing.assert_allclose(vec_add, np.array([0., 0., 0., 0.]))
+    np.testing.assert_allclose(vec_add, np.array([0.0, 0.0, 0.0, 0.0]))
+
 
 def test_multiply_vectors(grpc_stub):
     """Unit test to verify that the client gets the expected response

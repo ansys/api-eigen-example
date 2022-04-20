@@ -203,9 +203,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         vec_1 = np.array(vector_list[0], dtype=dtype)
         vec_2 = np.array(vector_list[1], dtype=dtype)
         result = demo_eigen_wrapper.multiply_vectors(vec_1, vec_2)
-        
-        
-        
+
         # Return the result as a numpy.ndarray
         result = np.array(result, dtype=dtype)
 
