@@ -215,12 +215,87 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         )
 
     def AddMatrices(self, request_iterator, context):
-        # TODO : Implement AddMatrices server logic
-        return super().AddMatrices(request_iterator, context)
+        """gRPC method for allowing the addition of Matrices.
+
+        Parameters
+        ----------
+        request_iterator : iterator
+            An iterator to the stream of Matrix messages provided.
+        context : grpc.ServicerContext
+            Provides RPC-specific information.
+
+        Returns
+        -------
+        grpcdemo_pb2.Matrix
+            The Matrix message.
+        """
+        # Process the input messages
+        dtype, size, matrix_list = self._get_matrices(request_iterator)
+
+        # Create an empty array with the input arguments characteristics (dtype, size)
+        result = np.zeros(size, dtype=dtype)
+
+        # Add all provided matrices using the Eigen library
+        for matrix in matrix_list:
+            # Casting is needed due to interface with Eigen library... Not the desired approach,
+            # but works. Ideally, we would want to pass matrix directly, but errors appear
+            cast_matrix = np.array(matrix, dtype=dtype)
+            result = demo_eigen_wrapper.add_matrices(result, cast_matrix)
+
+        # Finally, return the Matrix message
+        return grpcdemo_pb2.Matrix(
+            data_type=constants.NP_DTYPE_TO_DATATYPE[dtype],
+            matrix_rows=size[0],
+            matrix_cols=size[1],
+            matrix_as_chunk=result.tobytes(),
+        )
 
     def MultiplyMatrices(self, request_iterator, context):
-        # TODO : Implement MultiplyMatrices server logic
-        return super().MultiplyMatrices(request_iterator, context)
+        """gRPC method for allowing the multiplication of Matrices.
+
+        Parameters
+        ----------
+        request_iterator : iterator
+            An iterator to the stream of Matrix messages provided.
+        context : grpc.ServicerContext
+            Provides RPC-specific information.
+
+        Returns
+        -------
+        grpcdemo_pb2.Matrix
+            The Matrix message.
+        """
+        # Process the input messages
+        dtype, size, matrix_list = self._get_matrices(request_iterator)
+
+        # Check that the Matrix list contains a maximum of two matrices
+        if len(matrix_list) != 2:
+            raise RuntimeError(
+                "Unexpected number of matrices to be multiplied: "
+                + len(matrix_list)
+                + ". Only 2 is valid."
+            )
+
+        # Furthermore, since due to the previous _get_matrices method, the size of all
+        # matrices is the same... check that it is a square matrix! Otherwise, no multiplication
+        # is possible
+        if size[0] != size[1]:
+            raise RuntimeError("Only square matrices are allowed for multiplication.")
+
+        # Perform the matrix multiplication of the provided matrices using the Eigen library
+        # Casting is needed due to interface with Eigen library... Not the desired approach,
+        # but works. Ideally, we would want to pass vector directly, but errors appear
+        mat_1 = np.array(matrix_list[0], dtype=dtype)
+        mat_2 = np.array(matrix_list[1], dtype=dtype)
+        result = demo_eigen_wrapper.multiply_matrices(mat_1, mat_2)
+
+        # Finally, return the Matrix message
+        return grpcdemo_pb2.Matrix(
+            data_type=constants.NP_DTYPE_TO_DATATYPE[dtype],
+            matrix_rows=size[0],
+            matrix_cols=size[1],
+            matrix_as_chunk=result.tobytes(),
+        )
 
     def _get_vectors(self, request_iterator):
         """Private method to process a stream of Vector messages.
@@ -260,6 +335,51 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 
         # Return the input vector list (as a list of numpy.ndarray)
         return dtype, size, vector_list
+
+    def _get_matrices(self, request_iterator):
+        """Private method to process a stream of Matrix messages.
+
+        Parameters
+        ----------
+        request_iterator : iterator
+            An iterator to the received request messages of type Matrix.
+
+        Returns
+        -------
+        np.type, tuple, list of np.array
+            The type of data, the shape of the matrices and the list of matrices to be processed.
+        """
+        # Initialize the auxiliary variables and output matrix list
+        dtype = None
+        size = None
+        matrix_list = []
+
+        # Iterate over all incoming matrices
+        for matrix in request_iterator:
+            # Check the data type of the incoming matrix
+            if matrix.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
+                dtype = check_data_type(dtype, np.int32)
+            elif matrix.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
+                dtype = check_data_type(dtype, np.float64)
+
+            # Check the size of the incoming matrix
+            size = check_size(
+                size,
+                (
+                    matrix.matrix_rows,
+                    matrix.matrix_cols,
+                ),
+            )
+
+            # Deserialize the numpy array (and reshape!... otherwise, 1D array)
+            nparray = np.frombuffer(matrix.matrix_as_chunk, dtype=dtype)
+            nparray.reshape(size)
+
+            # Add the array to the list
+            matrix_list.append(nparray)
+
+        # Return the input matrix list (as a list of numpy.ndarray)
+        return dtype, size, matrix_list
 
 
 def serve():
