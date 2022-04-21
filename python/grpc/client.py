@@ -31,7 +31,7 @@ class DemoGRPCClient:
         ------
         IOError
             In case our client was unable to connect to the server.
-        """        
+        """
         # For test purposes, provide a stub directly
         if test is not None:
             self._stub = test
