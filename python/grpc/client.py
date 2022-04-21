@@ -40,6 +40,7 @@ class DemoGRPCClient:
     # =================================================================================================
 
     def request_greeting(self, name):
+        """Method which requests a greeting from the server."""
         # Build the greeting request
         request = grpcdemo_pb2.HelloRequest(name=name)
 
@@ -50,6 +51,7 @@ class DemoGRPCClient:
         print("The server answered: " + response.message)
 
     def flip_vector(self, vector):
+        """Method to flip a numpy.ndarray vector psoitions, such that [A, B, C, D] --> [D, C, B, A]."""
         # Build the stream (i.e. generator)
         vector_gen = self._generate_vector_stream(vector)
 
