@@ -14,7 +14,24 @@ class DemoGRPCClient:
     """The API Eigen Example client class for interacting via gRPC."""
 
     def __init__(self, ip="127.0.0.1", port=50051, timeout=1, test=None):
-        """Initialize connection to the API Eigen server"""
+        """Initialize connection to the API Eigen server.
+
+        Parameters
+        ----------
+        ip : str, optional
+            The IP or DNS to which we want to connect, by default "127.0.0.1".
+        port : int, optional
+            The port which we want to connect to, by default 50051.
+        timeout : int, optional
+            The number of seconds we will wait before returning a timeout in the connection, by default 1.
+        test : object, optional
+            The test GRPCDemoStub we will connect to in case provided, by default None. This argument is only intended for test puposes.
+
+        Raises
+        ------
+        IOError
+            In case our client was unable to connect to the server.
+        """        
         # For test purposes, provide a stub directly
         if test is not None:
             self._stub = test
@@ -42,7 +59,13 @@ class DemoGRPCClient:
     # =================================================================================================
 
     def request_greeting(self, name):
-        """Method which requests a greeting from the server."""
+        """Method which requests a greeting from the server.
+
+        Parameters
+        ----------
+        name : str
+            The name of the "client" (e.g. "Michael").
+        """
         # Build the greeting request
         request = grpcdemo_pb2.HelloRequest(name=name)
 
@@ -53,7 +76,18 @@ class DemoGRPCClient:
         print("The server answered: " + response.message)
 
     def flip_vector(self, vector):
-        """Method to flip a numpy.ndarray vector psoitions, such that [A, B, C, D] --> [D, C, B, A]."""
+        """Method to flip a numpy.ndarray vector psoitions, such that [A, B, C, D] --> [D, C, B, A].
+
+        Parameters
+        ----------
+        vector : numpy.ndarray
+            The vector we want to flip.
+
+        Returns
+        -------
+        numpy.ndarray
+            The flipped vector.
+        """
         # Build the stream (i.e. generator)
         vector_gen = self._generate_vector_stream(vector)
 
@@ -69,7 +103,13 @@ class DemoGRPCClient:
         return nparray
 
     def add_vectors(self, *args):
-        """Method to add numpy.ndarray vectors using the Eigen library on the server side."""
+        """Method to add numpy.ndarray vectors using the Eigen library on the server side.
+
+        Returns
+        -------
+        numpy.ndarray
+            The result of the addition of the given numpy.ndarrays.
+        """
         # Build the stream (i.e. generator)
         vector_iterator = self._generate_vector_stream(*args)
 
@@ -82,7 +122,13 @@ class DemoGRPCClient:
         return nparray
 
     def multiply_vectors(self, *args):
-        """Method to perform dot product of numpy.ndarray vectors using the Eigen library on the server side."""
+        """Method to perform dot product of numpy.ndarray vectors using the Eigen library on the server side.
+
+        Returns
+        -------
+        numpy.ndarray
+            The result of the dot product. Despite returning a numpy.ndarray, it will only contain one value since it is a dot product.
+        """
         # Build the stream (i.e. generator)
         vector_iterator = self._generate_vector_stream(*args)
 
@@ -95,7 +141,13 @@ class DemoGRPCClient:
         return nparray
 
     def add_matrices(self, *args):
-        """Method to add numpy.ndarray matrices using the Eigen library on the server side."""
+        """Method to add numpy.ndarray matrices using the Eigen library on the server side.
+
+        Returns
+        -------
+        numpy.ndarray
+            The resulting numpy.ndarray of the matrices addition.
+        """
         # Build the stream (i.e. generator)
         matrix_iterator = self._generate_matrix_stream(*args)
 
@@ -108,7 +160,13 @@ class DemoGRPCClient:
         return nparray
 
     def multiply_matrices(self, *args):
-        """Method to perform the product of numpy.ndarray matrices using the Eigen library on the server side."""
+        """Method to perform the product of numpy.ndarray matrices using the Eigen library on the server side.
+
+        Returns
+        -------
+        numpy.ndarray
+            The resulting numpy.ndarray of the matrices multiplication.
+        """
         # Build the stream (i.e. generator)
         matrix_iterator = self._generate_matrix_stream(*args)
 
