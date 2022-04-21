@@ -1,25 +1,17 @@
 .. _ref_rest:
 
-Python REST submodule
+Python REST subpackage
 =====================
+
+This is the REST subpackage which contains the needed elements for client-server interaction using REST.
+
 .. currentmodule:: python.rest
 
-.. autosummary::
+.. toctree::
+   :maxdepth: 4
+   :hidden:
+
    server
    client
    restdb
    
-.. automodule:: python.rest.server
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: python.rest.client
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: python.rest.restdb
-   :members:
-   :undoc-members:
-   :show-inheritance:

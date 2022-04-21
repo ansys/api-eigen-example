@@ -1,3 +1,5 @@
+"""The Python implementation of the REST API Eigen example database."""
+
 import sqlite3
 
 import click

@@ -1,3 +1,5 @@
+"""The Python implementation of the REST API Eigen example client."""
+
 import json
 
 import numpy as np

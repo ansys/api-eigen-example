@@ -1,3 +1,5 @@
+"""The Python implementation of the gRPC API Eigen example client."""
+
 import time
 
 import grpc
