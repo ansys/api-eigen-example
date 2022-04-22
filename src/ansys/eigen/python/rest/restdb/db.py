@@ -2,7 +2,6 @@
 
 import os
 import sqlite3
-from venv import create
 
 import click
 from flask import current_app, g
