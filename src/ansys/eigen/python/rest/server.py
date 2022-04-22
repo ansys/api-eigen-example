@@ -8,7 +8,7 @@ import demo_eigen_wrapper
 from flask import Flask, jsonify, request
 import numpy as np
 
-from ansys.rest.restdb.db import get_db, init_app_db
+from ansys.eigen.python.rest.restdb.db import get_db, init_app_db
 
 #
 #

@@ -2,9 +2,9 @@
 
 Python REST server module
 =========================
-.. currentmodule:: ansys.rest.server
+.. currentmodule:: ansys.eigen.python.rest.server
 
-.. automodule:: ansys.rest.server
+.. automodule:: ansys.eigen.python.rest.server
    :members:
    :undoc-members:
    :show-inheritance:

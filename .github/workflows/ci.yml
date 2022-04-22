@@ -82,7 +82,7 @@ jobs:
 
       - name: Test import
         run: |
-          python -c "from ansys.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
+          python -c "from ansys.eigen.python.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
 
   build_test:
     name: Build and Unit Testing

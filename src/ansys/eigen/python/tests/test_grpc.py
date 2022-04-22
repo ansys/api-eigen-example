@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from ansys.grpc.client import DemoGRPCClient
+from ansys.eigen.python.grpc.client import DemoGRPCClient
 
 # ================================================================================
 # Point your stubs and service to test the client-server interaction
@@ -12,21 +12,21 @@ from ansys.grpc.client import DemoGRPCClient
 
 @pytest.fixture(scope="module")
 def grpc_add_to_server():
-    from ansys.grpc.generated.grpcdemo_pb2_grpc import add_GRPCDemoServicer_to_server
+    from ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc import add_GRPCDemoServicer_to_server
 
     return add_GRPCDemoServicer_to_server
 
 
 @pytest.fixture(scope="module")
 def grpc_servicer():
-    from ansys.grpc.server import GRPCDemoServicer
+    from ansys.eigen.python.grpc.server import GRPCDemoServicer
 
     return GRPCDemoServicer()
 
 
 @pytest.fixture(scope="module")
 def grpc_stub(grpc_channel):
-    from ansys.grpc.generated.grpcdemo_pb2_grpc import GRPCDemoStub
+    from ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc import GRPCDemoStub
 
     return GRPCDemoStub(grpc_channel)
 

@@ -49,8 +49,8 @@ packages by importing them as follows
 
 .. code:: python
 
-    >>> import ansys.rest.server as rest_server
-    >>> import ansys.rest.client as rest_client
+    >>> import ansys.eigen.python.rest.server as rest_server
+    >>> import ansys.eigen.python.rest.client as rest_client
     >>> client = rest_client.DemoRESTClient("127.0.0.1", 5000)
     >>> client.get_connection_details()
 
