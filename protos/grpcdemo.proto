@@ -1,0 +1,68 @@
+syntax = "proto3";
+package grpcdemo;
+
+
+// ================================================================================
+// DEMO MESSAGES for API Eigen Example
+// ================================================================================
+
+// We define the data-types involved in the data transfer. Bear in mind that the amount
+// of space in memory that an Integer and a Double occupy is different. Thus it is
+// important to know how to breakdown our chunk of bytes.
+enum DataType{
+    INTEGER = 0;
+    DOUBLE = 1;
+  }
+
+// Interface definition for our Vector
+message Vector {
+    DataType data_type = 1;
+    int32 vector_size = 2;
+    bytes vector_as_chunk = 3;
+  }
+
+// Interface definition for our Matrix
+message Matrix {
+    DataType data_type = 1;
+    int32 matrix_rows = 2;
+    int32 matrix_cols = 3;
+    bytes matrix_as_chunk = 4;
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+    string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+    string message = 1;
+}
+
+
+// ================================================================================
+// DEMO SERVICE for API Eigen Example
+// ================================================================================
+
+// Interface exported by the server. Different to REST... we do not require to post
+// (i.e. store) in the end server the Objects of the interface (e.g. Vector, Matrix)
+service GRPCDemo {
+
+    // Sends a greeting
+    rpc SayHello (HelloRequest) returns (HelloReply) {}
+
+    // Flips a vector [A, B, C, D] --> [D, C, B, A]
+    rpc FlipVector(Vector) returns (Vector) {}
+
+    // Adds two vectors
+    rpc AddVectors(stream Vector) returns (Vector) {}
+
+    // Vector dot product
+    rpc MultiplyVectors(stream Vector) returns (Vector) {}
+
+    // Adds two matrices
+    rpc AddMatrices(stream Matrix) returns (Matrix) {}
+
+    // Multiplies two matrices
+    rpc MultiplyMatrices(stream Matrix) returns (Matrix) {}
+}

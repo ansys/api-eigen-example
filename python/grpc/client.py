@@ -1,150 +1,254 @@
+"""The Python implementation of the gRPC API Eigen example client."""
+
 import time
 
-from chunkdemo_pb2 import PopulateArrayRequest, StreamRequest
-from chunkdemo_pb2_grpc import ChunkDemoStub
 import grpc
 import numpy as np
 
-# chunk sizes for streaming and file streaming
-DEFAULT_CHUNKSIZE = 256 * 1024  # 256 kB
-
-# data mapping
-C_TO_NP = {"INT32": np.int32}
+import python.grpc.constants as constants
+import python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
+import python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
 
-class ChunkDemoClient:
-    """ """
+class DemoGRPCClient:
+    """The API Eigen Example client class for interacting via gRPC."""
 
-    def __init__(self, ip="127.0.0.1", port=50000, timeout=1):
-        """Initialize connection to the mapdl server"""
+    def __init__(self, ip="127.0.0.1", port=50051, timeout=1, test=None):
+        """Initialize connection to the API Eigen server.
+
+        Parameters
+        ----------
+        ip : str, optional
+            The IP or DNS to which we want to connect, by default "127.0.0.1".
+        port : int, optional
+            The port which we want to connect to, by default 50051.
+        timeout : int, optional
+            The number of seconds we will wait before returning a timeout in the connection, by default 1.
+        test : object, optional
+            The test GRPCDemoStub we will connect to in case provided, by default None. This argument is only intended for test puposes.
+
+        Raises
+        ------
+        IOError
+            In case our client was unable to connect to the server.
+        """
+        # For test purposes, provide a stub directly
+        if test is not None:
+            self._stub = test
+            return
+
         self._stub = None
-
         self._channel_str = "%s:%d" % (ip, port)
 
-        # by default is limited to 4194304 bytes
-        options = [("grpc.max_receive_message_length", 100 * 1024 * 1024)]
-        self.channel = grpc.insecure_channel(self._channel_str, options=options)
+        self.channel = grpc.insecure_channel(self._channel_str)
         self._state = grpc.channel_ready_future(self.channel)
-        self._stub = ChunkDemoStub(self.channel)
+        self._stub = grpcdemo_pb2_grpc.GRPCDemoStub(self.channel)
 
-        # verify connection
+        # Verify connection
         tstart = time.time()
         while ((time.time() - tstart) < timeout) and not self._state._matured:
             time.sleep(0.01)
 
         if not self._state._matured:
             raise IOError("Unable to connect to server at %s" % self._channel_str)
+        else:
+            print("Connected to server at %s:%d" % (ip, port))
 
-    def request_array(self, chunk_size=DEFAULT_CHUNKSIZE):
-        """Request an array from the server"""
-        request = StreamRequest()
-        metadata = [("chunk_size", str(chunk_size))]
-        chunks = self._stub.DownloadArray(request, metadata=metadata)
-        return self._parse_chunks(chunks, np.int32)
+    # =================================================================================================
+    # PUBLIC METHODS for Client operations
+    # =================================================================================================
 
-    def request_array_from_repeated(self):
-        request = StreamRequest()
-        response = self._stub.DownloadArraySlow(request)
-        # return np.array(response.ints)  # slow
-        return np.fromiter(response.ints, dtype=np.int32)
-
-    def populate_array(self, array_size):
-        request = PopulateArrayRequest(array_size=array_size)
-        return self._stub.PopulateArray(request)
-
-    def _parse_chunks(self, chunks, dtype=None):
-        """Deserialize chunks into a numpy array
+    def request_greeting(self, name):
+        """Method which requests a greeting from the server.
 
         Parameters
         ----------
-        chunks : generator
-            generator from grpc.  Each chunk contains a bytes payload
+        name : str
+            The name of the "client" (e.g. "Michael").
+        """
+        # Build the greeting request
+        request = grpcdemo_pb2.HelloRequest(name=name)
 
-        dtype : np.dtype
-            Numpy data type to interpert chunks as.
+        # Send the request
+        response = self._stub.SayHello(request)
+
+        # Show the server's response
+        print("The server answered: " + response.message)
+
+    def flip_vector(self, vector):
+        """Method to flip a numpy.ndarray vector psoitions, such that [A, B, C, D] --> [D, C, B, A].
+
+        Parameters
+        ----------
+        vector : numpy.ndarray
+            The vector we want to flip.
 
         Returns
         -------
-        array : np.ndarray
-            Deserialized numpy array.
-
+        numpy.ndarray
+            The flipped vector.
         """
-        if not chunks.is_active():
-            raise RuntimeError("Empty Record")
+        # Build the stream (i.e. generator)
+        vector_gen = self._generate_vector_stream(vector)
 
-        # map chunk datatype to np.dtype
-        metadata = dict(chunks.initial_metadata())
-        dtype = C_TO_NP[metadata["datatype"]]
-        size = int(metadata["size"])
-        arr = np.empty(size, dtype=dtype)
-        itemsize = np.dtype(np.int32).itemsize
+        # Retrieve only the first element - vector is a single numpy.ndarray (or should be!)
+        request = next(vector_gen)
 
-        i = 0
-        for chunk in chunks:
-            arr[i : i + len(chunk.payload) // itemsize] = np.frombuffer(
-                chunk.payload, dtype
+        # Call the server method and retrieve the result
+        vec_flip = self._stub.FlipVector(request)
+
+        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        nparray = self._read_nparray_from_vector(vec_flip)
+
+        return nparray
+
+    def add_vectors(self, *args):
+        """Method to add numpy.ndarray vectors using the Eigen library on the server side.
+
+        Returns
+        -------
+        numpy.ndarray
+            The result of the addition of the given numpy.ndarrays.
+        """
+        # Build the stream (i.e. generator)
+        vector_iterator = self._generate_vector_stream(*args)
+
+        # Call the server method and retrieve the result
+        vector_addition = self._stub.AddVectors(vector_iterator)
+
+        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        nparray = self._read_nparray_from_vector(vector_addition)
+
+        return nparray
+
+    def multiply_vectors(self, *args):
+        """Method to perform dot product of numpy.ndarray vectors using the Eigen library on the server side.
+
+        Returns
+        -------
+        numpy.ndarray
+            The result of the dot product. Despite returning a numpy.ndarray, it will only contain one value since it is a dot product.
+        """
+        # Build the stream (i.e. generator)
+        vector_iterator = self._generate_vector_stream(*args)
+
+        # Call the server method and retrieve the result
+        vector_mult = self._stub.MultiplyVectors(vector_iterator)
+
+        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        nparray = self._read_nparray_from_vector(vector_mult)
+
+        return nparray
+
+    def add_matrices(self, *args):
+        """Method to add numpy.ndarray matrices using the Eigen library on the server side.
+
+        Returns
+        -------
+        numpy.ndarray
+            The resulting numpy.ndarray of the matrices addition.
+        """
+        # Build the stream (i.e. generator)
+        matrix_iterator = self._generate_matrix_stream(*args)
+
+        # Call the server method and retrieve the result
+        matrix_addition = self._stub.AddMatrices(matrix_iterator)
+
+        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        nparray = self._read_nparray_from_matrix(matrix_addition)
+
+        return nparray
+
+    def multiply_matrices(self, *args):
+        """Method to perform the product of numpy.ndarray matrices using the Eigen library on the server side.
+
+        Returns
+        -------
+        numpy.ndarray
+            The resulting numpy.ndarray of the matrices multiplication.
+        """
+        # Build the stream (i.e. generator)
+        matrix_iterator = self._generate_matrix_stream(*args)
+
+        # Call the server method and retrieve the result
+        matrix_mult = self._stub.MultiplyMatrices(matrix_iterator)
+
+        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        nparray = self._read_nparray_from_matrix(matrix_mult)
+
+        return nparray
+
+    # =================================================================================================
+    # PRIVATE METHODS for Client operations
+    # =================================================================================================
+
+    def _generate_vector_stream(self, *args):
+        # Loop over all input arguments
+        for arg in args:
+            # Perform some argument input sanity checks
+            if type(arg) is not np.ndarray:
+                raise RuntimeError("Invalid argument. Only numpy.ndarrays allowed.")
+            elif arg.dtype.type not in constants.NP_DTYPE_TO_DATATYPE.keys():
+                raise RuntimeError(
+                    "Invalid argument. Only numpy.ndarrays of type int32 and float64 allowed."
+                )
+            elif arg.ndim != 1:
+                raise RuntimeError("Invalid argument. Only 1D numpy.ndarrays allowed.")
+
+            # If sanity checks went fine... yield the corresponding Vector message
+            yield grpcdemo_pb2.Vector(
+                data_type=constants.NP_DTYPE_TO_DATATYPE[arg.dtype.type],
+                vector_size=arg.shape[0],
+                vector_as_chunk=arg.tobytes(),
             )
-            i += len(chunk.payload) // itemsize
 
-        return arr
+    def _read_nparray_from_vector(self, vector):
+        # Convert Vector message to a numpy.ndarray to continue nominal operations (outside the client)
+        dtype = None
+        if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
+            dtype = np.int32
+        elif vector.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
+            dtype = np.float64
 
+        return np.frombuffer(vector.vector_as_chunk, dtype=dtype)
 
-if __name__ == "__main__":
-    import timeit
+    def _generate_matrix_stream(self, *args):
+        # Loop over all input arguments
+        for arg in args:
+            # Perform some argument input sanity checks
+            if type(arg) is not np.ndarray:
+                raise RuntimeError("Invalid argument. Only numpy.ndarrays allowed.")
+            elif arg.dtype.type not in constants.NP_DTYPE_TO_DATATYPE.keys():
+                raise RuntimeError(
+                    "Invalid argument. Only numpy.ndarrays of type int32 and float64 allowed."
+                )
+            elif arg.ndim != 2:
+                raise RuntimeError("Invalid argument. Only 2D numpy.ndarrays allowed.")
 
-    # connect to server
-    ip = "127.0.0.1"
-    port = 50000
-    client = ChunkDemoClient(ip, port)
-    print("Connected to server at %s:%d" % (ip, port))
+            # If sanity checks went fine... yield the corresponding Matrix message
+            yield grpcdemo_pb2.Matrix(
+                data_type=constants.NP_DTYPE_TO_DATATYPE[arg.dtype.type],
+                matrix_rows=arg.shape[0],
+                matrix_cols=arg.shape[1],
+                matrix_as_chunk=arg.tobytes(),
+            )
 
-    # Thanks SO
-    # https://stackoverflow.com/a/1094933/3369879
-    def sizeof_fmt(num, suffix="B"):
-        for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
-            if abs(num) < 1024.0:
-                return "%3.1f%s%s" % (num, unit, suffix)
-            num /= 1024.0
-        return "%.1f%s%s" % (num, "Yi", suffix)
+    def _read_nparray_from_matrix(self, matrix):
+        # Convert Matrix message to a numpy.ndarray to continue nominal operations (outside the client)
+        dtype = None
+        if matrix.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
+            dtype = np.int32
+        elif matrix.data_type == grpcdemo_pb2.DataType.Value("DOUBLE"):
+            dtype = np.float64
 
-    # Start by initializing the array on the server
-    array_size = 20000000
-    client.populate_array(array_size)
-    print("Created an INT32 array on the server size", array_size)
+        # Load into a 1D numpy array....
+        nparray = np.frombuffer(matrix.matrix_as_chunk, dtype=dtype)
 
-    ###########################################################################
-    ### Download using chunks
-    ###########################################################################
-    print("Testing with byte stream...")
-    n = 20
-    out = timeit.timeit(
-        "client.request_array()",
-        setup="from __main__ import " + ", ".join(locals()),
-        number=n,
-    )
-    tavg = out / n
-    print("Average time:", tavg)
-    arr_nbytes = client.request_array().nbytes
-    bps = arr_nbytes / tavg
-
-    print("Aprox speed:", sizeof_fmt(bps, suffix="B"))
-    print()
-
-    ###########################################################################
-    ### Download using repeated messages
-    ###########################################################################
-    print("Testing with repeated messages...")
-    client.populate_array(array_size)
-    n = 3
-    out = timeit.timeit(
-        "client.request_array_from_repeated()",
-        setup="from __main__ import " + ", ".join(locals()),
-        number=n,
-    )
-    tavg = out / n
-    print("Average time:", tavg)
-    arr_nbytes = client.request_array_from_repeated().nbytes
-    bps = arr_nbytes / tavg
-
-    print("Aprox speed:", sizeof_fmt(bps, suffix="B"))
-    print()
+        # ... and reshape it according to the Matrix message vefore returning it
+        return np.reshape(
+            nparray,
+            (
+                matrix.matrix_rows,
+                matrix.matrix_cols,
+            ),
+        )

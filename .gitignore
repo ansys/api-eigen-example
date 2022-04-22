@@ -19,6 +19,9 @@ doc/build_errors.txt
 doc/source/examples
 doc/source/**/_autosummary
 
+# eigen-wrapper
+python/eigen-wrapper/build
+python/eigen-wrapper/demo*
 
 # cmake
 cmake/
@@ -28,3 +31,4 @@ chunkdemo_pb2*
 
 # VSCode settings files
 .vscode
+.venv
