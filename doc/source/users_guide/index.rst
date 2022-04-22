@@ -16,8 +16,8 @@ the server and the client submodules for the API REST protocol.
 
 .. code:: python
 
-   import python.rest.server as rest_server
-   import python.rest.client as rest_client
+   import ansys.eigen.python.rest.server as rest_server
+   import ansys.eigen.python.rest.client as rest_client
 
 
 The Python servers (for both API REST and gRPC) are characterized for being Flask applications, which

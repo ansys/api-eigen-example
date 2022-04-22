@@ -2,9 +2,9 @@
 
 Python REST client module
 =========================
-.. currentmodule:: python.rest.client
+.. currentmodule:: ansys.eigen.python.rest.client
 
-.. automodule:: python.rest.client
+.. automodule:: ansys.eigen.python.rest.client
    :members:
    :undoc-members:
    :show-inheritance:

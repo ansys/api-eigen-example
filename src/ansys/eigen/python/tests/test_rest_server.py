@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pytest
 
-from python.rest.server import create_app
+from ansys.eigen.python.rest.server import create_app
 
 
 @pytest.fixture(scope="module")

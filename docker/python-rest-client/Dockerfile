@@ -12,7 +12,7 @@ RUN pip install -r requirements/requirements_build.txt
 RUN pip install ipykernel jupyterlab notebook
 
 # Add the needed folders for acting as a client (and the demo!)
-ADD python /client/python
+ADD src/ansys/eigen/python /client/ansys/eigen/python
 ADD docker/python-rest-client/demo.ipynb /client/demo.ipynb
 
 # Expose our port for accessing the Jupyter Notebook

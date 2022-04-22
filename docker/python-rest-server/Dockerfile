@@ -1,20 +1,26 @@
 # First select the image on top of which we want to create our server
 FROM ubuntu:22.04
 
+# Next in line, we will install the heavy reqs... Hopefully this does not change much
+# This stage takes a lot of time
+RUN apt-get update -y && apt-get install cmake libeigen3-dev pip curl sqlite3 -y
+
 # Now, let us create our work directory where we will import our server requirements, files etc.
 WORKDIR /server
 ADD requirements /server/requirements
-ADD python /server/python
-RUN mkdir /server/instance
+ADD src/ansys/eigen/cpp/eigen-wrapper /server/ansys/eigen/cpp/eigen-wrapper
+ADD src/ansys/eigen/python /server/ansys/eigen/python
+ADD pyproject.toml /server/pyproject.toml
+ADD README.md /server/README.md
 
 # Next in line, we will install our requirements
-RUN apt-get update -y && apt-get install cmake libeigen3-dev pip curl sqlite3 -y
 RUN pip install -r requirements/requirements_eigen_wrapper.txt
-RUN pip install python/eigen-wrapper
+RUN pip install ansys/eigen/cpp/eigen-wrapper
 RUN pip install -r requirements/requirements_build.txt
+RUN pip install .
 
 # Define the necessary env variables and exposed port for accesssing the server
-ENV FLASK_APP=python/rest/server.py
+ENV FLASK_APP=ansys/eigen/python/rest/server.py
 ENV FLASK_RUN_HOST=0.0.0.0
 EXPOSE 5000
 

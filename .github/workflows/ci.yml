@@ -74,7 +74,7 @@ jobs:
 
       - name: Install demo-eigen-wrapper
         run: |
-          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+          pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
 
       - name: Install api-eigen-example
         run: |
@@ -82,7 +82,7 @@ jobs:
 
       - name: Test import
         run: |
-          python -c "from python.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
+          python -c "from ansys.eigen.python.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
 
   build_test:
     name: Build and Unit Testing
@@ -111,7 +111,7 @@ jobs:
       
       - name: Install packages
         run: |
-          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+          pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
           pip install -r requirements/requirements_build.txt .
 
       - name: Unit Testing
@@ -150,7 +150,7 @@ jobs:
       - name: Install project requirements
         run: |
           sudo apt install libeigen3-dev
-          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+          pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
           pip install -r requirements/requirements_build.txt .
           pip install -r requirements/requirements_docs.txt
 

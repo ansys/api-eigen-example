@@ -12,6 +12,7 @@ chunkdemo.pb.*
 *.pytest*
 .coverage
 coverage.xml
+*instance*
 
 # doc
 doc/_build

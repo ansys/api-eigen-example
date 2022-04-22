@@ -5,9 +5,9 @@ import time
 import grpc
 import numpy as np
 
-import python.grpc.constants as constants
-import python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
-import python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
+import ansys.eigen.python.grpc.constants as constants
+import ansys.eigen.python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
+import ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
 
 class DemoGRPCClient:

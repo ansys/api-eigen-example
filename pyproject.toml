@@ -15,4 +15,4 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 Home = "https://github.com/ansys/api-eigen-example"
 
 [tool.flit.module]
-name = "python"
+name = "ansys.eigen.python"

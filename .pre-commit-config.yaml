@@ -24,7 +24,7 @@ repos:
   hooks:
   - id: flake8
     args: [
-      --exclude, python/grpc/generated/*
+      --exclude, src/ansys/eigen/python/grpc/generated/*
     ]
 
 - repo: https://github.com/codespell-project/codespell

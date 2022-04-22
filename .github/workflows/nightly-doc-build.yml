@@ -12,10 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
       - name: Install project requirements
         run: |
           sudo apt install libeigen3-dev
-          pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+          pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
           pip install -r requirements/requirements_build.txt .
           pip install -r requirements/requirements_docs.txt
 

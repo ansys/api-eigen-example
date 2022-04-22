@@ -2,9 +2,9 @@
 
 Python gRPC client module
 =========================
-.. currentmodule:: python.grpc.client
+.. currentmodule:: ansys.eigen.python.grpc.client
 
-.. automodule:: python.grpc.client
+.. automodule:: ansys.eigen.python.grpc.client
    :members:
    :undoc-members:
    :show-inheritance:
