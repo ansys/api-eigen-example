@@ -1,7 +1,7 @@
 """The Python implementation of the REST API Eigen example database."""
 
-import sqlite3
 import os
+import sqlite3
 from venv import create
 
 import click
@@ -38,7 +38,7 @@ def get_db():
     if "db" not in g:
         # Check if folder exists... otherwise, create it
         os.makedirs(os.path.dirname(current_app.config["DATABASE"]), exist_ok=True)
-    
+
         g.db = sqlite3.connect(
             current_app.config["DATABASE"], detect_types=sqlite3.PARSE_DECLTYPES
         )

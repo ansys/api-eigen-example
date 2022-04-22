@@ -12,7 +12,9 @@ from ansys.eigen.python.grpc.client import DemoGRPCClient
 
 @pytest.fixture(scope="module")
 def grpc_add_to_server():
-    from ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc import add_GRPCDemoServicer_to_server
+    from ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc import (
+        add_GRPCDemoServicer_to_server,
+    )
 
     return add_GRPCDemoServicer_to_server
 
