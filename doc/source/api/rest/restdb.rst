@@ -2,9 +2,9 @@
 
 Python REST database module
 ===========================
-.. currentmodule:: python.rest.restdb
+.. currentmodule:: ansys.rest.restdb
 
-.. automodule:: python.rest.restdb.db
+.. automodule:: ansys.rest.restdb.db
    :members:
    :undoc-members:
    :show-inheritance:

@@ -7,9 +7,9 @@ import demo_eigen_wrapper
 import grpc
 import numpy as np
 
-import python.grpc.constants as constants
-import python.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
-import python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
+import ansys.grpc.constants as constants
+import ansys.grpc.generated.grpcdemo_pb2 as grpcdemo_pb2
+import ansys.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
 # =================================================================================================
 # AUXILIARY METHODS for Server operations

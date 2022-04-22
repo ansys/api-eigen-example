@@ -2,9 +2,9 @@
 
 Python gRPC server module
 =========================
-.. currentmodule:: python.grpc.server
+.. currentmodule:: ansys.grpc.server
 
-.. automodule:: python.grpc.server
+.. automodule:: ansys.grpc.server
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from python.rest.client import DemoRESTClient
-from python.rest.server import create_app
+from ansys.rest.client import DemoRESTClient
+from ansys.rest.server import create_app
 
 
 @pytest.fixture(scope="module")

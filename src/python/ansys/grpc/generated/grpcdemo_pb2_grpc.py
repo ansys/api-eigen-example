@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import python.grpc.generated.grpcdemo_pb2 as grpcdemo__pb2
+import ansys.grpc.generated.grpcdemo_pb2 as grpcdemo__pb2
 
 
 class GRPCDemoStub(object):

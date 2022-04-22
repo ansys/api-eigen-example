@@ -2,7 +2,7 @@
 
 ## API REST using Python
 For this case scenario, there are 2 Docker containers, which have to be built the following way:
-* **python-rest-client**: Docker container with the needed packages for running the implemented client (i.e. ```from python.rest.client import DemoRESTClient```).
+* **python-rest-client**: Docker container with the needed packages for running the implemented client (i.e. ```from ansys.rest.client import DemoRESTClient```).
 * **python-rest-server**: Docker container with the needed packages for running the server with the Eigen library solver.
 
 In order to build them, run from the root directory of the repository the following command:
