@@ -54,7 +54,7 @@ packages by importing them as follows
     >>> client = rest_client.DemoRESTClient("127.0.0.1", 5000)
     >>> client.get_connection_details()
 
-For more examples, please refer to the :ref:`_user_guide`.
+For more examples, please refer to the :ref:`user_guide`.
 
 
 
