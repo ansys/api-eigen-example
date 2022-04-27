@@ -18,7 +18,7 @@ def testing_client():
             yield testing_client  # this is where the testing happens!
 
 
-def test_add_vectors_rest(benchmark,testing_client):
+def test_add_vectors_rest(benchmark, testing_client):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
