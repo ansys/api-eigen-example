@@ -24,14 +24,14 @@ Other Ansys Python packages are also available here or through www.pypi.org.
 
 .. code:: bash
 
-	git clone https://github.com/pyansys/pyfluent.git
+	git clone https://github.com/ansys/api-eigen-example.git
 
 In case we wanted to use the Python versions of the API Eigen Example project, it is necessary
 that we first install the demo-eigen-wrapper (a wrapper to the Eigen library using pybind11).
 
 .. code:: bash
 
-    pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+    pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
 
 And finally, you can install the project by doing as follows:
 
