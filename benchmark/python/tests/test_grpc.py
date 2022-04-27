@@ -38,8 +38,8 @@ def grpc_stub(grpc_channel):
 # ================================================================================
 
 
-def test_add_vectors(benchmark, grpc_stub):
-    """Unit test to verify that the client gets the expected response
+def test_add_vectors_grpc(benchmark, grpc_stub):
+    """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
 
     client = DemoGRPCClient(test=grpc_stub)
@@ -50,8 +50,8 @@ def test_add_vectors(benchmark, grpc_stub):
     benchmark(client.add_vectors, vec_1, vec_2)
 
 
-def test_multiply_vectors(benchmark, grpc_stub):
-    """Unit test to verify that the client gets the expected response
+def test_multiply_vectors_grpc(benchmark, grpc_stub):
+    """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
 
     client = DemoGRPCClient(test=grpc_stub)
@@ -62,8 +62,8 @@ def test_multiply_vectors(benchmark, grpc_stub):
     benchmark(client.multiply_vectors, vec_1, vec_2)
 
 
-def test_add_matrices(benchmark, grpc_stub):
-    """Unit test to verify that the client gets the expected response
+def test_add_matrices_grpc(benchmark, grpc_stub):
+    """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
 
     client = DemoGRPCClient(test=grpc_stub)
@@ -74,8 +74,8 @@ def test_add_matrices(benchmark, grpc_stub):
     benchmark(client.add_matrices, mat_1, mat_2)
 
 
-def test_multiply_matrices(benchmark, grpc_stub):
-    """Unit test to verify that the client gets the expected response
+def test_multiply_matrices_grpc(benchmark, grpc_stub):
+    """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
     client = DemoGRPCClient(test=grpc_stub)
 

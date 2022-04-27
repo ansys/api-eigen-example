@@ -14,8 +14,8 @@ git clone --depth 1 https://github.com/ansys/api-eigen-example.git
 
 # Install the eigen wrapper and requirements for api-eigen-example
 pip install -r api-eigen-example/requirements/requirements_eigen_wrapper.txt
-pip install api-eigen-example/src/cpp/eigen-wrapper
-pip install -r api-eigen-example/requirements/requirements_build.tx
+pip install api-eigen-example/src/ansys/eigen/cpp/eigen-wrapper
+pip install -r api-eigen-example/requirements/requirements_build.txt
 
 # Declare an array of string with type
 declare -a Versions=(

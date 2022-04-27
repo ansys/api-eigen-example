@@ -18,8 +18,8 @@ def testing_client():
             yield testing_client  # this is where the testing happens!
 
 
-def test_client_add_vectors(benchmark,testing_client):
-    """Unit test to verify that the client gets the expected response
+def test_add_vectors_rest(benchmark,testing_client):
+    """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
@@ -29,8 +29,8 @@ def test_client_add_vectors(benchmark,testing_client):
     benchmark(client.add, vec_1, vec_2)
 
 
-def test_client_multiply_vectors(benchmark, testing_client):
-    """Unit test to verify that the client gets the expected response
+def test_multiply_vectors_rest(benchmark, testing_client):
+    """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
@@ -40,8 +40,8 @@ def test_client_multiply_vectors(benchmark, testing_client):
     benchmark(client.multiply, vec_1, vec_2)
 
 
-def test_client_add_matrices(benchmark, testing_client):
-    """Unit test to verify that the client gets the expected response
+def test_add_matrices_rest(benchmark, testing_client):
+    """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
@@ -51,8 +51,8 @@ def test_client_add_matrices(benchmark, testing_client):
     benchmark(client.add, mat_1, mat_2)
 
 
-def test_client_multiply_matrices(benchmark, testing_client):
-    """Unit test to verify that the client gets the expected response
+def test_multiply_matrices_rest(benchmark, testing_client):
+    """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
 

@@ -7,4 +7,9 @@ Run with
 ./run_tests.sh
 ```
 
-Output will be saved to `hist/`
+Output will be saved to `hist/`. In case you want to store the new benchmark test results, please run:
+```
+./publish_results.sh
+```
+
+And commit to the repository.
