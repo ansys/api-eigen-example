@@ -98,7 +98,7 @@ our previously deployed server we would:
 
 .. code:: python
 
-   client = grpc_client.DemoGRPCClient(ip="127.0.0.1", port=50051)
+   cli = grpc_client.DemoGRPCClient(ip="127.0.0.1", port=50051)
 
 This way, we would have our client available to perform operations such as the following:
 
@@ -107,6 +107,6 @@ This way, we would have our client available to perform operations such as the f
    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
 
-   client.request_greeting("James")                       # >>> Server answering  "Hello, James!"
-   vec_add = client.add_vectors(vec_1, vec_2)             # >>> numpy.ndarray([ 6.0,  6.0,  5.0,  4.0])
-   vec_mul = client.multiply_vectors(vec_1, vec_2)        # >>> 19 (== dot product of vec_1 and vec_2)
+   cli.request_greeting("James")                  # >>> Server answering  "Hello, James!"
+   vec_add = cli.add_vectors(vec_1, vec_2)        # >>> numpy.ndarray([ 6.0,  6.0,  5.0,  4.0])
+   vec_mul = cli.multiply_vectors(vec_1, vec_2)   # >>> 19 (== dot product of vec_1 and vec_2)
