@@ -13,3 +13,7 @@ Output will be saved to `hist/`. In case you want to store the new benchmark tes
 ```
 
 And commit to the repository.
+
+## Results
+
+Please, refer to the following [file](https://github.com/ansys/api-eigen-example/edit/feat/bm-results/benchmark/python/results/README.md) for going through the latest benchmark results published.
