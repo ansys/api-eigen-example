@@ -47,11 +47,3 @@ jobs:
           load: true
           tags: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ matrix.image-names }}:latest
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ matrix.image-names }}:latest
-
-      - name: Push the image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          tags: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ matrix.image-names }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ matrix.image-names }}:latest
-          cache-to: type=inline
