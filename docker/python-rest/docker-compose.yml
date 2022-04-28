@@ -2,10 +2,10 @@ version: "3.1"
 
 services:
   server:
-    image: python-rest-server:latest
+    image: ghcr.io/ansys/api-eigen-example/python-rest-server:latest
 
   client:
-    image: python-rest-client:latest
+    image: ghcr.io/ansys/api-eigen-example/python-rest-client:latest
     # We need to export the client port so that we can access the Jupyter NB
     ports:
       - 8888:8888
