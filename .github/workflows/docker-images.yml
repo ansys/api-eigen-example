@@ -45,5 +45,6 @@ jobs:
           context: .
           file: docker/${{ matrix.image-names }}/Dockerfile
           load: true
+          push: true
           tags: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ matrix.image-names }}:latest
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ matrix.image-names }}:latest
