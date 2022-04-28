@@ -20,18 +20,18 @@ distributions it is as easy as running the following:
 
 To install a local version of the API Eigen Example project, you need to clone the repository through
 GitHub Enterprise (https://github.com/ansys/api-eigen-example).
-Other Ansys Python packages are also available here or through www.pypi.org. 
+Other Ansys Python packages are also available here or through https://www.pypi.org. 
 
 .. code:: bash
 
-	git clone https://github.com/pyansys/pyfluent.git
+	git clone https://github.com/ansys/api-eigen-example.git
 
 In case we wanted to use the Python versions of the API Eigen Example project, it is necessary
 that we first install the demo-eigen-wrapper (a wrapper to the Eigen library using pybind11).
 
 .. code:: bash
 
-    pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
+    pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
 
 And finally, you can install the project by doing as follows:
 
@@ -54,7 +54,7 @@ packages by importing them as follows
     >>> client = rest_client.DemoRESTClient("127.0.0.1", 5000)
     >>> client.get_connection_details()
 
-For more examples, please refer to the User's guide.
+For more examples, please refer to the :ref:`user_guide`.
 
 
 
