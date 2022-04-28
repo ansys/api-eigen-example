@@ -8,6 +8,8 @@ API Eigen Example Documentation |version|
    getting_started/index
    users_guide/index
    api/index
+   docker/index
+   examples/index
    contributing
 
 Introduction
