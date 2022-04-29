@@ -13,7 +13,7 @@ env:
   REPO_NAME: ${{ github.repository }}
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
