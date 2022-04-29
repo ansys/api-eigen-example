@@ -14,7 +14,7 @@ simple library we have created. This library basically contains two elements in 
     it, in our case the Eigen library. This API REST interface basically exposes certain functionalities such as
     adding, subtracting and multiplying ``Eigen::VectorXd`` and ``Eigen::MatrixXd`` in a simple way.
 - A client in charge of easing the interaction with the server by means of API REST interface specific methods.
-    By using the client library, one does not need to know the specifics of the API REST interface. 
+    By using the client library, one does not need to know the specifics of the API REST interface.
 
 In order to run this demo, it is necessary to deploy a server. When the docs are generated
 (via workflows), the server is deployed as a service to compile the example. However, if you
