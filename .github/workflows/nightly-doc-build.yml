@@ -9,6 +9,12 @@ jobs:
   nightly_docs_build:
     runs-on: ubuntu-latest
 
+    services:
+      rest-server-python:
+        image: ghcr.io/ansys/api-eigen-example/python-rest-server:latest
+        ports: 
+          - 5000:5000
+
     steps:
       - uses: actions/checkout@v2
 
