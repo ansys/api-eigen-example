@@ -37,7 +37,7 @@ from ansys.eigen.python.rest.client import DemoRESTClient
 # This ``DemoRESTClient`` class is basically the one which will handle the API REST interface with
 # the server, together with the connection itself, the formatting of the request and so on. When
 # constructing the class we must provide as inputs the ``host`` and the ``port`` of the server. For this
-# demo we are running, since we already deployed the server (either manually or as a service - i.e. container), 
+# demo we are running, since we already deployed the server (either manually or as a service - i.e. container),
 # we will provide us arguments:
 #
 # - Host: http://127.0.0.1
@@ -45,7 +45,7 @@ from ansys.eigen.python.rest.client import DemoRESTClient
 #
 # The server is exposed by **IP 127.0.0.1** and **port 5000** as per defined in the Dockerfile of the server
 # (or if deployed manually, as specified previously). Thus, the previous inputs should be provided.
-# 
+#
 # This ``DemoRESTClient`` class also allows for Basic Authentication in case the server were to be protected.
 # Please, see below how to provide the ``user`` and ``pwd`` in the following example:
 
@@ -72,7 +72,7 @@ vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
 # Performing REST interaction
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Now, we will call the client method ``add(...)``, and we will explain the typical process of all interface methods (``add(...)``, ``subtract(...)`` and ``multiply(...)``):
-# 
+#
 # - The client performs some sanity checks to confirm that the inputs provided are as expected. This Demo has some limitations such as: only 1D, 2D numpy.ndarrays are allowed; they must be of type float64. However, if we were to interact directly with the server, much more considerations would have to be taken into account(regarding the format of the requests - that is the reason why we use a client library).
 # - Once the client has checked that everything is fine to go, we POST our RESOURCES. Here is where the REST world starts:
 #     - Servers expose resources, also known as entities, which are well understood if we compare them to objects. For example, if we want to POST a RESOURCE we should basically:
@@ -95,7 +95,7 @@ vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
 #         - ``{"vector-addition" : {"result" : [2.0, 3.0, 5.0, 4.0] }}``
 #         - The dedicated client implemented will then parse this JSON string and transform the resulting value into a numpy.ndarray.
 #         - This way, the end user calls the client library with numpy.ndarrays and retrieves numpy.ndarrays, without having to know the specifics of the interface.
-# 
+#
 # Let us now call the method!
 #
 
