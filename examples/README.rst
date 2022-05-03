@@ -13,5 +13,5 @@ Add examples here for the API Eigen Examples project.
    :maxdepth: 1
    :hidden:
 
-.. 00-api-rest-python-example/README.txt
-.. 01-api-rest-cpp-example/README.txt
+.. 00-rest-examples/README.txt
+.. 01-grpc-examples/README.txt
