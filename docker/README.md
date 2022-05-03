@@ -43,7 +43,7 @@ Or you can just pull them from the GitHub Container Registry repository:
 ```
 docker pull ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
 docker pull ghcr.io/ansys/api-eigen-example/python-grpc-client:latest
-
+```
 In case you wanted to access the Docker-compose demo, please do as follows:
 ```
 cd docker/python-grpc
