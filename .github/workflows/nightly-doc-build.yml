@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      rest-server-python:
+      python-rest-server:
         image: ghcr.io/ansys/api-eigen-example/python-rest-server:latest
         ports: 
           - 5000:5000
-      grpc-server-python:
+      python-grpc-server:
         image: ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
         ports: 
           - 50051:50051
