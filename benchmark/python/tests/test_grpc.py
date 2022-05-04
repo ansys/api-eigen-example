@@ -1,4 +1,3 @@
-import numpy as np
 import pytest
 
 from ansys.eigen.python.grpc.client import DemoGRPCClient
