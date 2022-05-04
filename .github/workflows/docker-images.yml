@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image-names: ['python-rest-client', 'python-rest-server']
+        image-names: ['python-rest-client', 'python-rest-server', 'python-grpc-client', 'python-grpc-server']
 
     steps:
       - uses: actions/checkout@v2

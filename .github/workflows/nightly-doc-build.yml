@@ -14,6 +14,10 @@ jobs:
         image: ghcr.io/ansys/api-eigen-example/python-rest-server:latest
         ports: 
           - 5000:5000
+      grpc-server-python:
+        image: ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
+        ports: 
+          - 50051:50051
 
     steps:
       - uses: actions/checkout@v2

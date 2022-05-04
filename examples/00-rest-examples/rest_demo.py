@@ -38,7 +38,7 @@ from ansys.eigen.python.rest.client import DemoRESTClient
 # the server, together with the connection itself, the formatting of the request and so on. When
 # constructing the class we must provide as inputs the ``host`` and the ``port`` of the server. For this
 # demo we are running, since we already deployed the server (either manually or as a service - i.e. container),
-# we will provide us arguments:
+# we will provide the following arguments:
 #
 # - Host: http://127.0.0.1
 # - Port: 5000
