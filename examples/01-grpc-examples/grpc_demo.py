@@ -81,20 +81,16 @@ vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
 # - The client serializes the messages with the inputs provided using generator functions. Our end server is characterized for receiving ``streams`` of messages, which basically represent a list of messages. Each of these messages are serialized following the interface proposed by the proto files, thanks to the automatically generated source code by protobuf.
 #     - For example our ``Vector`` message is characterized for having the following structure:
 #
-#         `` enum DataType {
-#               INTEGER = 0;
-#               DOUBLE = 1;} ``
+#           ``enum DataType {INTEGER = 0;DOUBLE = 1;}``
 #
-#         `` message Vector {
-#               DataType data_type = 1;
-#               int32 vector_size = 2;
-#               bytes vector_as_chunk = 3;} ``
+#           ``message Vector {DataType data_type = 1; int32 vector_size = 2; bytes vector_as_chunk = 3;}``
 #
 # - When the server receives the messages, it deserializes them and interprets each of the previous fields. Thus, it is easily converted into a numpy.ndarray of the adequate type. Then, the desired vectors to be added are passed to the Eigen library via our ``demo_eigen_wrapper`` for the resolution of the demanded operation.
 #
 # - Once the results of the operation are available, the server serializes the result and responds with the adequate message to the client.
 #     - For example, according to the proto file, our server receives a stream of Vector messages, and returns a single Vector message (which contains the result of the requested operation):
-#         `` rpc AddVectors(stream Vector) returns (Vector) {} ``
+#
+#           ``rpc AddVectors(stream Vector) returns (Vector) {}``
 #
 # - The client then receives the response, deserializes the message and returns the corresponding result to the end-user as numpy.ndarray. Thus, the entire process is like a black-box for the end-user, and does not require to understand what is happening behind the scenes, since the end-user is only interested in the end-result.
 #
