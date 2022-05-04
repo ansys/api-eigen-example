@@ -89,7 +89,7 @@ vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
 #
 # - Once the results of the operation are available, the server serializes the result and responds with the adequate message to the client.
 #     - For example, according to the proto file, our server receives a stream of Vector messages, and returns a single Vector message (which contains the result of the requested operation):
-#         
+#
 #           ``rpc AddVectors(stream Vector) returns (Vector) {}``
 #
 # - The client then receives the response, deserializes the message and returns the corresponding result to the end-user as numpy.ndarray. Thus, the entire process is like a black-box for the end-user, and does not require to understand what is happening behind the scenes, since the end-user is only interested in the end-result.
