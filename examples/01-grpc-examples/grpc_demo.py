@@ -14,7 +14,7 @@ simple library we have created. This library basically contains two elements in 
     it, in our case the Eigen library. This API gRPC interface basically exposes certain functionalities such as
     adding, subtracting and multiplying ``Eigen::VectorXd`` and ``Eigen::MatrixXd`` in a simple way. By using Protobuf,
     we have created certain messages which both the server and the client know how to encode and decode.
-- A client in charge of easing the interaction with the server by means of API gRPX interface specific methods.
+- A client in charge of easing the interaction with the server by means of API gRPC interface specific methods.
 
 In order to run this demo, it is necessary to deploy a server. When the docs are generated
 (via workflows), the server is deployed as a service to compile the example. However, if you
