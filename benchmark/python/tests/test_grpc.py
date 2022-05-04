@@ -1,6 +1,11 @@
 import numpy as np
 import pytest
 
+
+from .test_tools import mat_generator, vec_generator, SIZES
+
+
+
 from ansys.eigen.python.grpc.client import DemoGRPCClient
 
 # ================================================================================
@@ -37,49 +42,49 @@ def grpc_stub(grpc_channel):
 # Unit tests for client-server interaction
 # ================================================================================
 
-
-def test_add_vectors_grpc(benchmark, grpc_stub):
+@pytest.mark.parametrize('sz', SIZES)
+def test_add_vectors_grpc(benchmark, grpc_stub, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
 
     client = DemoGRPCClient(test=grpc_stub)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
-    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+    vec_1 = vec_generator(sz)
+    vec_2 = vec_generator(sz)
 
     benchmark(client.add_vectors, vec_1, vec_2)
 
-
-def test_multiply_vectors_grpc(benchmark, grpc_stub):
+@pytest.mark.parametrize('sz', SIZES)
+def test_multiply_vectors_grpc(benchmark, grpc_stub, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
 
     client = DemoGRPCClient(test=grpc_stub)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
-    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+    vec_1 = vec_generator(sz)
+    vec_2 = vec_generator(sz)
 
     benchmark(client.multiply_vectors, vec_1, vec_2)
 
-
-def test_add_matrices_grpc(benchmark, grpc_stub):
+@pytest.mark.parametrize('sz', SIZES)
+def test_add_matrices_grpc(benchmark, grpc_stub, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
 
     client = DemoGRPCClient(test=grpc_stub)
 
-    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
-    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+    mat_1 = mat_generator(sz)
+    mat_2 = mat_generator(sz)
 
     benchmark(client.add_matrices, mat_1, mat_2)
 
-
-def test_multiply_matrices_grpc(benchmark, grpc_stub):
+@pytest.mark.parametrize('sz', SIZES)
+def test_multiply_matrices_grpc(benchmark, grpc_stub, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
     client = DemoGRPCClient(test=grpc_stub)
 
-    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
-    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+    mat_1 = mat_generator(sz)
+    mat_2 = mat_generator(sz)
 
     benchmark(client.multiply_matrices, mat_1, mat_2)
