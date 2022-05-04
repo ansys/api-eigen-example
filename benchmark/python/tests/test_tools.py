@@ -1,9 +1,8 @@
 """ Tools for BM tests """
 
-import numpy as np
+from random import random, seed
 
-from random import seed
-from random import random
+import numpy as np
 
 # MIN and MAX values for our random numbers
 MIN = 0.0

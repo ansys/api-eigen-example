@@ -3,7 +3,8 @@ import pytest
 from ansys.eigen.python.rest.client import DemoRESTClient
 from ansys.eigen.python.rest.server import create_app
 
-from .test_tools import mat_generator, vec_generator, SIZES
+from .test_tools import SIZES, mat_generator, vec_generator
+
 
 @pytest.fixture(scope="module")
 def testing_client():
@@ -17,7 +18,8 @@ def testing_client():
         with app.app_context():
             yield testing_client  # this is where the testing happens!
 
-@pytest.mark.parametrize('sz', SIZES)
+
+@pytest.mark.parametrize("sz", SIZES)
 def test_add_vectors_rest(benchmark, testing_client, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
@@ -28,7 +30,8 @@ def test_add_vectors_rest(benchmark, testing_client, sz):
 
     benchmark(client.add, vec_1, vec_2)
 
-@pytest.mark.parametrize('sz', SIZES)
+
+@pytest.mark.parametrize("sz", SIZES)
 def test_multiply_vectors_rest(benchmark, testing_client, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
@@ -39,7 +42,8 @@ def test_multiply_vectors_rest(benchmark, testing_client, sz):
 
     benchmark(client.multiply, vec_1, vec_2)
 
-@pytest.mark.parametrize('sz', SIZES)
+
+@pytest.mark.parametrize("sz", SIZES)
 def test_add_matrices_rest(benchmark, testing_client, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
@@ -50,7 +54,8 @@ def test_add_matrices_rest(benchmark, testing_client, sz):
 
     benchmark(client.add, mat_1, mat_2)
 
-@pytest.mark.parametrize('sz', SIZES)
+
+@pytest.mark.parametrize("sz", SIZES)
 def test_multiply_matrices_rest(benchmark, testing_client, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
