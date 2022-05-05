@@ -3,6 +3,7 @@
 from concurrent import futures
 import logging
 
+import click
 import demo_eigen_wrapper
 import grpc
 import numpy as np
@@ -103,6 +104,11 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         grpcdemo_pb2.HelloReply
             The greeting reply by the server.
         """
+        click.echo("Greeting requested! Requested by: " + request.name)
+
+        # Inform about the size of the message content
+        click.echo("Size of message: " + constants.human_size(request))
+
         return grpcdemo_pb2.HelloReply(message="Hello, %s!" % request.name)
 
     def FlipVector(self, request, context):
@@ -120,6 +126,11 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         grpcdemo_pb2.Vector
             The flipped Vector message.
         """
+        click.echo("Vector flip requested!")
+
+        # Inform about the size of the message content
+        click.echo("Size of message: " + constants.human_size(request.vector_as_chunk))
+
         # Check the data type of the incoming vector
         dtype = None
         size = None
@@ -159,6 +170,8 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         grpcdemo_pb2.Vector
             The Vector message.
         """
+        click.echo("Vector addition requested!")
+
         # Process the input messages
         dtype, size, vector_list = self._get_vectors(request_iterator)
 
@@ -194,6 +207,8 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         grpcdemo_pb2.Vector
             The Vector message.
         """
+        click.echo("Vector dot product requested!")
+
         # Process the input messages
         dtype, _, vector_list = self._get_vectors(request_iterator)
 
@@ -237,6 +252,8 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         grpcdemo_pb2.Matrix
             The Matrix message.
         """
+        click.echo("Matrix addition requested!")
+
         # Process the input messages
         dtype, size, matrix_list = self._get_matrices(request_iterator)
 
@@ -273,6 +290,8 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         grpcdemo_pb2.Matrix
             The Matrix message.
         """
+        click.echo("Matrix multiplication requested!")
+
         # Process the input messages
         dtype, size, matrix_list = self._get_matrices(request_iterator)
 
@@ -329,6 +348,12 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 
         # Iterate over all incoming vectors
         for vector in request_iterator:
+
+            # Inform about the size of the message content
+            click.echo(
+                "Size of message: " + constants.human_size(vector.vector_as_chunk)
+            )
+
             # Check the data type of the incoming vector
             if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
                 dtype = check_data_type(dtype, np.int32)
@@ -368,6 +393,12 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
 
         # Iterate over all incoming matrices
         for matrix in request_iterator:
+
+            # Inform about the size of the message content
+            click.echo(
+                "Size of message: " + constants.human_size(matrix.matrix_as_chunk)
+            )
+
             # Check the data type of the incoming matrix
             if matrix.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
                 dtype = check_data_type(dtype, np.int32)

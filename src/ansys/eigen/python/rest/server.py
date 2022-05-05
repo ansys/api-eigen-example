@@ -1,6 +1,7 @@
 """The Python implementation of the REST API Eigen example server."""
 
 import json
+from math import floor
 import os
 
 import click
@@ -24,10 +25,13 @@ ALLOWED_TYPES = (
     "vector",
     "matrix",
 )
+
 ALLOWED_OPS = (
     "addition",
     "multiplication",
 )
+
+HUMAN_SIZES = ["B", "KB", "MB", "GB", "TB"]
 
 
 def create_app():
@@ -285,6 +289,9 @@ def create_app():
             + " has been inserted into the server's DB."
         )
 
+        # Inform about the size of the message content
+        click.echo("Size of message: " + __human_size(request.content_length))
+
         # ... return the body of the response
         return json.dumps({str_type: {"id": id_in_db}})
 
@@ -468,6 +475,32 @@ def create_app():
         else:
             # This should not occur
             return None
+
+    def __human_size(content_length: int):
+        """Method to show the size of the message in human-readable format.
+
+        Parameters
+        ----------
+        content_length : int
+            The content length of the message.
+
+        Returns
+        -------
+        str
+            The size of the message received in human-readable format.
+        """
+        idx = 0
+        while True:
+            if content_length >= 1024:
+                idx += 1
+                content_length = floor(content_length / 1024)
+            else:
+                break
+
+        if idx >= len(HUMAN_SIZES):
+            raise InvalidUsage("Message content above TB level... Not handled!")
+
+        return str(content_length) + HUMAN_SIZES[idx]
 
     return app
 

@@ -30,9 +30,9 @@ for version in ${Versions[@]}; do
     else
         pip install api-eigen-example==$version -q
     fi
-    pytest tests/ --benchmark-save=$version --benchmark-quiet --disable-warnings --no-header
+    pytest tests/ --benchmark-save=$version --benchmark-quiet --disable-warnings --no-header --benchmark-warmup=true --benchmark-min-rounds=500
 done
 
 mkdir hist -p
 rm hist/*
-pytest-benchmark compare --histogram hist/hist --group-by name --sort fullname 1> /dev/null
+pytest-benchmark compare --histogram hist/hist --group-by group --sort fullname 1> /dev/null
