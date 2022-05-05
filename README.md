@@ -1,4 +1,9 @@
 # API Eigen example project
+
+**IMPORTANT NOTE**: This repository is for demonstration purposes only. It is not intended to expose the
+Eigen Library as a service, nor is it expected to be used as-is. This demo is intended to be used for demonstrating
+the REST and gRPC protocols via client-server interaction.
+
 ## Introduction
 
 The API Eigen example package is a simple project which intends to show PyAnsys
