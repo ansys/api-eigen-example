@@ -18,6 +18,7 @@ def testing_client():
         with app.app_context():
             yield testing_client  # this is where the testing happens!
 
+
 @pytest.mark.benchmark(group="add_vectors")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
 def test_add_vectors_rest(benchmark, testing_client, sz):
@@ -29,6 +30,7 @@ def test_add_vectors_rest(benchmark, testing_client, sz):
     vec_2 = vec_generator(sz)
 
     benchmark(client.add, vec_1, vec_2)
+
 
 @pytest.mark.benchmark(group="multiply_vectors")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
@@ -42,6 +44,7 @@ def test_multiply_vectors_rest(benchmark, testing_client, sz):
 
     benchmark(client.multiply, vec_1, vec_2)
 
+
 @pytest.mark.benchmark(group="add_matrices")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
 def test_add_matrices_rest(benchmark, testing_client, sz):
@@ -53,6 +56,7 @@ def test_add_matrices_rest(benchmark, testing_client, sz):
     mat_2 = mat_generator(sz)
 
     benchmark(client.add, mat_1, mat_2)
+
 
 @pytest.mark.benchmark(group="multiply_matrices")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)

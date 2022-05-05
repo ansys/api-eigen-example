@@ -52,6 +52,7 @@ def test_add_vectors_grpc(benchmark, grpc_stub, sz):
 
     benchmark(client.add_vectors, vec_1, vec_2)
 
+
 @pytest.mark.benchmark(group="multiply_vectors")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
 def test_multiply_vectors_grpc(benchmark, grpc_stub, sz):
@@ -65,6 +66,7 @@ def test_multiply_vectors_grpc(benchmark, grpc_stub, sz):
 
     benchmark(client.multiply_vectors, vec_1, vec_2)
 
+
 @pytest.mark.benchmark(group="add_matrices")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
 def test_add_matrices_grpc(benchmark, grpc_stub, sz):
@@ -77,6 +79,7 @@ def test_add_matrices_grpc(benchmark, grpc_stub, sz):
     mat_2 = mat_generator(sz)
 
     benchmark(client.add_matrices, mat_1, mat_2)
+
 
 @pytest.mark.benchmark(group="multiply_matrices")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
