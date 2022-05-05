@@ -86,7 +86,9 @@ jobs:
 
   build_test:
     name: Build and Unit Testing
-    needs: testimport
+    needs: 
+      - testimport
+      - stylecheck
     runs-on: ubuntu-latest
 
     steps:
@@ -127,7 +129,7 @@ jobs:
 
   build_doc:
     name: Build Documentation
-    needs: testimport
+    needs: build_test
     runs-on: ubuntu-latest
 
     services:
