@@ -10,6 +10,7 @@ MAX = 10.0
 
 # The amount of sizes of numpy.ndarrays to be processed
 SIZES = [pow(2, n) for n in range(1, 8)]
+SIZES_IDS = [f'{i:05d}' for i in SIZES]
 
 # Initialize our seed
 seed(1)
