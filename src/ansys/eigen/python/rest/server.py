@@ -11,8 +11,6 @@ import numpy as np
 
 from ansys.eigen.python.rest.restdb.db import get_db, init_app_db
 
-__HUMAN_SIZES = ["B", "KB", "MB", "GB", "TB"]
-
 #
 #
 # It is necessary to define the environment variable FLASK_APP pointing to this same file
@@ -27,10 +25,13 @@ ALLOWED_TYPES = (
     "vector",
     "matrix",
 )
+
 ALLOWED_OPS = (
     "addition",
     "multiplication",
 )
+
+HUMAN_SIZES = ["B", "KB", "MB", "GB", "TB"]
 
 
 def create_app():
@@ -496,10 +497,10 @@ def create_app():
             else:
                 break
 
-        if idx >= len(__HUMAN_SIZES):
+        if idx >= len(HUMAN_SIZES):
             raise InvalidUsage("Message content above TB level... Not handled!")
 
-        return str(content_length) + __HUMAN_SIZES[idx]
+        return str(content_length) + HUMAN_SIZES[idx]
 
     return app
 
