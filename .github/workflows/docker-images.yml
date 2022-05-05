@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  python-rest-client:
+  docker-images:
     name: Build the ${{ matrix.image-names }} docker image
     runs-on: ubuntu-latest
     strategy:
