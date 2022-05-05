@@ -35,7 +35,7 @@ def human_size(request: object):
         else:
             break
 
-    if idx > len(HUMAN_SIZES):
+    if idx >= len(HUMAN_SIZES):
         raise RuntimeError("Message size above TB level... Not handled!")
 
     return str(content_length) + HUMAN_SIZES[idx]

@@ -496,7 +496,7 @@ def create_app():
             else:
                 break
 
-        if idx > len(__HUMAN_SIZES):
+        if idx >= len(__HUMAN_SIZES):
             raise InvalidUsage("Message content above TB level... Not handled!")
 
         return str(content_length) + __HUMAN_SIZES[idx]
