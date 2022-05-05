@@ -47,7 +47,10 @@ def test_greeting(capsys, grpc_stub):
     client.request_greeting("Michael")
 
     captured = capsys.readouterr()
-    assert captured.out == "Greeting requested! Requested by: Michael\nSize of message: 96B\nThe server answered: Hello, Michael!\n"
+    assert (
+        captured.out
+        == "Greeting requested! Requested by: Michael\nSize of message: 96B\nThe server answered: Hello, Michael!\n"
+    )
 
 
 def test_flip_vector(grpc_stub):

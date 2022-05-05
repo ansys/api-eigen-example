@@ -129,7 +129,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         click.echo("Vector flip requested!")
 
         # Inform about the size of the message content
-        click.echo("Size of message: " + constants.human_size(request))
+        click.echo("Size of message: " + constants.human_size(request.vector_as_chunk))
 
         # Check the data type of the incoming vector
         dtype = None
@@ -350,7 +350,9 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         for vector in request_iterator:
 
             # Inform about the size of the message content
-            click.echo("Size of message: " + constants.human_size(vector))
+            click.echo(
+                "Size of message: " + constants.human_size(vector.vector_as_chunk)
+            )
 
             # Check the data type of the incoming vector
             if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
@@ -393,7 +395,9 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         for matrix in request_iterator:
 
             # Inform about the size of the message content
-            click.echo("Size of message: " + constants.human_size(matrix))
+            click.echo(
+                "Size of message: " + constants.human_size(matrix.matrix_as_chunk)
+            )
 
             # Check the data type of the incoming matrix
             if matrix.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
