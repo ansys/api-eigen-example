@@ -12,13 +12,13 @@ HUMAN_SIZES = ["B", "KB", "MB", "GB", "TB"]
 """List of human-readable sizes handled."""
 
 
-def human_size(request: object):
+def human_size(content: object):
     """Method to show the size of the message in human-readable format.
 
     Parameters
     ----------
-    content_length : object
-        The request message.
+    content : object
+        The content of the message.
 
     Returns
     -------
@@ -26,7 +26,7 @@ def human_size(request: object):
         The size of the message received in human-readable format.
     """
     idx = 0
-    content_length = getsizeof(request)
+    content_length = getsizeof(content)
 
     while True:
         if content_length >= 1024:
