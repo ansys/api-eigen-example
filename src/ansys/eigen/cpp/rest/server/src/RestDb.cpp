@@ -6,21 +6,21 @@
 
 bool ansys::rest::db::initialize_db(sqlite3 *db) {
     // Needed variables
-    int rc;         // return value
-    char *zErrMsg;  // Error message
+    int returnCode;         // return value
+    char *zErrMsg;  // error message
 
     // Start by creating the db
-    rc = sqlite3_open(nullptr, &db);
+    returnCode = sqlite3_open(nullptr, &db);
 
     // Check if the DB has been initialized or not
-    if (rc) {
+    if (returnCode) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return false;
     } else {
         fprintf(stderr, "Opened database successfully\n");
     }
 
-    /* Create SQL statement */
+    // Create SQL statement
     const char *sql =
         "DROP TABLE IF EXISTS eigen_db;"
         "DROP TABLE IF EXISTS types;"
@@ -33,8 +33,8 @@ bool ansys::rest::db::initialize_db(sqlite3 *db) {
         "INSERT INTO types (eigen_type) VALUES ('MATRIX');";
 
     // Execute SQL statement - for initializing DB tables
-    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
-    if (rc != SQLITE_OK) {
+    returnCode = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if (returnCode != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
         return false;
@@ -45,8 +45,7 @@ bool ansys::rest::db::initialize_db(sqlite3 *db) {
 }
 
 static int ansys::rest::db::callback(void *NotUsed, int argc, char **argv, char **azColName) {
-    int i;
-    for (i = 0; i < argc; i++) {
+    for (int i = 0; i < argc; i++) {
         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
     }
 
