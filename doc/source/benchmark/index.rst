@@ -40,7 +40,7 @@ If we applied this to the first test shown, the order would be as follows (from 
 * REST "add_vectors" test with vectors of 8 elements.
 * ...
 
-By analizing the name format of the tests one can also identify its characteristics. For example
+By analyzing the name format of the tests one can also identify its characteristics. For example
 
 * **test_add_vectors_grpc[0128]** is telling us that we are running the "add_vectors" test, for the gRPC protocol with random vectors of size 128.
 * **test_multiply_matrices_rest[0064]** is telling us that we are running the "multiply_matrices" test, for the REST protocol with random square matrices of size 128.
