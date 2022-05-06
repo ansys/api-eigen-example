@@ -1,20 +1,28 @@
 #include <sqlite3.h>
 
+#ifndef SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTDB_HPP
+#define SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTDB_HPP
+
 /**
- * @brief Namespace for including the REST DB functionalities
+ * @brief This namespace contains the REST Server logic.
  */
-namespace ansys::rest::db {
+namespace ansys::rest {
+
+/**
+ * @brief Namespace for including the REST DB functionalities.
+ */
+namespace db {
 
 /**
  * @brief Method for initializing the REST DB to be used.
  *
- * @param db : a pointer to the sqlite3 db.
+ * @param db : a pointer to the sqlite3 DB.
  * @return True if initialization was successful, False otherwise.
  */
 bool initialize_db(sqlite3 *db);
 
 /**
- * @brief Callback to be executed after function is complete
+ * @brief Callback to be executed after function is complete.
  *
  * @param NotUsed
  * @param argc
@@ -24,4 +32,8 @@ bool initialize_db(sqlite3 *db);
  */
 static int callback(void *NotUsed, int argc, char **argv, char **azColName);
 
-}  // namespace ansys::rest::db
+}  // namespace db
+
+}  // namespace ansys::rest
+
+#endif /* SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTDB_HPP */

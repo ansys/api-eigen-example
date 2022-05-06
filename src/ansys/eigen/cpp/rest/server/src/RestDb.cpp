@@ -6,8 +6,8 @@
 
 bool ansys::rest::db::initialize_db(sqlite3 *db) {
     // Needed variables
-    int returnCode;         // return value
-    char *zErrMsg;  // error message
+    int returnCode;  // return value
+    char *zErrMsg;   // error message
 
     // Start by creating the db
     returnCode = sqlite3_open(nullptr, &db);
@@ -39,12 +39,13 @@ bool ansys::rest::db::initialize_db(sqlite3 *db) {
         sqlite3_free(zErrMsg);
         return false;
     } else {
-        fprintf(stdout, "Records created successfully\n");
+        fprintf(stdout, "DB tables created successfully\n");
         return true;
     }
 }
 
-static int ansys::rest::db::callback(void *NotUsed, int argc, char **argv, char **azColName) {
+static int ansys::rest::db::callback(void *NotUsed, int argc, char **argv,
+                                     char **azColName) {
     for (int i = 0; i < argc; i++) {
         printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
     }
