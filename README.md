@@ -1,9 +1,5 @@
 # API Eigen example project
 
-**IMPORTANT NOTE**: This repository is for demonstration purposes only. It is not intended to expose the
-Eigen Library as a service, nor is it expected to be used as-is. This demo is intended to be used for demonstrating
-the REST and gRPC protocols via client-server interaction.
-
 ## Introduction
 
 The API Eigen example package is a simple project which intends to show PyAnsys
@@ -76,3 +72,12 @@ packages by importing them as follows
 An automatically generated version of the project's documentation is published every night under the following [link](https://apieigen.docs.pyansys.com/).
 
 Please, feel free to search on it more specific documentation of the project itself.
+
+## IMPORTANT NOTE!!
+
+This repository is **for demonstration purposes only**. It is not intended to expose the
+Eigen Library as a service, nor is it expected to be used as a product. This demo is intended to be used for demonstrating
+the REST and gRPC protocols via client-server interaction, with interactive examples, documentation and resources.
+
+It provides a baseline (or guidelines) for future projects which may have to deal with API protocols such as REST and gRPC, in different languages,
+with a higher level of complexity than a simple "Hello World" project.
