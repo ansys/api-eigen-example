@@ -9,7 +9,7 @@ namespace ansys::rest::db {
  * @brief Method for initializing the REST DB to be used.
  *
  * @param db : a pointer to the sqlite3 db.
- * @return True if initialiation was successful, False otherwise.
+ * @return True if initialization was successful, False otherwise.
  */
 bool initialize_db(sqlite3 *db);
 
