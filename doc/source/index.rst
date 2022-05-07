@@ -10,6 +10,7 @@ API Eigen Example Documentation |version|
    api/index
    docker/index
    examples/index
+   benchmark/index
    contributing
 
 Introduction
@@ -36,10 +37,10 @@ This demo project contains basically 4 different examples:
 
 - A Python REST API demo using both client-server features, which has
   a wrapping over the Eigen library using pybind11.
-- [IN PROGRESS] A C++ REST API demo using both client-server features, 
-  with direct interaction with the Eigen Library on the server side.
 - A Python gRPC demo using both client-server features, which
   has a wrapping over the Eigen library using pybind11.
+- [IN PROGRESS] A C++ REST API demo using both client-server features, 
+  with direct interaction with the Eigen Library on the server side.
 - [IN PROGRESS] A C++ gRPC demo using both client-server features, with
   direct interaction with the Eigen Library on the server side.
 
