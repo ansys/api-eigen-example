@@ -64,6 +64,22 @@ Eigen::VectorXd read_vector(const std::string& input);
  */
 Eigen::MatrixXd read_matrix(const std::string& input);
 
+/**
+ * @brief Method in charge of writing a JSON list from the Eigen::VectorXd object given.
+ * 
+ * @param input : the Eigen::VectorXd.
+ * @return std::string representing the Vector as a JSON list 
+ */
+std::string write_vector(const Eigen::VectorXd& input);
+
+/**
+ * @brief Method in charge of writing a JSON list from the Eigen::MatrixXd object given.
+ * 
+ * @param input : the Eigen::MatrixXd.
+ * @return std::string representing the Matrix as a JSON list 
+ */
+std::string write_matrix(const Eigen::MatrixXd& input);
+
 }  // namespace EigenFunctionalities
 
 #endif /* SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_EIGENFUNCTIONALITIES_HPP */
