@@ -1,5 +1,7 @@
 #include "EigenFunctionalities.hpp"
 
+#include <crow.h>
+
 Eigen::MatrixXd EigenFunctionalities::multiply_matrices(
     const Eigen::MatrixXd& a, const Eigen::MatrixXd& b) {
     return a * b;
@@ -24,33 +26,35 @@ Eigen::VectorXd EigenFunctionalities::read_vector(const std::string& input) {
     // Initialize our resulting vector
     Eigen::VectorXd res{};
 
-    // Get the input string as a C str + its length
-    char* ptr = (char*)input.c_str();
-    int len = input.length();
+    // Check if the request body has the expected inputs
+    const crow::json::rvalue json_input = crow::json::load(input);
 
-    // This is the Vector index
-    int idx = 0;
+    // Check if the provided input can be processed
+    if (json_input.has("value")) {
+        try {
+            // Read the string as a JSON
+            const crow::json::rvalue value = json_input["value"];
 
-    // Let us start parsing the vector
-    char* start = ptr;
-    for (int i = 0; i < len; i++) {
-        if (ptr[i] == '[') {
-            // First entry for parsing --> Vector start
-            start = ptr + i + 1;
-        } else if (ptr[i] == ']') {
-            // We have reached the end! Parse one last time
-            res(idx) = atof(start);
-        } else if (ptr[i] == ',') {
-            // We have reached the end of an entry, parse the value!
-            res(idx) = atof(start);
-            start = ptr + i + 1;
-            idx++;
+            // Resize our Eigen::VectorXd to the provided size
+            res.resize(value.size());
+
+            // Process the entries! Expected entries are of type double (or int,
+            // but castable)...
+            int idx{0};
+            for (const auto& val : value) {
+                res(idx) = val.d();
+            }
+        } catch (const std::runtime_error& e) {
+            throw std::runtime_error("Error parsing input as vector: " + input +
+                                     ".");
         }
+    } else {
+        // JSON content does not have the expected format
+        throw std::runtime_error(
+            "Expected 'value' key in request content not present.");
     }
 
-    // Return the Eigen::VectorXd after resizing
-    res.resize(idx + 1);
-
+    // Return the Eigen::VectorXd
     return res;
 }
 

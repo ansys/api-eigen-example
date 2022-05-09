@@ -1,6 +1,8 @@
 #include <crow.h>
 #include <sqlite3.h>
 
+#include "RestDb.hpp"
+
 #ifndef SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTSERVER_HPP
 #define SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTSERVER_HPP
 
@@ -16,10 +18,8 @@ class RestServer {
    public:
     /**
      * @brief Construct a new Rest Server object
-     *
-     * @param db : the database to be used for storing the resources.
      */
-    RestServer(sqlite3* db);
+    RestServer();
 
     /**
      * @brief Destroy the Rest Server object.
@@ -47,14 +47,34 @@ class RestServer {
 
    private:
     /**
-     * @brief A pointer to our server's DB.
+     * @brief The server's DB.
      */
-    sqlite3* _db;
+    db::RestDb _db;
 
     /**
      * @brief The server CROW application.
      */
     crow::SimpleApp _app;
+
+    /**
+     * @brief Method defining the "Vectors" Resource endpoints
+     */
+    void vector_resource_endpoints();
+
+    /**
+     * @brief Method defining the "Matrices" Resource endpoints
+     */
+    void matrix_resource_endpoints();
+
+    /**
+     * @brief Method defining the "Vectors" operations endpoints
+     */
+    void vector_operations_endpoints();
+
+    /**
+     * @brief Method defining the "Matrices" operations endpoints
+     */
+    void matrix_operations_endpoints();
 };
 
 };  // namespace ansys::rest
