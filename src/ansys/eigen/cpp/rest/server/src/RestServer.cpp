@@ -17,20 +17,20 @@ ansys::rest::RestServer::RestServer() {
         return "Greetings from the REST Eigen Server (implemented in C++)!";
     });
 
-    // VECTORS ENDPOINT - RESOURCE
-    //============================
+    // VECTORS RESOURCE - ENDPOINTS
+    //=============================
     vector_resource_endpoints();
 
-    // MATRICES ENDPOINT - RESOURCE
-    //=============================
+    // MATRICES RESOURCE - ENDPOINTS
+    //==============================
     matrix_resource_endpoints();
 
-    // VECTORS OPS. - RESOURCE
-    //========================
+    // VECTORS OPS. - ENDPOINTS
+    //=========================
     vector_operations_endpoints();
 
-    // MATRICES OPS. - RESOURCE
-    //=========================
+    // MATRICES OPS. - ENDPOINTS
+    //==========================
     matrix_operations_endpoints();
 }
 
@@ -205,7 +205,7 @@ void ansys::rest::RestServer::vector_operations_endpoints() {
             }
         });
 
-    // 1) ENDPOINT for MULTIPLYING VECTORS
+    // 2) ENDPOINT for MULTIPLYING VECTORS
     // ===================================
     CROW_ROUTE(_app, "/multiply/Vectors")
         .methods(crow::HTTPMethod::GET)([&](const crow::request& req) {
@@ -293,7 +293,7 @@ void ansys::rest::RestServer::matrix_operations_endpoints() {
             }
         });
 
-    // 1) ENDPOINT for MULTIPLYING MATRICES
+    // 2) ENDPOINT for MULTIPLYING MATRICES
     // ====================================
     CROW_ROUTE(_app, "/multiply/Matrices")
         .methods(crow::HTTPMethod::GET)([&](const crow::request& req) {

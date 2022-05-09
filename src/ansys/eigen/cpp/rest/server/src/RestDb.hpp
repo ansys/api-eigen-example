@@ -34,13 +34,13 @@ std::string dbtype_to_str(const DbTypes &value);
 /**
  * @brief Callback to be executed after function is complete.
  *
- * @param NotUsed
- * @param argc
- * @param argv
- * @param azColName
+ * @param value pointer to the argument passed in sqlite3_exec.
+ * @param argc number of callbacks to process.
+ * @param argv values in each callback.
+ * @param azColName name of the cols in the callback.
  * @return int
  */
-static int callback(void *NotUsed, int argc, char **argv, char **azColName);
+static int callback(void *value, int argc, char **argv, char **azColName);
 
 /**
  * @brief Class for establishing a connection with the REST DB and interacting
