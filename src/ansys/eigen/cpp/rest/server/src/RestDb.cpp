@@ -102,10 +102,10 @@ long ansys::rest::db::RestDb::store_resource(const DbTypes &type,
     if (returnCode != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-        throw std::runtime_error("Insertion unsuccessfull!");
+        throw std::runtime_error("Insertion unsuccessful!");
     } else {
         fprintf(stdout,
-                "Insertion successfull. Returning ID of inserted row.\n");
+                "Insertion successful. Returning ID of inserted row.\n");
         return sqlite3_last_insert_rowid(_db);
     }
 }
@@ -129,9 +129,9 @@ std::string ansys::rest::db::RestDb::load_resource(const DbTypes &type,
     if (returnCode != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-        throw std::runtime_error("Search unsuccessfull!");
+        throw std::runtime_error("Search unsuccessful!");
     } else {
-        fprintf(stdout, "Search successfull. Returning value.\n");
+        fprintf(stdout, "Search successful. Returning value.\n");
         return value;
     }
 }

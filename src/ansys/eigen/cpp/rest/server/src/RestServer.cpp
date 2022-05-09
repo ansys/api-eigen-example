@@ -64,7 +64,7 @@ void ansys::rest::RestServer::vector_resource_endpoints() {
             EigenFunctionalities::read_vector(req.body);
 
             // Inform the user that the processing was successful
-            CROW_LOG_INFO << "Entry succesfully processed: " + req.body;
+            CROW_LOG_INFO << "Entry successfully processed: " + req.body;
             CROW_LOG_INFO << "Attempting to store in DB...";
 
             // Store into the DB and retrieve its ID
@@ -72,7 +72,7 @@ void ansys::rest::RestServer::vector_resource_endpoints() {
                 _db.store_resource(ansys::rest::db::DbTypes::VECTOR, req.body);
 
             // Define the response code and message
-            CROW_LOG_INFO << "Storage in DB succesfull. Creating response.";
+            CROW_LOG_INFO << "Storage in DB successful. Creating response.";
             auto responseBody = crow::json::wvalue(
                 {{"vector", crow::json::wvalue({{"id", id}})}});
 
@@ -98,7 +98,7 @@ void ansys::rest::RestServer::vector_resource_endpoints() {
                 return crow::response(404, "Entry not found");
             } else {
                 // Define the response code and message
-                CROW_LOG_INFO << "Search in DB succesfull. Creating response.";
+                CROW_LOG_INFO << "Search in DB successful. Creating response.";
 
                 // Send the response
                 return crow::response(200, resource);
@@ -117,7 +117,7 @@ void ansys::rest::RestServer::matrix_resource_endpoints() {
             EigenFunctionalities::read_matrix(req.body);
 
             // Inform the user that the processing was successful
-            CROW_LOG_INFO << "Entry succesfully processed: " + req.body;
+            CROW_LOG_INFO << "Entry successfully processed: " + req.body;
             CROW_LOG_INFO << "Attempting to store in DB...";
 
             // Store into the DB and retrieve its ID
@@ -125,7 +125,7 @@ void ansys::rest::RestServer::matrix_resource_endpoints() {
                 _db.store_resource(ansys::rest::db::DbTypes::MATRIX, req.body);
 
             // Define the response code and message
-            CROW_LOG_INFO << "Storage in DB succesfull. Creating response.";
+            CROW_LOG_INFO << "Storage in DB successful. Creating response.";
             auto responseBody = crow::json::wvalue(
                 {{"matrix", crow::json::wvalue({{"id", id}})}});
 
@@ -151,7 +151,7 @@ void ansys::rest::RestServer::matrix_resource_endpoints() {
                 return crow::response(404, "Entry not found");
             } else {
                 // Define the response code and message
-                CROW_LOG_INFO << "Search in DB succesfull. Creating response.";
+                CROW_LOG_INFO << "Search in DB successful. Creating response.";
 
                 // Send the response
                 return crow::response(200, resource);
