@@ -130,8 +130,7 @@ jobs:
       - name: Install OS packages
         run: |
           sudo apt install cmake libeigen3-dev libboost-all-dev libsqlite3-dev libcurl4-openssl-dev
-          cd external/crow-v1.0/build
-          cmake .. -DCROW_BUILD_EXAMPLES=OFF -DCROW_BUILD_TESTS=OFF && make install
+          cd external/crow-v1.0/build && cmake .. -DCROW_BUILD_EXAMPLES=OFF -DCROW_BUILD_TESTS=OFF && make install
       
       - name: Build projects
         run: |
