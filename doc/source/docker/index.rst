@@ -5,7 +5,7 @@ Docker examples
 ===============
 As part of the development of this project, several Docker images have been created which allow
 to use directly the client and server modules for both REST and gRPC using Python and C++. Depending
-on the demo of interest to you, please refer to the corresponding section
+on the demo of interest to you, please refer to the corresponding section.
 
 *********************
 REST API using Python
