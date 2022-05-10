@@ -1,3 +1,4 @@
+exclude: '^.*external.*$'
 repos:
 - repo: https://github.com/psf/black
   rev: 22.3.0
@@ -23,9 +24,6 @@ repos:
   rev: 3.9.2
   hooks:
   - id: flake8
-    args: [
-      --exclude, src/ansys/eigen/python/grpc/generated/*
-    ]
 
 - repo: https://github.com/codespell-project/codespell
   rev: v2.1.0
