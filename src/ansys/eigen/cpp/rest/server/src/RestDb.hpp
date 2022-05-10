@@ -72,7 +72,7 @@ class RestDb {
      * given ID.
      *
      * @param type the type of resource processed.
-     * @param input the id of the resource inside the DB.
+     * @param id the id of the resource inside the DB.
      * @return std::string - the resource loaded from the DB (as a string).
      */
     std::string load_resource(const DbTypes &type, const int &id);
