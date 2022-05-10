@@ -50,33 +50,35 @@ Eigen::VectorXd add_vectors(const Eigen::VectorXd& v, const Eigen::VectorXd& w);
 
 /**
  * @brief Method in charge of parsing the JSON list to a vector.
- * 
- * @param input : the JSON list.
- * @return Eigen::VectorXd 
+ *
+ * @param input the JSON list.
+ * @return Eigen::VectorXd
  */
 Eigen::VectorXd read_vector(const std::string& input);
 
 /**
  * @brief Method in charge of parsing the JSON list of lists to a matrix.
- * 
- * @param input : the JSON list of lists.
- * @return Eigen::MatrixXd 
+ *
+ * @param input the JSON list of lists.
+ * @return Eigen::MatrixXd
  */
 Eigen::MatrixXd read_matrix(const std::string& input);
 
 /**
- * @brief Method in charge of writing a JSON list from the Eigen::VectorXd object given.
- * 
- * @param input : the Eigen::VectorXd.
- * @return std::string representing the Vector as a JSON list 
+ * @brief Method in charge of writing a JSON list from the Eigen::VectorXd
+ * object given.
+ *
+ * @param input the Eigen::VectorXd.
+ * @return std::string - representing the Vector as a JSON list.
  */
 std::string write_vector(const Eigen::VectorXd& input);
 
 /**
- * @brief Method in charge of writing a JSON list from the Eigen::MatrixXd object given.
- * 
- * @param input : the Eigen::MatrixXd.
- * @return std::string representing the Matrix as a JSON list 
+ * @brief Method in charge of writing a JSON list from the Eigen::MatrixXd
+ * object given.
+ *
+ * @param input the Eigen::MatrixXd.
+ * @return std::string - representing the Matrix as a JSON list.
  */
 std::string write_matrix(const Eigen::MatrixXd& input);
 

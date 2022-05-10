@@ -19,14 +19,14 @@ namespace db {
  * @brief Enum holding the types of variables handled.
  */
 enum class DbTypes {
-    VECTOR,  ///< The Vector type
-    MATRIX   ///< The Matrix type
+    VECTOR,  ///< The Vector type.
+    MATRIX   ///< The Matrix type.
 };
 
 /**
  * @brief Method for returning the enum value as a std::string.
  *
- * @param value : the enum value we want as a std::string.
+ * @param value the enum value we want as a std::string.
  * @return std::string
  */
 std::string dbtype_to_str(const DbTypes &value);
@@ -61,9 +61,9 @@ class RestDb {
     /**
      * @brief Method for storing a Resource in the REST DB.
      *
-     * @param type : the type of resource processed.
-     * @param input: the JSON request body from where the resource is parsed.
-     * @return long : the id of the inserted row in the DB.
+     * @param type  the type of resource processed.
+     * @param input the JSON request body from where the resource is parsed.
+     * @return long - the id of the inserted row in the DB.
      */
     long store_resource(const DbTypes &type, const std::string &input);
 
@@ -71,9 +71,9 @@ class RestDb {
      * @brief Method in charge of loading a stored resource in the DB from a
      * given ID.
      *
-     * @param type : the type of resource processed.
-     * @param input: the id of the resource inside the DB.
-     * @return std::string : the resource loaded from the DB (as a string).
+     * @param type the type of resource processed.
+     * @param input the id of the resource inside the DB.
+     * @return std::string - the resource loaded from the DB (as a string).
      */
     std::string load_resource(const DbTypes &type, const int &id);
 

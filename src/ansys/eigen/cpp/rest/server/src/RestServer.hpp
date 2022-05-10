@@ -1,5 +1,4 @@
 #include <crow.h>
-#include <sqlite3.h>
 
 #include "RestDb.hpp"
 
@@ -17,7 +16,7 @@ namespace ansys::rest {
 class RestServer {
    public:
     /**
-     * @brief Construct a new Rest Server object
+     * @brief Construct a new Rest Server object.
      */
     RestServer();
 
@@ -29,11 +28,11 @@ class RestServer {
     /**
      * @brief Method for serving our application.
      *
-     * @param port : the port in which we want to server our app. Default:
+     * @param port the port in which we want to server our app. Default:
      * 18080.
-     * @param async : whether we want to run application asynchronously or not.
+     * @param async whether we want to run application asynchronously or not.
      * Default: false.
-     * @param logLevel : the logging level of our server. Default: Info.
+     * @param logLevel the logging level of our server. Default: Info.
      */
     void serve(const int port = 18080, const bool async = false,
                const crow::LogLevel logLevel = crow::LogLevel::Info);
@@ -57,22 +56,22 @@ class RestServer {
     crow::SimpleApp _app;
 
     /**
-     * @brief Method defining the "Vectors" Resource endpoints
+     * @brief Method defining the "Vectors" Resource endpoints.
      */
     void vector_resource_endpoints();
 
     /**
-     * @brief Method defining the "Matrices" Resource endpoints
+     * @brief Method defining the "Matrices" Resource endpoints.
      */
     void matrix_resource_endpoints();
 
     /**
-     * @brief Method defining the "Vectors" operations endpoints
+     * @brief Method defining the "Vectors" operations endpoints.
      */
     void vector_operations_endpoints();
 
     /**
-     * @brief Method defining the "Matrices" operations endpoints
+     * @brief Method defining the "Matrices" operations endpoints.
      */
     void matrix_operations_endpoints();
 };
