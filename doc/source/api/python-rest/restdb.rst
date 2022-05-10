@@ -1,4 +1,4 @@
-.. _ref_rest_restdb:
+.. _ref_python_rest_restdb:
 
 Python REST database module
 ===========================

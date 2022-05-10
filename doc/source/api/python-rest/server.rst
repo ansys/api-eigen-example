@@ -1,4 +1,4 @@
-.. _ref_rest_server:
+.. _ref_python_rest_server:
 
 Python REST server module
 =========================

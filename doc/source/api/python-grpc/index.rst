@@ -1,4 +1,4 @@
-.. _ref_grpc:
+.. _ref_python_grpc:
 
 Python gRPC subpackage
 ======================

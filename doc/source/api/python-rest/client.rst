@@ -1,4 +1,4 @@
-.. _ref_rest_client:
+.. _ref_python_rest_client:
 
 Python REST client module
 =========================

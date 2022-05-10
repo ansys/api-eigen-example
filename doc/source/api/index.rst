@@ -14,5 +14,6 @@ Here we should discuss the different API modules at a high level.
    :maxdepth: 4
    :hidden:
 
-   rest/index
-   grpc/index
+   python-rest/index
+   python-grpc/index
+   cpp-rest/index

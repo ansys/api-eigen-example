@@ -1,4 +1,4 @@
-.. _ref_grpc_client:
+.. _ref_python_grpc_client:
 
 Python gRPC client module
 =========================

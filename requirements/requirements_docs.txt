@@ -14,3 +14,4 @@ sphinxemoji==0.2.0
 pandas==1.4.1
 pandoc>=2.1
 matplotlib==3.5.1
+breathe>=4.33.1

@@ -1,4 +1,4 @@
-.. _ref_grpc_server:
+.. _ref_python_grpc_server:
 
 Python gRPC server module
 =========================
