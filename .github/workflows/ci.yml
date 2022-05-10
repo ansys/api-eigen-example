@@ -138,7 +138,9 @@ jobs:
 
   build_doc:
     name: Build Documentation
-    needs: python_build_test
+    needs:
+      - python_build_test
+      - cpp_build_test
     runs-on: ubuntu-latest
 
     services:
