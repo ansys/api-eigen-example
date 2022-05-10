@@ -31,13 +31,10 @@ include/crow/tags
 *.gcda
 *.gcno
 
-build
-
 .directory
 crow_all.h
 
 # conan.io
-build*/
 
 #Doxygen
 html/

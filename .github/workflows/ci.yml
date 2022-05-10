@@ -130,6 +130,8 @@ jobs:
       - name: Install OS packages
         run: |
           sudo apt install cmake libeigen3-dev libboost-all-dev libsqlite3-dev libcurl4-openssl-dev
+          cd src/ansys/eigen/cpp/rest/server/external/crow-v1.0/build
+          cmake .. -DCROW_BUILD_EXAMPLES=OFF -DCROW_BUILD_TESTS=OFF && cmake --build .
       
       - name: Build projects
         run: |

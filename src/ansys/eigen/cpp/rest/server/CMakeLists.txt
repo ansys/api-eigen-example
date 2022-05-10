@@ -5,10 +5,11 @@ project(cpp_rest_server VERSION 1.0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Include CrowCpp as an external library
-add_subdirectory(external/crow-v1.0)
 
-# Add the Boost and Eigen library to the CMake project - after being installed
+# Add the Crow, Boost and Eigen library to the CMake project - after being installed
+find_package(Crow REQUIRED)
+include_directories(${Crow_INCLUDE_DIR})
+
 find_package(Boost 1.71.0 REQUIRED)
 include_directories(${BOOST_INCLUDE_DIR})
 
