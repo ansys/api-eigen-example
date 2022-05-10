@@ -32,7 +32,7 @@ jobs:
       - name: Run pre-commit
         run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
-  testimport:
+  python_test_import:
     name: Smoke Tests
     runs-on: ${{ matrix.os }}
     strategy:
@@ -84,10 +84,10 @@ jobs:
         run: |
           python -c "from ansys.eigen.python.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
 
-  build_test:
+  python_build_test:
     name: Build and Unit Testing
     needs: 
-      - testimport
+      - python_test_import
       - stylecheck
     runs-on: ubuntu-latest
 
@@ -129,7 +129,7 @@ jobs:
 
   build_doc:
     name: Build Documentation
-    needs: build_test
+    needs: python_build_test
     runs-on: ubuntu-latest
 
     services:
