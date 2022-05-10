@@ -127,15 +127,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install OS packages
-        run: |
-          sudo apt install cmake libeigen3-dev libboost-all-dev libsqlite3-dev libcurl4-openssl-dev
-          cd external/crow-v1.0/build && cmake .. -DCROW_BUILD_EXAMPLES=OFF -DCROW_BUILD_TESTS=OFF && sudo make install
-      
-      - name: Build projects
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install conan
+        run: pip install conan
+
+      - name: Build C++ projects
         run: |
           cd src/ansys/eigen/cpp/rest/server/build/
-          cmake .. && cmake --build .
+          conan install .. && cmake .. && cmake --build .
 
   build_doc:
     name: Build Documentation
