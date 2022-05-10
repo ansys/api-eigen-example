@@ -26,6 +26,7 @@ python/eigen-wrapper/demo*
 
 # cmake
 cmake/
+!external/crow-v1.0/cmake
 
 # autogen python source
 chunkdemo_pb2*
