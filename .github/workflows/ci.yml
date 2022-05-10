@@ -33,7 +33,7 @@ jobs:
         run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
   python_test_import:
-    name: Smoke Tests
+    name: Python - Smoke Tests
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -58,15 +58,6 @@ jobs:
           restore-keys: |
             Python-${{ runner.os }}-${{ matrix.python-version }}
 
-      # - name: Windows pip cache
-      #   uses: actions/cache@v2
-      #   if: ${{ runner.os == 'Windows' }}
-      #   with:
-      #     path: ~\AppData\Local\pip\Cache
-      #     key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
-      #     restore-keys: |
-      #       Python-${{ runner.os }}-${{ matrix.python-version }}
-
       - name: Install eigen library
         run: |
           sudo apt update
@@ -85,7 +76,7 @@ jobs:
           python -c "from ansys.eigen.python.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
 
   python_build_test:
-    name: Build and Unit Testing
+    name: Python - Build and Unit Testing
     needs: 
       - python_test_import
       - stylecheck
@@ -126,6 +117,24 @@ jobs:
           name: HTML-Coverage
           path: cov_html
           retention-days: 7
+
+  cpp_build_test:
+    name: C++ - Build and Unit Testing
+    needs: 
+      - stylecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install OS packages
+        run: |
+          sudo apt install cmake libeigen3-dev libboost-all-dev libsqlite3-dev libcurl4-openssl-dev
+      
+      - name: Build projects
+        run: |
+          cd src/ansys/eigen/cpp/rest/server/build/
+          cmake .. && cmake --build .
 
   build_doc:
     name: Build Documentation
