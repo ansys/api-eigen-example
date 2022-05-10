@@ -3,5 +3,7 @@
 C++ REST DB module
 ==================
 
-.. autodoxygenfile:: RestDb.hpp
+.. doxygennamespace:: ansys::rest::db
    :project: cpp-rest-server
+   :members:
+   :private-members:
