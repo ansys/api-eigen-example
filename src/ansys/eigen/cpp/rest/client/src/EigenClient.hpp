@@ -1,8 +1,11 @@
+#include <jsoncpp/json/json.h>
 #include <restclient-cpp/connection.h>
 #include <restclient-cpp/restclient.h>
 
 #include <iostream>
+#include <memory>
 #include <string>
+#include <vector>
 
 #ifndef SRC_ANSYS_EIGEN_CPP_REST_CLIENT_SRC_EIGENCLIENT_HPP
 #define SRC_ANSYS_EIGEN_CPP_REST_CLIENT_SRC_EIGENCLIENT_HPP
@@ -45,11 +48,35 @@ class EigenClient {
      */
     void request_greeting();
 
+    std::vector<double> add_vectors(const std::vector<double>& vec1,
+                                    const std::vector<double>& vec2);
+
+    double multiply_vectors(const std::vector<double>& vec1,
+                            const std::vector<double>& vec2);
+
+    std::vector<std::vector<double>> add_matrices(
+        const std::vector<std::vector<double>>& mat1,
+        const std::vector<std::vector<double>>& mat2);
+
+    std::vector<std::vector<double>> multiply_matrices(
+        const std::vector<std::vector<double>>& mat1,
+        const std::vector<std::vector<double>>& mat2);
+
    private:
     /**
      * @brief The connection pointer to the endpoint server.
      */
     RestClient::Connection* _conn{nullptr};
+
+    RestClient::Response get(const std::string& url, const std::string& data);
+
+    int post_vector(const std::vector<double>& input);
+
+    Json::Value vector_to_json(const std::vector<double>& input);
+
+    std::vector<double> json_to_vector(const Json::Value& input);
+
+    std::vector<std::vector<double>> json_to_matrix(const Json::Value& input);
 };
 
 /**

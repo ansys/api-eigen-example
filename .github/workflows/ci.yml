@@ -139,11 +139,13 @@ jobs:
           cd src/ansys/eigen/cpp/rest/server/build/
           conan install .. && cmake .. && cmake --build .
 
+      #  Requires installing restclient-cpp and jsoncpp libs manually - not available in conan.io
       - name: Build C++ REST Client
         run: |
           sudo apt update && sudo apt install libcurl4-openssl-dev && cd external/restclient-cpp-v0.5.2 &&./autogen.sh && ./configure && sudo make install && cd -
-          cd src/ansys/eigen/cpp/rest/client/build/
-          cmake .. && cmake --build .
+          sudo apt update && cd external/jsoncpp-v1.9.5/build && cmake .. && sudo make install && cd - 
+          sudo /sbin/ldconfig -v
+          cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build .
 
   build_doc:
     name: Build Documentation

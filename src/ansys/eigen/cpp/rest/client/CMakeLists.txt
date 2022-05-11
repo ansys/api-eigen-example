@@ -5,8 +5,8 @@ project(cpp_rest_client VERSION 1.0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Link to the restclient-cpp lib
-link_libraries(-lrestclient-cpp)
+# Link to the restclient-cpp and jsoncpplib
+link_libraries(-lrestclient-cpp -ljsoncpp)
 
 # Add the executable
 add_executable(cpp_rest_client src/main.cpp)
