@@ -173,36 +173,24 @@ void ansys::rest::RestServer::vector_operations_endpoints() {
             // Check if the request body has the expected inputs
             const crow::json::rvalue json_input = crow::json::load(req.body);
             if (json_input.has("id1") && json_input.has("id2")) {
-                // First, load the resources from the DB
-                auto id1 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR,
-                                             json_input["id1"].i());
-                auto id2 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR,
-                                             json_input["id2"].i());
-
-                // Now, transform them to Eigen::VectorXd objects
-                auto e_id1 = EigenFunctionalities::read_vector(id1);
-                auto e_id2 = EigenFunctionalities::read_vector(id2);
-
-                // Once we have the Eigen Vectors, perform the operations
-                auto e_res = EigenFunctionalities::add_vectors(e_id1, e_id2);
-
-                // Now, we will write the resulting vector operation
-                auto res = EigenFunctionalities::write_vector(e_res);
-
-                // And finally, write the response
-                CROW_LOG_INFO << "Vector addition operation successful. "
-                                 "Creating response.";
-                auto responseBody = crow::json::wvalue(
-                    {{"vector-addition",
-                      crow::json::wvalue({{"result", res}})}});
-
-                // Send the response
-                return crow::response(200, responseBody);
+                return add_vectors(json_input["id1"].i(),
+                                   json_input["id2"].i());
             } else {
                 // JSON content does not have the expected format
                 return crow::response(
                     500, "Expected 'id1','id2' keys in request not present.");
             }
+        });
+
+    CROW_ROUTE(_app, "/add/Vectors/<int>/<int>")
+        .methods(crow::HTTPMethod::GET)([&](int id1, int id2) {
+            CROW_LOG_INFO << "Attempting to add Vector resources...";
+            // Expected request body content to be empty
+            // However, URL should look like... /add/Vectors/1/2
+            //
+            // Without request body... but IDs in URL! =)
+            //
+            return add_vectors(id1, id2);
         });
 
     // 2) ENDPOINT for MULTIPLYING VECTORS
@@ -216,34 +204,24 @@ void ansys::rest::RestServer::vector_operations_endpoints() {
             // Check if the request body has the expected inputs
             const crow::json::rvalue json_input = crow::json::load(req.body);
             if (json_input.has("id1") && json_input.has("id2")) {
-                // First, load the resources from the DB
-                auto id1 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR,
-                                             json_input["id1"].i());
-                auto id2 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR,
-                                             json_input["id2"].i());
-
-                // Now, transform them to Eigen::VectorXd objects
-                auto e_id1 = EigenFunctionalities::read_vector(id1);
-                auto e_id2 = EigenFunctionalities::read_vector(id2);
-
-                // Once we have the Eigen Vectors, perform the operations
-                auto e_res =
-                    EigenFunctionalities::multiply_vectors(e_id1, e_id2);
-
-                // And finally, write the response
-                CROW_LOG_INFO << "Vector multiplication operation successful. "
-                                 "Creating response.";
-                auto responseBody = crow::json::wvalue(
-                    {{"vector-multiplication",
-                      crow::json::wvalue({{"result", e_res}})}});
-
-                // Send the response
-                return crow::response(200, responseBody);
+                return multiply_vectors(json_input["id1"].i(),
+                                        json_input["id2"].i());
             } else {
                 // JSON content does not have the expected format
                 return crow::response(
                     500, "Expected 'id1','id2' keys in request not present.");
             }
+        });
+
+    CROW_ROUTE(_app, "/multiply/Vectors/<int>/<int>")
+        .methods(crow::HTTPMethod::GET)([&](int id1, int id2) {
+            CROW_LOG_INFO << "Attempting to multiply Vector resources...";
+            // Expected request body content to be empty
+            // However, URL should look like... /multiply/Vectors/1/2
+            //
+            // Without request body... but IDs in URL! =)
+            //
+            return multiply_vectors(id1, id2);
         });
 }
 
@@ -261,36 +239,24 @@ void ansys::rest::RestServer::matrix_operations_endpoints() {
             // Check if the request body has the expected inputs
             const crow::json::rvalue json_input = crow::json::load(req.body);
             if (json_input.has("id1") && json_input.has("id2")) {
-                // First, load the resources from the DB
-                auto id1 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX,
-                                             json_input["id1"].i());
-                auto id2 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX,
-                                             json_input["id2"].i());
-
-                // Now, transform them to Eigen::MatrixXd objects
-                auto e_id1 = EigenFunctionalities::read_matrix(id1);
-                auto e_id2 = EigenFunctionalities::read_matrix(id2);
-
-                // Once we have the Eigen Matrices, perform the operations
-                auto e_res = EigenFunctionalities::add_matrices(e_id1, e_id2);
-
-                // Now, we will write the resulting matrix operation
-                auto res = EigenFunctionalities::write_matrix(e_res);
-
-                // And finally, write the response
-                CROW_LOG_INFO << "Matrix addition operation successful. "
-                                 "Creating response.";
-                auto responseBody = crow::json::wvalue(
-                    {{"matrix-addition",
-                      crow::json::wvalue({{"result", res}})}});
-
-                // Send the response
-                return crow::response(200, responseBody);
+                return add_matrices(json_input["id1"].i(),
+                                    json_input["id2"].i());
             } else {
                 // JSON content does not have the expected format
                 return crow::response(
                     500, "Expected 'id1','id2' keys in request not present.");
             }
+        });
+
+    CROW_ROUTE(_app, "/add/Matrices/<int>/<int>")
+        .methods(crow::HTTPMethod::GET)([&](int id1, int id2) {
+            CROW_LOG_INFO << "Attempting to add Matrix resources...";
+            // Expected request body content to be empty
+            // However, URL should look like... /add/Matrices/1/2
+            //
+            // Without request body... but IDs in URL! =)
+            //
+            return add_matrices(id1, id2);
         });
 
     // 2) ENDPOINT for MULTIPLYING MATRICES
@@ -304,36 +270,118 @@ void ansys::rest::RestServer::matrix_operations_endpoints() {
             // Check if the request body has the expected inputs
             const crow::json::rvalue json_input = crow::json::load(req.body);
             if (json_input.has("id1") && json_input.has("id2")) {
-                // First, load the resources from the DB
-                auto id1 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX,
-                                             json_input["id1"].i());
-                auto id2 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX,
-                                             json_input["id2"].i());
-
-                // Now, transform them to Eigen::MatrixXd objects
-                auto e_id1 = EigenFunctionalities::read_matrix(id1);
-                auto e_id2 = EigenFunctionalities::read_matrix(id2);
-
-                // Once we have the Eigen Matrices, perform the operations
-                auto e_res =
-                    EigenFunctionalities::multiply_matrices(e_id1, e_id2);
-
-                // Now, we will write the resulting matrix operation
-                auto res = EigenFunctionalities::write_matrix(e_res);
-
-                // And finally, write the response
-                CROW_LOG_INFO << "Matrix multiplication operation successful. "
-                                 "Creating response.";
-                auto responseBody = crow::json::wvalue(
-                    {{"matrix-multiplication",
-                      crow::json::wvalue({{"result", res}})}});
-
-                // Send the response
-                return crow::response(200, responseBody);
+                return multiply_matrices(json_input["id1"].i(),
+                                         json_input["id2"].i());
             } else {
                 // JSON content does not have the expected format
                 return crow::response(
                     500, "Expected 'id1','id2' keys in request not present.");
             }
         });
+
+    CROW_ROUTE(_app, "/multiply/Matrices/<int>/<int>")
+        .methods(crow::HTTPMethod::GET)([&](int id1, int id2) {
+            CROW_LOG_INFO << "Attempting to multiply Matrix resources...";
+            // Expected request body content to be empty
+            // However, URL should look like... /multiply/Matrices/1/2
+            //
+            // Without request body... but IDs in URL! =)
+            //
+            return multiply_matrices(id1, id2);
+        });
+}
+
+crow::response ansys::rest::RestServer::add_vectors(int id1, int id2) {
+    // First, load the resources from the DB (as strings)
+    auto s_id1 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id1);
+    auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id2);
+
+    // Now, transform them to Eigen::VectorXd objects
+    auto e_id1 = EigenFunctionalities::read_vector(s_id1);
+    auto e_id2 = EigenFunctionalities::read_vector(s_id2);
+
+    // Once we have the Eigen Vectors, perform the operations
+    auto e_res = EigenFunctionalities::add_vectors(e_id1, e_id2);
+
+    // Now, we will write the resulting vector operation
+    auto res = EigenFunctionalities::write_vector(e_res);
+
+    // And finally, write the response
+    CROW_LOG_INFO << "Vector addition operation successful. Creating response.";
+    auto responseBody = crow::json::wvalue(
+        {{"vector-addition", crow::json::wvalue({{"result", res}})}});
+
+    // Send the response
+    return crow::response(200, responseBody);
+}
+
+crow::response ansys::rest::RestServer::multiply_vectors(int id1, int id2) {
+    // First, load the resources from the DB
+    auto s_id1 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id1);
+    auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id2);
+
+    // Now, transform them to Eigen::VectorXd objects
+    auto e_id1 = EigenFunctionalities::read_vector(s_id1);
+    auto e_id2 = EigenFunctionalities::read_vector(s_id2);
+
+    // Once we have the Eigen Vectors, perform the operations
+    auto e_res = EigenFunctionalities::multiply_vectors(e_id1, e_id2);
+
+    // And finally, write the response
+    CROW_LOG_INFO
+        << "Vector multiplication operation successful. Creating response.";
+    auto responseBody = crow::json::wvalue(
+        {{"vector-multiplication", crow::json::wvalue({{"result", e_res}})}});
+
+    // Send the response
+    return crow::response(200, responseBody);
+}
+
+crow::response ansys::rest::RestServer::add_matrices(int id1, int id2) {
+    // First, load the resources from the DB
+    auto s_id1 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id1);
+    auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id2);
+
+    // Now, transform them to Eigen::MatrixXd objects
+    auto e_id1 = EigenFunctionalities::read_matrix(s_id1);
+    auto e_id2 = EigenFunctionalities::read_matrix(s_id2);
+
+    // Once we have the Eigen Matrices, perform the operations
+    auto e_res = EigenFunctionalities::add_matrices(e_id1, e_id2);
+
+    // Now, we will write the resulting matrix operation
+    auto res = EigenFunctionalities::write_matrix(e_res);
+
+    // And finally, write the response
+    CROW_LOG_INFO << "Matrix addition operation successful. Creating response.";
+    auto responseBody = crow::json::wvalue(
+        {{"matrix-addition", crow::json::wvalue({{"result", res}})}});
+
+    // Send the response
+    return crow::response(200, responseBody);
+}
+
+crow::response ansys::rest::RestServer::multiply_matrices(int id1, int id2) {
+    // First, load the resources from the DB
+    auto s_id1 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id1);
+    auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id2);
+
+    // Now, transform them to Eigen::MatrixXd objects
+    auto e_id1 = EigenFunctionalities::read_matrix(s_id1);
+    auto e_id2 = EigenFunctionalities::read_matrix(s_id2);
+
+    // Once we have the Eigen Matrices, perform the operations
+    auto e_res = EigenFunctionalities::multiply_matrices(e_id1, e_id2);
+
+    // Now, we will write the resulting matrix operation
+    auto res = EigenFunctionalities::write_matrix(e_res);
+
+    // And finally, write the response
+    CROW_LOG_INFO
+        << "Matrix multiplication operation successful. Creating response.";
+    auto responseBody = crow::json::wvalue(
+        {{"matrix-multiplication", crow::json::wvalue({{"result", res}})}});
+
+    // Send the response
+    return crow::response(200, responseBody);
 }

@@ -74,6 +74,46 @@ class RestServer {
      * @brief Method defining the "Matrices" operations endpoints.
      */
     void matrix_operations_endpoints();
+
+    /**
+     * @brief Method in charge of retrieving the Vector resources from the DB
+     * and adding them.
+     *
+     * @param id1 - the id of the first Vector.
+     * @param id2 - the id of the second Vector.
+     * @return crow::response
+     */
+    crow::response add_vectors(int id1, int id2);
+
+    /**
+     * @brief Method in charge of retrieving the Vector resources from the DB
+     * and performing their dot product.
+     *
+     * @param id1 - the id of the first Vector.
+     * @param id2 - the id of the second Vector.
+     * @return crow::response
+     */
+    crow::response multiply_vectors(int id1, int id2);
+
+    /**
+     * @brief Method in charge of retrieving the Matrix resources from the DB
+     * and adding them.
+     *
+     * @param id1 - the id of the first Matrix.
+     * @param id2 - the id of the second Matrix.
+     * @return crow::response
+     */
+    crow::response add_matrices(int id1, int id2);
+
+    /**
+     * @brief Method in charge of retrieving the Matrix resources from the DB
+     * and multiplying them.
+     *
+     * @param id1 - the id of the first Matrix.
+     * @param id2 - the id of the second Matrix.
+     * @return crow::response
+     */
+    crow::response multiply_matrices(int id1, int id2);
 };
 
 };  // namespace ansys::rest
