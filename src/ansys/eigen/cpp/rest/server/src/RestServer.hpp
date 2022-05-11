@@ -8,7 +8,7 @@
 /**
  * @brief This namespace contains the REST Server logic.
  */
-namespace ansys::rest {
+namespace ansys::rest::server {
 
 /**
  * @brief Class containing the server logic.
@@ -116,6 +116,6 @@ class RestServer {
     crow::response multiply_matrices(int id1, int id2);
 };
 
-};  // namespace ansys::rest
+};  // namespace ansys::rest::server
 
 #endif /* SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTSERVER_HPP */

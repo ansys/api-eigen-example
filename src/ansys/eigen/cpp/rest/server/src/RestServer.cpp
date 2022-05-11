@@ -5,7 +5,7 @@
 #include "EigenFunctionalities.hpp"
 #include "RestDb.hpp"
 
-ansys::rest::RestServer::RestServer() {
+ansys::rest::server::RestServer::RestServer() {
     CROW_LOG_INFO << "REST Server object instantiated.";
 
     // We are defining how we want this endpoint to behave
@@ -34,12 +34,12 @@ ansys::rest::RestServer::RestServer() {
     matrix_operations_endpoints();
 }
 
-ansys::rest::RestServer::~RestServer() {
+ansys::rest::server::RestServer::~RestServer() {
     CROW_LOG_INFO << "REST Server object destroyed.";
 }
 
-void ansys::rest::RestServer::serve(const int port, const bool async,
-                                    const crow::LogLevel logLevel) {
+void ansys::rest::server::RestServer::serve(const int port, const bool async,
+                                            const crow::LogLevel logLevel) {
     // Set the servers logging level we have decided
     _app.loglevel(logLevel);
 
@@ -53,7 +53,7 @@ void ansys::rest::RestServer::serve(const int port, const bool async,
     }
 }
 
-void ansys::rest::RestServer::vector_resource_endpoints() {
+void ansys::rest::server::RestServer::vector_resource_endpoints() {
     // Define how the different "Vectors" resource endpoints should behave
     //
     // 1) ENDPOINT for POSTING VECTORS
@@ -106,7 +106,7 @@ void ansys::rest::RestServer::vector_resource_endpoints() {
         });
 }
 
-void ansys::rest::RestServer::matrix_resource_endpoints() {
+void ansys::rest::server::RestServer::matrix_resource_endpoints() {
     // Define how the different "Matrices" resource endpoints should behave
     //
     // 1) ENDPOINT for POSTING MATRICES
@@ -159,7 +159,7 @@ void ansys::rest::RestServer::matrix_resource_endpoints() {
         });
 }
 
-void ansys::rest::RestServer::vector_operations_endpoints() {
+void ansys::rest::server::RestServer::vector_operations_endpoints() {
     // Define how the different "Vectors" operations endpoints should behave
     //
     // 1) ENDPOINT for ADDING VECTORS
@@ -225,7 +225,7 @@ void ansys::rest::RestServer::vector_operations_endpoints() {
         });
 }
 
-void ansys::rest::RestServer::matrix_operations_endpoints() {
+void ansys::rest::server::RestServer::matrix_operations_endpoints() {
     // Define how the different "Matrices" operations endpoints should behave
     //
     // 1) ENDPOINT for ADDING MATRICES
@@ -291,7 +291,7 @@ void ansys::rest::RestServer::matrix_operations_endpoints() {
         });
 }
 
-crow::response ansys::rest::RestServer::add_vectors(int id1, int id2) {
+crow::response ansys::rest::server::RestServer::add_vectors(int id1, int id2) {
     // First, load the resources from the DB (as strings)
     auto s_id1 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id1);
     auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id2);
@@ -315,7 +315,8 @@ crow::response ansys::rest::RestServer::add_vectors(int id1, int id2) {
     return crow::response(200, responseBody);
 }
 
-crow::response ansys::rest::RestServer::multiply_vectors(int id1, int id2) {
+crow::response ansys::rest::server::RestServer::multiply_vectors(int id1,
+                                                                 int id2) {
     // First, load the resources from the DB
     auto s_id1 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id1);
     auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id2);
@@ -337,7 +338,7 @@ crow::response ansys::rest::RestServer::multiply_vectors(int id1, int id2) {
     return crow::response(200, responseBody);
 }
 
-crow::response ansys::rest::RestServer::add_matrices(int id1, int id2) {
+crow::response ansys::rest::server::RestServer::add_matrices(int id1, int id2) {
     // First, load the resources from the DB
     auto s_id1 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id1);
     auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id2);
@@ -361,7 +362,8 @@ crow::response ansys::rest::RestServer::add_matrices(int id1, int id2) {
     return crow::response(200, responseBody);
 }
 
-crow::response ansys::rest::RestServer::multiply_matrices(int id1, int id2) {
+crow::response ansys::rest::server::RestServer::multiply_matrices(int id1,
+                                                                  int id2) {
     // First, load the resources from the DB
     auto s_id1 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id1);
     auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id2);

@@ -3,5 +3,7 @@
 C++ REST server module
 ======================
 
-.. autodoxygenfile:: RestServer.hpp
+.. doxygennamespace:: ansys::rest::server
    :project: cpp-rest-server
+   :members:
+   :private-members:
