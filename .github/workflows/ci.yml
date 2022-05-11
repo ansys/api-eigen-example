@@ -135,10 +135,16 @@ jobs:
       - name: Install conan
         run: pip install conan
 
-      - name: Build C++ projects
+      - name: Build C++ REST Server
         run: |
           cd src/ansys/eigen/cpp/rest/server/build/
           conan install .. && cmake .. && cmake --build .
+
+      - name: Build C++ REST Client
+        run: |
+          cd external/restclient-cpp-v0.5.2 &&./autogen.sh && ./configure && make install && cd ..
+          cd src/ansys/eigen/cpp/rest/client/build/
+          cmake .. && cmake --build .
 
   build_doc:
     name: Build Documentation
