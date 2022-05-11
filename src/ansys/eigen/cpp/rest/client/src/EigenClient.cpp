@@ -1,7 +1,5 @@
 #include "EigenClient.hpp"
 
-#include <jsoncpp/json/value.h>
-#include <restclient-cpp/helpers.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -71,10 +69,8 @@ std::vector<double> ansys::rest::client::EigenClient::add_vectors(
     auto id2 = post_vector(vec2);
 
     // Once the vectors are posted, request the operation
-    Json::Value body;
-    body["id1"] = id1;
-    body["id2"] = id2;
-    auto result = get("/add/Vectors", body.asString());
+    auto result = _conn->get("/add/Vectors/" + std::to_string(id1) + "/" +
+                             std::to_string(id2));
 
     // Let us read the result from the returned JSON
     Json::Value aux_value;
@@ -90,9 +86,9 @@ std::vector<double> ansys::rest::client::EigenClient::add_vectors(
         result.body.c_str() + static_cast<int>(result.body.length()),
         &aux_value, &err);
 
+    print_response(result);
     if (!success) {
-        print_response(result);
-        fprintf(stderr, "Failure parsing server response.");
+        fprintf(stderr, "Failure parsing server response.\n");
         return std::vector<double>{};
     } else {
         return json_to_vector(aux_value["vector-addition"]["result"]);
@@ -102,11 +98,6 @@ std::vector<double> ansys::rest::client::EigenClient::add_vectors(
 // ============================================================================
 // EigenClient PRIVATE METHODS
 // ============================================================================
-
-RestClient::Response ansys::rest::client::EigenClient::get(
-    const std::string& url, const std::string& data) {
-    return _conn->get(url + " -d " + data);
-}
 
 int ansys::rest::client::EigenClient::post_vector(
     const std::vector<double>& input) {
@@ -119,8 +110,13 @@ int ansys::rest::client::EigenClient::post_vector(
 
     // Let us start by parsing the vector into a string...
     // .. and posting the vectors to the server
-    aux_value["vector"] = vector_to_json(input);
-    auto response = _conn->post("/Vectors", aux_value.asString());
+    aux_value["value"] = vector_to_json(input);
+
+    Json::FastWriter fastWriter;
+    std::string output = fastWriter.write(aux_value);
+    fprintf(stdout, "Request: POST /Vectors Content: %s", output.c_str());
+
+    auto response = _conn->post("/Vectors", output);
     aux_value.clear();
 
     // Let us read the ids from the returned JSON
@@ -133,9 +129,9 @@ int ansys::rest::client::EigenClient::post_vector(
         response.body.c_str() + static_cast<int>(response.body.length()),
         &aux_value, &err);
 
+    print_response(response);
     if (!success) {
-        print_response(response);
-        fprintf(stderr, "Failure parsing server response.");
+        fprintf(stderr, "Failure parsing server response.\n");
         return -1;
     } else {
         id = aux_value["vector"]["id"].asInt();
@@ -152,10 +148,8 @@ Json::Value ansys::rest::client::EigenClient::vector_to_json(
     Json::Value vector;
 
     // Iterate over your vector and append values to the output JSON
-    int idx{0};
     for (const auto& elem : input) {
         vector.append(elem);
-        ++idx;
     }
 
     // Return the JSON
