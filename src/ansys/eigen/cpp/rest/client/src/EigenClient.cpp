@@ -69,8 +69,10 @@ std::vector<double> ansys::rest::client::EigenClient::add_vectors(
     auto id2 = post_vector(vec2);
 
     // Once the vectors are posted, request the operation
-    auto result = _conn->get("/add/Vectors/" + std::to_string(id1) + "/" +
-                             std::to_string(id2));
+    std::string request{"/add/Vectors/" + std::to_string(id1) + "/" +
+                        std::to_string(id2)};
+    fprintf(stdout, "Request: GET %s\n", request.c_str());
+    auto result = _conn->get(request);
 
     // Let us read the result from the returned JSON
     Json::Value aux_value;
@@ -92,6 +94,41 @@ std::vector<double> ansys::rest::client::EigenClient::add_vectors(
         return std::vector<double>{};
     } else {
         return json_to_vector(aux_value["vector-addition"]["result"]);
+    }
+}
+
+double ansys::rest::client::EigenClient::multiply_vectors(
+    const std::vector<double>& vec1, const std::vector<double>& vec2) {
+    // Start by posting the Vectors
+    auto id1 = post_vector(vec1);
+    auto id2 = post_vector(vec2);
+
+    // Once the vectors are posted, request the operation
+    std::string request{"/multiply/Vectors/" + std::to_string(id1) + "/" +
+                        std::to_string(id2)};
+    fprintf(stdout, "Request: GET %s\n", request.c_str());
+    auto result = _conn->get(request);
+
+    // Let us read the result from the returned JSON
+    Json::Value aux_value;
+    std::string err{};
+    bool success{true};
+
+    // Let us declare our JSON Reader
+    Json::CharReaderBuilder builder;
+    const std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
+
+    success = reader->parse(
+        result.body.c_str(),
+        result.body.c_str() + static_cast<int>(result.body.length()),
+        &aux_value, &err);
+
+    print_response(result);
+    if (!success) {
+        fprintf(stderr, "Failure parsing server response.\n");
+        return 0.0;
+    } else {
+        return aux_value["vector-multiplication"]["result"].asDouble();
     }
 }
 

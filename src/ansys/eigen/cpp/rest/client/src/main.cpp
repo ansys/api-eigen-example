@@ -14,6 +14,8 @@ int main(int argc, char const *argv[]) {
 
     client.add_vectors(vec1, vec2);
 
+    client.multiply_vectors(vec1, vec2);
+
     // Exit successfully
     return 0;
 }
