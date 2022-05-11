@@ -213,15 +213,20 @@ subprocess.call("make clean", shell=True)
 subprocess.call("cd ../../src/ansys/eigen/cpp/rest/server/docs ; doxygen", shell=True)
 
 breathe_projects = {
-    "cpp-rest-server": "../../src/ansys/eigen/cpp/rest/server/docs/xml/"
+    "cpp-rest-server": "../../src/ansys/eigen/cpp/rest/server/docs/xml/",
+    "cpp-rest-client": "../../src/ansys/eigen/cpp/rest/client/docs/xml/",
 }
-breathe_default_project = "cpp-rest-server"
+breathe_default_project = "cpp-rest-client"
 
 breathe_projects_source = {
     "cpp-rest-server": (
         "../../src/ansys/eigen/cpp/rest/server/src",
         ["RestServer.hpp", "RestDb.hpp", "EigenFunctionalities.hpp"],
-    )
+    ),
+    "cpp-rest-client": (
+        "../../src/ansys/eigen/cpp/rest/client/src",
+        ["EigenClient.hpp"],
+    ),
 }
 breathe_show_include = False
 breathe_separate_member_pages = True
