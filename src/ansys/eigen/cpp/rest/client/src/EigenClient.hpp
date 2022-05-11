@@ -25,14 +25,14 @@ class EigenClient {
     /**
      * @brief Construct a new Eigen Client object.
      *
-     * @param baseUrl - the API Eigen Example server endpoint (e.g.
+     * @param baseUrl the API Eigen Example server endpoint (e.g.
      * http://127.0.0.1:18081).
-     * @param user - (optional) the user in case of BasicAuthentication
+     * @param user (optional) the user in case of BasicAuthentication mechanism
+     * required. Default: empty.
+     * @param pwd (optional) the password in case of BasicAuthentication
      * mechanism required. Default: empty.
-     * @param pwd- (optional) the password in case of BasicAuthentication
-     * mechanism required. Default: empty.
-     * @param timeout - (optional) the timeout to be set for aborting
-     * connection. Default: 10.
+     * @param timeout (optional) the timeout to be set for aborting connection.
+     * Default: 10.
      */
     EigenClient(const std::string& baseUrl,
                 const std::string& user = std::string{},
@@ -52,8 +52,8 @@ class EigenClient {
      * @brief Method in charge of requesting a vector addition to the endpoint
      * server.
      *
-     * @param vec1 - the first vector involved in the operation.
-     * @param vec2 - the second vector involved in the operation.
+     * @param vec1 the first vector involved in the operation.
+     * @param vec2 the second vector involved in the operation.
      * @return std::vector<double>
      */
     std::vector<double> add_vectors(const std::vector<double>& vec1,
@@ -63,8 +63,8 @@ class EigenClient {
      * @brief Method in charge of requesting a vector dot product to the
      * endpoint server.
      *
-     * @param vec1 - the first vector involved in the operation.
-     * @param vec2 - the second vector involved in the operation.
+     * @param vec1 the first vector involved in the operation.
+     * @param vec2 the second vector involved in the operation.
      * @return double
      */
     double multiply_vectors(const std::vector<double>& vec1,
@@ -74,8 +74,8 @@ class EigenClient {
      * @brief Method in charge of requesting a matrix addition to the
      * endpoint server.
      *
-     * @param mat1 - the first matrix involved in the operation.
-     * @param mat2 - the second matrix involved in the operation.
+     * @param mat1 the first matrix involved in the operation.
+     * @param mat2 the second matrix involved in the operation.
      * @return std::vector<std::vector<double>>
      */
     std::vector<std::vector<double>> add_matrices(
@@ -86,8 +86,8 @@ class EigenClient {
      * @brief Method in charge of requesting a matrix multiplication to the
      * endpoint server.
      *
-     * @param mat1 - the first matrix involved in the operation.
-     * @param mat2 - the second matrix involved in the operation.
+     * @param mat1 the first matrix involved in the operation.
+     * @param mat2 the second matrix involved in the operation.
      * @return std::vector<std::vector<double>>
      */
     std::vector<std::vector<double>> multiply_matrices(
@@ -104,7 +104,7 @@ class EigenClient {
      * @brief Method in charge of connecting to the endpoint server to POST a
      * Vector Resource.
      *
-     * @param input - the vector we are interested in posting.
+     * @param input the vector we are interested in posting.
      * @return int - the ID of the posted vector.
      */
     int post_vector(const std::vector<double>& input);
@@ -113,7 +113,7 @@ class EigenClient {
      * @brief Method in charge of transforming a std::vector of type double to a
      * JSON object.
      *
-     * @param input - the vector to be formatted as a JSON object.
+     * @param input the vector to be formatted as a JSON object.
      * @return Json::Value
      */
     Json::Value vector_to_json(const std::vector<double>& input);
@@ -122,7 +122,7 @@ class EigenClient {
      * @brief Method in charge of transforming a JSON object which represents a
      * vector into a std::vector<double>.
      *
-     * @param input - the JSON object to be formatted as a vector.
+     * @param input the JSON object to be formatted as a vector.
      * @return std::vector<double>
      */
     std::vector<double> json_to_vector(const Json::Value& input);
@@ -131,7 +131,7 @@ class EigenClient {
      * @brief Method in charge of transforming a JSON object which represents a
      * matrix into a std::vector<std::vector<double>>.
      *
-     * @param input - the JSON object to be formatted as a matrix.
+     * @param input the JSON object to be formatted as a matrix.
      * @return std::vector<std::vector<double>>
      */
     std::vector<std::vector<double>> json_to_matrix(const Json::Value& input);
@@ -140,7 +140,7 @@ class EigenClient {
 /**
  * @brief Method for printing out Response objects in a common format.
  *
- * @param response - the RestClient::Response object.
+ * @param response the RestClient::Response object.
  */
 void print_response(const RestClient::Response& response);
 
