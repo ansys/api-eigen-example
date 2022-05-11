@@ -141,7 +141,7 @@ jobs:
 
       - name: Build C++ REST Client
         run: |
-          cd external/restclient-cpp-v0.5.2 &&./autogen.sh && ./configure && make install && cd ..
+          sudo apt update && sudo apt install curl && cd external/restclient-cpp-v0.5.2 &&./autogen.sh && ./configure && make install && cd ..
           cd src/ansys/eigen/cpp/rest/client/build/
           cmake .. && cmake --build .
 
