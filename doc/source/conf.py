@@ -221,7 +221,7 @@ breathe_projects = {
     "cpp-rest-server": "../../src/ansys/eigen/cpp/rest/server/docs/xml/",
     "cpp-rest-client": "../../src/ansys/eigen/cpp/rest/client/docs/xml/",
 }
-breathe_default_project = "cpp-rest-client"
+breathe_default_project = "cpp-rest-server"
 
 breathe_projects_source = {
     "cpp-rest-server": (
