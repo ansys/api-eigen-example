@@ -1,8 +1,8 @@
 name: Nightly Documentation Build
 
 on:
-  schedule:  # UTC at 0300
-    - cron:  '0 3 * * *'
+  schedule: # UTC at 0300
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
@@ -12,11 +12,11 @@ jobs:
     services:
       python-rest-server:
         image: ghcr.io/ansys/api-eigen-example/python-rest-server:latest
-        ports: 
+        ports:
           - 5000:5000
       python-grpc-server:
         image: ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
-        ports: 
+        ports:
           - 50051:50051
 
     steps:
@@ -37,7 +37,7 @@ jobs:
       - name: Build documentation
         run: |
           make -C doc html
-          
+
       - name: Upload documentation
         uses: actions/upload-artifact@v2
         with:
