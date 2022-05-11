@@ -6,7 +6,7 @@
 #define SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTSERVER_HPP
 
 /**
- * @brief This namespace contains the REST Server logic.
+ * @brief Namespace including the API Eigen Example Server implemented in C++.
  */
 namespace ansys::rest::server {
 

@@ -6,14 +6,10 @@
 #define SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTDB_HPP
 
 /**
- * @brief This namespace contains the REST Server logic.
+ * @brief Namespace including the API Eigen Example Server REST DB
+ * functionalities.
  */
-namespace ansys::rest {
-
-/**
- * @brief Namespace for including the REST DB functionalities.
- */
-namespace db {
+namespace ansys::rest::db {
 
 /**
  * @brief Enum holding the types of variables handled.
@@ -89,8 +85,6 @@ class RestDb {
     void initialize_db();
 };
 
-}  // namespace db
-
-}  // namespace ansys::rest
+}  // namespace ansys::rest::db
 
 #endif /* SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTDB_HPP */

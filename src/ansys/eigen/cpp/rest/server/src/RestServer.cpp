@@ -61,7 +61,7 @@ void ansys::rest::server::RestServer::vector_resource_endpoints() {
     CROW_ROUTE(_app, "/Vectors")
         .methods(crow::HTTPMethod::POST)([&](const crow::request& req) {
             // Check if the provided input can be processed
-            EigenFunctionalities::read_vector(req.body);
+            ansys::eigen::read_vector(req.body);
 
             // Inform the user that the processing was successful
             CROW_LOG_INFO << "Entry successfully processed: " + req.body;
@@ -114,7 +114,7 @@ void ansys::rest::server::RestServer::matrix_resource_endpoints() {
     CROW_ROUTE(_app, "/Matrices")
         .methods(crow::HTTPMethod::POST)([&](const crow::request& req) {
             // Check if the provided input can be processed
-            EigenFunctionalities::read_matrix(req.body);
+            ansys::eigen::read_matrix(req.body);
 
             // Inform the user that the processing was successful
             CROW_LOG_INFO << "Entry successfully processed: " + req.body;
@@ -297,14 +297,14 @@ crow::response ansys::rest::server::RestServer::add_vectors(int id1, int id2) {
     auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id2);
 
     // Now, transform them to Eigen::VectorXd objects
-    auto e_id1 = EigenFunctionalities::read_vector(s_id1);
-    auto e_id2 = EigenFunctionalities::read_vector(s_id2);
+    auto e_id1 = ansys::eigen::read_vector(s_id1);
+    auto e_id2 = ansys::eigen::read_vector(s_id2);
 
     // Once we have the Eigen Vectors, perform the operations
-    auto e_res = EigenFunctionalities::add_vectors(e_id1, e_id2);
+    auto e_res = ansys::eigen::add_vectors(e_id1, e_id2);
 
     // Now, we will write the resulting vector operation
-    auto res = EigenFunctionalities::write_vector(e_res);
+    auto res = ansys::eigen::write_vector(e_res);
 
     // And finally, write the response
     CROW_LOG_INFO << "Vector addition operation successful. Creating response.";
@@ -322,11 +322,11 @@ crow::response ansys::rest::server::RestServer::multiply_vectors(int id1,
     auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::VECTOR, id2);
 
     // Now, transform them to Eigen::VectorXd objects
-    auto e_id1 = EigenFunctionalities::read_vector(s_id1);
-    auto e_id2 = EigenFunctionalities::read_vector(s_id2);
+    auto e_id1 = ansys::eigen::read_vector(s_id1);
+    auto e_id2 = ansys::eigen::read_vector(s_id2);
 
     // Once we have the Eigen Vectors, perform the operations
-    auto e_res = EigenFunctionalities::multiply_vectors(e_id1, e_id2);
+    auto e_res = ansys::eigen::multiply_vectors(e_id1, e_id2);
 
     // And finally, write the response
     CROW_LOG_INFO
@@ -344,14 +344,14 @@ crow::response ansys::rest::server::RestServer::add_matrices(int id1, int id2) {
     auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id2);
 
     // Now, transform them to Eigen::MatrixXd objects
-    auto e_id1 = EigenFunctionalities::read_matrix(s_id1);
-    auto e_id2 = EigenFunctionalities::read_matrix(s_id2);
+    auto e_id1 = ansys::eigen::read_matrix(s_id1);
+    auto e_id2 = ansys::eigen::read_matrix(s_id2);
 
     // Once we have the Eigen Matrices, perform the operations
-    auto e_res = EigenFunctionalities::add_matrices(e_id1, e_id2);
+    auto e_res = ansys::eigen::add_matrices(e_id1, e_id2);
 
     // Now, we will write the resulting matrix operation
-    auto res = EigenFunctionalities::write_matrix(e_res);
+    auto res = ansys::eigen::write_matrix(e_res);
 
     // And finally, write the response
     CROW_LOG_INFO << "Matrix addition operation successful. Creating response.";
@@ -369,14 +369,14 @@ crow::response ansys::rest::server::RestServer::multiply_matrices(int id1,
     auto s_id2 = _db.load_resource(ansys::rest::db::DbTypes::MATRIX, id2);
 
     // Now, transform them to Eigen::MatrixXd objects
-    auto e_id1 = EigenFunctionalities::read_matrix(s_id1);
-    auto e_id2 = EigenFunctionalities::read_matrix(s_id2);
+    auto e_id1 = ansys::eigen::read_matrix(s_id1);
+    auto e_id2 = ansys::eigen::read_matrix(s_id2);
 
     // Once we have the Eigen Matrices, perform the operations
-    auto e_res = EigenFunctionalities::multiply_matrices(e_id1, e_id2);
+    auto e_res = ansys::eigen::multiply_matrices(e_id1, e_id2);
 
     // Now, we will write the resulting matrix operation
-    auto res = EigenFunctionalities::write_matrix(e_res);
+    auto res = ansys::eigen::write_matrix(e_res);
 
     // And finally, write the response
     CROW_LOG_INFO

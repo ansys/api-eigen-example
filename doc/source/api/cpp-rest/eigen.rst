@@ -3,5 +3,7 @@
 C++ REST Eigen-binder module
 ============================
 
-.. autodoxygenfile:: EigenFunctionalities.hpp
+.. doxygennamespace:: ansys::eigen
    :project: cpp-rest-server
+   :members:
+   :private-members:

@@ -2,27 +2,27 @@
 
 #include <crow.h>
 
-Eigen::MatrixXd EigenFunctionalities::multiply_matrices(
-    const Eigen::MatrixXd& a, const Eigen::MatrixXd& b) {
+Eigen::MatrixXd ansys::eigen::multiply_matrices(const Eigen::MatrixXd& a,
+                                                const Eigen::MatrixXd& b) {
     return a * b;
 }
 
-Eigen::MatrixXd EigenFunctionalities::add_matrices(const Eigen::MatrixXd& a,
-                                                   const Eigen::MatrixXd& b) {
+Eigen::MatrixXd ansys::eigen::add_matrices(const Eigen::MatrixXd& a,
+                                           const Eigen::MatrixXd& b) {
     return a + b;
 }
 
-double EigenFunctionalities::multiply_vectors(const Eigen::VectorXd& v,
-                                              const Eigen::VectorXd& w) {
+double ansys::eigen::multiply_vectors(const Eigen::VectorXd& v,
+                                      const Eigen::VectorXd& w) {
     return v.dot(w);
 }
 
-Eigen::VectorXd EigenFunctionalities::add_vectors(const Eigen::VectorXd& v,
-                                                  const Eigen::VectorXd& w) {
+Eigen::VectorXd ansys::eigen::add_vectors(const Eigen::VectorXd& v,
+                                          const Eigen::VectorXd& w) {
     return v + w;
 }
 
-Eigen::VectorXd EigenFunctionalities::read_vector(const std::string& input) {
+Eigen::VectorXd ansys::eigen::read_vector(const std::string& input) {
     // Initialize our resulting vector
     Eigen::VectorXd res{};
 
@@ -62,7 +62,7 @@ Eigen::VectorXd EigenFunctionalities::read_vector(const std::string& input) {
     return res;
 }
 
-Eigen::MatrixXd EigenFunctionalities::read_matrix(const std::string& input) {
+Eigen::MatrixXd ansys::eigen::read_matrix(const std::string& input) {
     // Initialize our resulting vector
     Eigen::MatrixXd res{};
 
@@ -128,7 +128,7 @@ Eigen::MatrixXd EigenFunctionalities::read_matrix(const std::string& input) {
     return res;
 }
 
-std::string EigenFunctionalities::write_vector(const Eigen::VectorXd& input) {
+std::string ansys::eigen::write_vector(const Eigen::VectorXd& input) {
     // Initialize the JSON list
     std::string json_list{};
 
@@ -152,7 +152,7 @@ std::string EigenFunctionalities::write_vector(const Eigen::VectorXd& input) {
     return json_list;
 }
 
-std::string EigenFunctionalities::write_matrix(const Eigen::MatrixXd& input) {
+std::string ansys::eigen::write_matrix(const Eigen::MatrixXd& input) {
     // Initialize the JSON list
     std::string json_list{};
 
@@ -165,13 +165,13 @@ std::string EigenFunctionalities::write_matrix(const Eigen::MatrixXd& input) {
     for (int i = 0; i < (input.rows() - 1); ++i) {
         // Get the row as an Eigen::VectorXd
         row_vector = input.row(i);
-        json_list.append(EigenFunctionalities::write_vector(row_vector));
+        json_list.append(ansys::eigen::write_vector(row_vector));
         json_list.append(", ");
     }
 
     // Append the last element
     row_vector = input.row(input.rows() - 1);
-    json_list.append(EigenFunctionalities::write_vector(row_vector));
+    json_list.append(ansys::eigen::write_vector(row_vector));
 
     // Close the list
     json_list.append("]");
