@@ -141,7 +141,7 @@ jobs:
 
       - name: Build C++ REST Client
         run: |
-          sudo apt update && sudo apt install libcurl4-openssl-dev && cd external/restclient-cpp-v0.5.2 &&./autogen.sh && ./configure && make install && cd ..
+          sudo apt update && sudo apt install libcurl4-openssl-dev && cd external/restclient-cpp-v0.5.2 &&./autogen.sh && ./configure && sudo make install && cd ..
           cd src/ansys/eigen/cpp/rest/client/build/
           cmake .. && cmake --build .
 
