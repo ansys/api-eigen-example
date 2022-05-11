@@ -10,5 +10,6 @@ This is the REST subpackage which contains the needed elements for client-server
    :hidden:
 
    server
+   client
    restdb
    eigen

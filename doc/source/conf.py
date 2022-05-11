@@ -210,7 +210,8 @@ epub_exclude_files = ["search.html"]
 import subprocess
 
 subprocess.call("make clean", shell=True)
-subprocess.call("cd ../../src/ansys/eigen/cpp/rest/server/docs ; doxygen", shell=True)
+subprocess.call("cd ../../src/ansys/eigen/cpp/rest/server/docs ; doxygen; cd -", shell=True)
+subprocess.call("cd ../../src/ansys/eigen/cpp/rest/client/docs ; doxygen; cd -", shell=True)
 
 breathe_projects = {
     "cpp-rest-server": "../../src/ansys/eigen/cpp/rest/server/docs/xml/",

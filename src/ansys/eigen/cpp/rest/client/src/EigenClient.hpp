@@ -19,7 +19,7 @@ class EigenClient {
     EigenClient();
 
     /**
-     * @brief Destroy the Eigen Client object
+     * @brief Destroy the Eigen Client object.
      */
     ~EigenClient();
 
