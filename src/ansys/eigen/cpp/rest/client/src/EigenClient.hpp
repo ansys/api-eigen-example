@@ -110,6 +110,15 @@ class EigenClient {
     int post_vector(const std::vector<double>& input);
 
     /**
+     * @brief Method in charge of connecting to the endpoint server to POST a
+     * Matrix Resource.
+     *
+     * @param input the matrix we are interested in posting.
+     * @return int - the ID of the posted matrix.
+     */
+    int post_matrix(const std::vector<std::vector<double>>& input);
+
+    /**
      * @brief Method in charge of transforming a std::vector of type double to a
      * JSON object.
      *
@@ -117,6 +126,15 @@ class EigenClient {
      * @return Json::Value
      */
     Json::Value vector_to_json(const std::vector<double>& input);
+
+    /**
+     * @brief Method in charge of transforming a std::vector<std::vecto> of type
+     * double to a JSON object.
+     *
+     * @param input the matrix to be formatted as a JSON object.
+     * @return Json::Value
+     */
+    Json::Value matrix_to_json(const std::vector<std::vector<double>>& input);
 
     /**
      * @brief Method in charge of transforming a JSON object which represents a
