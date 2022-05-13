@@ -29,7 +29,7 @@ class EigenClient {
      * @brief Construct a new Eigen Client object.
      *
      * @param baseUrl the API Eigen Example server endpoint (e.g.
-     * http://127.0.0.1:18081).
+     * http://127.0.0.1:18080).
      * @param user (optional) the user in case of BasicAuthentication mechanism
      * required. Default: empty.
      * @param pwd (optional) the password in case of BasicAuthentication

@@ -35,11 +35,11 @@ can also be easily performed using CURL commands).
 
 This demo project contains basically 4 different examples:
 
-- A Python REST API demo using both client-server features, which has
+- A **Python REST API** demo using both client-server features, which has
   a wrapping over the Eigen library using pybind11.
-- A Python gRPC demo using both client-server features, which
+- A **Python gRPC API** demo using both client-server features, which
   has a wrapping over the Eigen library using pybind11.
-- [IN PROGRESS] A C++ REST API demo using both client-server features, 
+- A **C++ REST API** demo using both client-server features, 
   with direct interaction with the Eigen Library on the server side.
 - [IN PROGRESS] A C++ gRPC demo using both client-server features, with
   direct interaction with the Eigen Library on the server side.
