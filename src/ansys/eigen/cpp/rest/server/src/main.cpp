@@ -1,4 +1,3 @@
-#include "RestDb.hpp"
 #include "RestServer.hpp"
 
 int main() {
