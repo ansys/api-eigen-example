@@ -15,7 +15,7 @@ ansys::rest::client::EigenClient::EigenClient(const std::string& baseUrl,
                                               const std::string& pwd,
                                               int timeout) {
     // Start creating the EigenClient object
-    fprintf(stdout, "EigenClient object created.\n");
+    std::cout << "EigenClient object created." << std::endl;
 
     // Initialize the RestClient
     RestClient::init();
@@ -25,7 +25,7 @@ ansys::rest::client::EigenClient::EigenClient(const std::string& baseUrl,
 
     // Add the BasicAuth headers if user and pwd available
     if (!user.empty() && !pwd.empty()) {
-        fprintf(stdout, "Setting BasicAuthentication credentials.\n");
+        std::cout << "Setting BasicAuthentication credentials." << std::endl;
         _conn->SetBasicAuth(user, pwd);
     }
 
@@ -41,7 +41,7 @@ ansys::rest::client::EigenClient::EigenClient(const std::string& baseUrl,
 
 ansys::rest::client::EigenClient::~EigenClient() {
     // Start destroying the EigenClient object
-    fprintf(stdout, "EigenClient object destroyed.\n");
+    std::cout << "EigenClient object destroyed." << std::endl;
 
     // Delete the client connection
     delete _conn;
@@ -71,7 +71,7 @@ std::vector<double> ansys::rest::client::EigenClient::add_vectors(
     // Once the vectors are posted, request the operation
     std::string request{"/add/Vectors/" + std::to_string(id1) + "/" +
                         std::to_string(id2)};
-    fprintf(stdout, "Request: GET %s\n", request.c_str());
+    std::cout << "Request: GET " << request << std::endl;
     auto result = _conn->get(request);
 
     // Let us read the result from the returned JSON
@@ -90,7 +90,7 @@ std::vector<double> ansys::rest::client::EigenClient::add_vectors(
 
     print_response(result);
     if (!success) {
-        fprintf(stderr, "Failure parsing server response.\n");
+        std::cerr << "Failure parsing server response." << std::endl;
         return std::vector<double>{};
     } else {
         return json_to_vector(aux_value["vector-addition"]["result"]);
@@ -106,7 +106,7 @@ double ansys::rest::client::EigenClient::multiply_vectors(
     // Once the vectors are posted, request the operation
     std::string request{"/multiply/Vectors/" + std::to_string(id1) + "/" +
                         std::to_string(id2)};
-    fprintf(stdout, "Request: GET %s\n", request.c_str());
+    std::cout << "Request: GET " << request << std::endl;
     auto result = _conn->get(request);
 
     // Let us read the result from the returned JSON
@@ -125,7 +125,7 @@ double ansys::rest::client::EigenClient::multiply_vectors(
 
     print_response(result);
     if (!success) {
-        fprintf(stderr, "Failure parsing server response.\n");
+        std::cerr << "Failure parsing server response." << std::endl;
         return 0.0;
     } else {
         return aux_value["vector-multiplication"]["result"].asDouble();
@@ -142,7 +142,7 @@ std::vector<std::vector<double>> ansys::rest::client::EigenClient::add_matrices(
     // Once the matrices are posted, request the operation
     std::string request{"/add/Matrices/" + std::to_string(id1) + "/" +
                         std::to_string(id2)};
-    fprintf(stdout, "Request: GET %s\n", request.c_str());
+    std::cout << "Request: GET " << request << std::endl;
     auto result = _conn->get(request);
 
     // Let us read the result from the returned JSON
@@ -161,7 +161,7 @@ std::vector<std::vector<double>> ansys::rest::client::EigenClient::add_matrices(
 
     print_response(result);
     if (!success) {
-        fprintf(stderr, "Failure parsing server response.\n");
+        std::cerr << "Failure parsing server response." << std::endl;
         return std::vector<std::vector<double>>{};
     } else {
         return json_to_matrix(aux_value["matrix-addition"]["result"]);
@@ -179,7 +179,7 @@ ansys::rest::client::EigenClient::multiply_matrices(
     // Once the matrices are posted, request the operation
     std::string request{"/multiply/Matrices/" + std::to_string(id1) + "/" +
                         std::to_string(id2)};
-    fprintf(stdout, "Request: GET %s\n", request.c_str());
+    std::cout << "Request: GET " << request << std::endl;
     auto result = _conn->get(request);
 
     // Let us read the result from the returned JSON
@@ -198,7 +198,7 @@ ansys::rest::client::EigenClient::multiply_matrices(
 
     print_response(result);
     if (!success) {
-        fprintf(stderr, "Failure parsing server response.\n");
+        std::cerr << "Failure parsing server response." << std::endl;
         return std::vector<std::vector<double>>{};
     } else {
         return json_to_matrix(aux_value["matrix-multiplication"]["result"]);
@@ -224,7 +224,7 @@ int ansys::rest::client::EigenClient::post_vector(
 
     Json::FastWriter fastWriter;
     std::string output = fastWriter.write(aux_value);
-    fprintf(stdout, "Request: POST /Vectors Content: %s", output.c_str());
+    std::cout << "Request: POST /Vectors Content: " << output << std::endl;
 
     auto response = _conn->post("/Vectors", output);
     aux_value.clear();
@@ -241,7 +241,7 @@ int ansys::rest::client::EigenClient::post_vector(
 
     print_response(response);
     if (!success) {
-        fprintf(stderr, "Failure parsing server response.\n");
+        std::cerr << "Failure parsing server response." << std::endl;
         return -1;
     } else {
         id = aux_value["vector"]["id"].asInt();
@@ -267,7 +267,7 @@ int ansys::rest::client::EigenClient::post_matrix(
 
     Json::FastWriter fastWriter;
     std::string output = fastWriter.write(aux_value);
-    fprintf(stdout, "Request: POST /Matrices Content: %s", output.c_str());
+    std::cout << "Request: POST /Matrices Content: " << output << std::endl;
 
     auto response = _conn->post("/Matrices", output);
     aux_value.clear();
@@ -284,7 +284,7 @@ int ansys::rest::client::EigenClient::post_matrix(
 
     print_response(response);
     if (!success) {
-        fprintf(stderr, "Failure parsing server response.\n");
+        std::cerr << "Failure parsing server response." << std::endl;
         return -1;
     } else {
         id = aux_value["matrix"]["id"].asInt();
@@ -360,6 +360,6 @@ ansys::rest::client::EigenClient::json_to_matrix(const Json::Value& input) {
 // ============================================================================
 
 void ansys::rest::client::print_response(const RestClient::Response& response) {
-    fprintf(stdout, "Response: Code - %d; Body: %s\n", response.code,
-            response.body.c_str());
+    std::cout << "Response: Code - " << response.code
+              << " ; Body: " << response.body << std::endl;
 }

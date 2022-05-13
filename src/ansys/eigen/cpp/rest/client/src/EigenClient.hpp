@@ -10,10 +10,13 @@
 #ifndef SRC_ANSYS_EIGEN_CPP_REST_CLIENT_SRC_EIGENCLIENT_HPP
 #define SRC_ANSYS_EIGEN_CPP_REST_CLIENT_SRC_EIGENCLIENT_HPP
 
+namespace ansys {
+namespace rest {
+
 /**
  * @brief Namespace including the API Eigen Example Client implemented in C++.
  */
-namespace ansys::rest::client {
+namespace client {
 
 /**
  * @brief Class containing the basic functionalities to interact with the API
@@ -162,6 +165,8 @@ class EigenClient {
  */
 void print_response(const RestClient::Response& response);
 
-}  // namespace ansys::rest::client
+}  // namespace client
+}  // namespace rest
+}  // namespace ansys
 
 #endif /* SRC_ANSYS_EIGEN_CPP_REST_CLIENT_SRC_EIGENCLIENT_HPP */
