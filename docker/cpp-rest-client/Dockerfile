@@ -17,10 +17,10 @@ RUN cd project/build/ && cmake .. && cmake --build . && make install && cd -
 RUN ldconfig -v
 
 # And add the demo! And some fun dependencies :)
-ADD docker/cpp-rest-client/demo.ipynb /client/demo.ipynb
 RUN conda install -c conda-forge jupyterlab
 RUN conda install -c conda-forge xeus-cling
 RUN conda install curl
+ADD docker/cpp-rest-client/demo.ipynb /client/demo.ipynb
 
 # Expose our port for accessing the Jupyter Notebook
 EXPOSE 8888
