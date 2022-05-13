@@ -20,8 +20,9 @@ communicating with the server without needing to know the specifics of the proto
 However, feel free to interact directly by your own means with the server (e.g. API REST communication 
 can also be easily performed using CURL commands).
 
-## Getting Started
-To use the API Eigen Example project you do not need any specific requirements or
+## Getting Started with the Python packages
+
+To use the API Eigen Example Python project you do not need any specific requirements or
 additional software, apart from the ones to be installed via the requirements --all-files
 and a CMake version of the Eigen library.
 
@@ -65,6 +66,117 @@ packages by importing them as follows
     >>> import ansys.eigen.python.rest.client as rest_client
     >>> client = rest_client.DemoRESTClient("127.0.0.1", 5000)
     >>> client.get_connection_details()
+```
+
+## Getting Started with the C++ packages
+To use the API Eigen Example C++ projects, the installation process is a bit more cumbersome.
+First of all, you would need to install the following packaged libraries: cmake.
+
+```bash
+    sudo apt install cmake
+```
+
+Now depending on the C++ project, the dependencies may vary. Go into your sections of interest from the ones below!
+
+### Installing the C++ REST Server
+
+Installing the C++ REST server manually is a very simple process. Just run the following command lines from
+the root of the repository.
+
+```bash
+    pip install -r requirements/requirements_build.txt .
+    cd src/ansys/eigen/cpp/rest/server/build/
+    conan install .. && cmake .. && cmake --build . && sudo make install
+```
+
+You are ready to go with the C++ REST Server! Start writing your own C++ ``main.cpp`` file and
+include the project header files as follows:
+
+```cpp
+    #include <apieigen/rest/RestServer.hpp>
+
+    int main() {
+       // Let us instantiate our server
+       ansys::rest::server::RestServer server{};
+
+       // Start serving!
+       server.serve();
+    }
+```
+
+For compiling, just link the library as follows:
+
+```bash
+    g++ -o myServer main.cpp -lapieigen_example_rest_server
+```
+
+And run your server!
+
+```bash
+    ./myServer
+```
+
+### Installing the C++ REST Client
+
+Installing the C++ REST client manually is a little bit more complex process. We will have to install some
+development libraries and compile (in place) some additional external libraries.
+
+First, we need to install a ``dev`` version of ``libcurl``. Using an Ubuntu package manager as ``apt``, one should have to do as follows:
+
+```bash
+    sudo apt install libcurl4-openssl-dev
+```
+
+Once we have ``libcurl-dev`` installed, we now have to compile some external projects. These external projects have been frozen at a given version
+within this repository and they can be found in the ``external`` folder. To install them, just follow the next steps:
+
+```bash
+    sudo apt update && sudo apt install libcurl4-openssl-dev && cd external/restclient-cpp-v0.5.2 && ./autogen.sh && ./configure && sudo make install && cd -
+    sudo apt update && cd external/jsoncpp-v1.9.5/build && cmake -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp .. && sudo make install && cd - 
+```
+
+Now, once we have all dependencies installed, we will build and install the client library!
+
+```bash
+    cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build . && sudo make install && cd -
+```
+
+And that's it! You are ready to use the REST C++ Client library. Start writing your own C++ ``client.cpp`` file and
+include the project header files as follows:
+
+```cpp
+
+   #include <vector>
+   #include <apieigen/rest/EigenClient.hpp>
+
+   int main(int argc, char const *argv[]) {
+       // ------------------------------------------------------------------------
+       // Deploying the client
+       // ------------------------------------------------------------------------
+       // Instantiate an EigenClient
+       auto client = ansys::rest::client::EigenClient("http://0.0.0.0:18080");
+
+       // ------------------------------------------------------------------------
+       // REQUESTING GREETING - A.K.A "Hello World"
+       // ------------------------------------------------------------------------
+       // Let us request a greeting!
+       client.request_greeting();
+
+       // Exit successfully
+       return 0;
+   }
+```
+
+For compiling, just link the library as follows:
+
+```bash
+    g++ -o myClientApp client.cpp -lapieigen_example_rest_client
+```
+
+And run your client application!
+
+```bash
+    ./myClientApp
 ```
 
 ## Documentation
