@@ -1,0 +1,7 @@
+ [requires]
+ sqlite3/3.38.5
+ eigen/3.4.0
+ crowcpp-crow/1.0+1
+
+ [generators]
+ cmake

@@ -28,6 +28,11 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_gallery.gen_gallery",
     "sphinxemoji.sphinxemoji",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.imgmath",
+    "sphinx.ext.todo",
+    "breathe",
 ]
 
 # Intersphinx mapping
@@ -199,3 +204,34 @@ epub_title = project
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ["search.html"]
+
+# -- Import the C++ docs -----------------------------------------------------
+
+import subprocess
+
+subprocess.call("make clean", shell=True)
+subprocess.call(
+    "cd ../../src/ansys/eigen/cpp/rest/server/docs ; doxygen; cd -", shell=True
+)
+subprocess.call(
+    "cd ../../src/ansys/eigen/cpp/rest/client/docs ; doxygen; cd -", shell=True
+)
+
+breathe_projects = {
+    "cpp-rest-server": "../../src/ansys/eigen/cpp/rest/server/docs/xml/",
+    "cpp-rest-client": "../../src/ansys/eigen/cpp/rest/client/docs/xml/",
+}
+breathe_default_project = "cpp-rest-server"
+
+breathe_projects_source = {
+    "cpp-rest-server": (
+        "../../src/ansys/eigen/cpp/rest/server/src",
+        ["RestServer.hpp", "RestDb.hpp", "EigenFunctionalities.hpp"],
+    ),
+    "cpp-rest-client": (
+        "../../src/ansys/eigen/cpp/rest/client/src",
+        ["EigenClient.hpp"],
+    ),
+}
+breathe_show_include = False
+breathe_separate_member_pages = True

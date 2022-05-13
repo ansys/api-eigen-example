@@ -110,3 +110,138 @@ This way, we would have our client available to perform operations such as the f
    cli.request_greeting("James")                  # >>> Server answering  "Hello, James!"
    vec_add = cli.add_vectors(vec_1, vec_2)        # >>> numpy.ndarray([ 6.0,  6.0,  5.0,  4.0])
    vec_mul = cli.multiply_vectors(vec_1, vec_2)   # >>> 19 (== dot product of vec_1 and vec_2)
+
+==============================================
+Understanding the API Eigen Example C++ Module
+==============================================
+
+Within this project, apart from Python packages, there are also C++ projects. These projects are basically the C++ implementations
+of the previously explained Python packages. They can be found within the repository in the following directories:
+
+- The C++ REST projects: ``src/ansys/eigen/cpp/rest``
+- The C++ gRPC projects: ``src/ansys/eigen/cpp/grpc``
+
+Each of these two directories also contains two projects: ``client`` and ``server`` which are the key modules for
+performing the demos. Let's look into each of the two sets of projects (REST and gRPC).
+
+---------------------------------------
+The API REST Eigen Example C++ Projects
+---------------------------------------
+
+First of all, you would need to install the projects! In order to do so, please follow the instructions in
+:ref:`getting_started`
+
+Assuming you have already installed them, let's do some simple includes:
+
+.. code:: cpp
+
+   #include <apieigen/rest/EigenClient.hpp>
+   #include <apieigen/rest/RestServer.hpp>
+
+
+The API REST C++ server is characterized for being a CrowCpp application, which
+contains a SQLite DB. This server is intended to be run easily with the following
+commands. 
+
+If you created a simple ``server.cpp`` file, you could do the following:
+
+.. code:: cpp
+
+   #include <apieigen/rest/RestServer.hpp>
+
+   int main() {
+      // Let us instantiate our server
+      ansys::rest::server::RestServer server{};
+
+      // Start serving!
+      server.serve();
+   }
+
+If you know compiled the ``server.cpp`` file once the library is installed such that:
+
+.. code:: bash
+
+   g++ -o myServer server.cpp -lapieigen_example_rest_server
+
+You would just have to run the outcoming executable from the compilation:
+
+.. code:: bash
+   
+   ./myServer
+
+And now, your server would be deployed!
+
+.. code:: bash
+
+   >>> Opened database successfully.
+   >>> RestDb object created.
+   >>> DB tables created successfully.
+   >>> (2022-05-13 08:48:54) [INFO    ] REST Server object instantiated.
+   >>> (2022-05-13 08:48:54) [INFO    ] Crow/1.0 server is running at http://0.0.0.0:18080 using 16 threads
+   >>> (2022-05-13 08:48:54) [INFO    ] Call `app.loglevel(crow::LogLevel::Warning)` to hide Info level logs.
+
+This will deploy the server by its default parameters, though you can always deploy it with your own custom
+parameters, by providing the optional inputs in the `serve(...)` method.
+
+Now, let us look into the client!
+
+The C++ client contains a class called ``EigenClient``, which basically provide the end-user the tools to interact
+directly with the previously deployed server. For example, if we wanted to create an API REST client for interacting with
+our previously deployed server we would, in a new C++ file which we will call ``client.cpp``:
+
+.. code:: cpp
+
+   #include <vector>
+
+   #include <apieigen/rest/EigenClient.hpp>
+
+   int main(int argc, char const *argv[]) {
+       // ------------------------------------------------------------------------
+       // Deploying the client
+       // ------------------------------------------------------------------------
+       // Instantiate an EigenClient
+       auto client = ansys::rest::client::EigenClient("http://0.0.0.0:18080");
+
+       // ------------------------------------------------------------------------
+       // REQUESTING GREETING - A.K.A "Hello World"
+       // ------------------------------------------------------------------------
+       // Let us request a greeting!
+       client.request_greeting();
+
+       // ------------------------------------------------------------------------
+       // Performing vector operations
+       // ------------------------------------------------------------------------
+       // Let us create some reference vectors
+       std::vector<double> vec1{1.0, 2.0, 3.0, 50.0};
+       std::vector<double> vec2{4.0, 5.0, 8.0, 10.0};
+
+       // Let us add them
+       auto result = client.add_vectors(vec1, vec2);
+
+       // Exit successfully
+       return 0;
+   }
+
+
+The previous client, for example, would deal with a vector addition operation via REST API interaction
+with our server, apart from requesting a greeting!
+
+In order to compile the client, one should do as follows:
+
+.. code:: bash
+
+   g++ -o myClientApp client.cpp -lapieigen_example_rest_client
+
+And then you would just have to run the outcoming executable from the compilation:
+
+.. code:: bash
+   
+   ./myClientApp
+
+Enjoy creating your own apps!
+
+---------------------------------------
+The API gRPC Eigen Example C++ Projects
+---------------------------------------
+
+Coming soon!

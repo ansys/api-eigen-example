@@ -14,7 +14,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   stylecheck:
     name: Style Check
     runs-on: ubuntu-latest
@@ -32,14 +31,14 @@ jobs:
       - name: Run pre-commit
         run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
-  testimport:
-    name: Smoke Tests
+  python_test_import:
+    name: Python - Smoke Tests
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         # os: [windows-latest, ubuntu-latest]
         os: [ubuntu-latest]
-        python-version: ['3.7', '3.8', '3.9']
+        python-version: ["3.7", "3.8", "3.9"]
 
     steps:
       - uses: actions/checkout@v2
@@ -58,15 +57,6 @@ jobs:
           restore-keys: |
             Python-${{ runner.os }}-${{ matrix.python-version }}
 
-      # - name: Windows pip cache
-      #   uses: actions/cache@v2
-      #   if: ${{ runner.os == 'Windows' }}
-      #   with:
-      #     path: ~\AppData\Local\pip\Cache
-      #     key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
-      #     restore-keys: |
-      #       Python-${{ runner.os }}-${{ matrix.python-version }}
-
       - name: Install eigen library
         run: |
           sudo apt update
@@ -84,10 +74,10 @@ jobs:
         run: |
           python -c "from ansys.eigen.python.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
 
-  build_test:
-    name: Build and Unit Testing
-    needs: 
-      - testimport
+  python_build_test:
+    name: Python - Build and Unit Testing
+    needs:
+      - python_test_import
       - stylecheck
     runs-on: ubuntu-latest
 
@@ -110,7 +100,7 @@ jobs:
           key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
           restore-keys: |
             Python-${{ runner.os }}-${{ matrix.python-version }}
-      
+
       - name: Install packages
         run: |
           pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
@@ -127,19 +117,50 @@ jobs:
           path: cov_html
           retention-days: 7
 
+  cpp_build_test:
+    name: C++ - Build and Unit Testing
+    needs:
+      - stylecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install conan
+        run: pip install conan
+
+      - name: Build C++ REST Server
+        run: |
+          cd src/ansys/eigen/cpp/rest/server/build/
+          conan install .. && cmake .. && cmake --build .
+
+      #  Requires installing restclient-cpp and jsoncpp libs manually - not available in conan.io
+      - name: Build C++ REST Client
+        run: |
+          sudo apt update && sudo apt install libcurl4-openssl-dev && cd external/restclient-cpp-v0.5.2 && ./autogen.sh && ./configure && sudo make install && cd -
+          sudo apt update && cd external/jsoncpp-v1.9.5/build && cmake -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp .. && sudo make install && cd - 
+          cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build .
+
   build_doc:
     name: Build Documentation
-    needs: build_test
+    needs:
+      - python_build_test
+      - cpp_build_test
     runs-on: ubuntu-latest
 
     services:
       python-rest-server:
         image: ghcr.io/ansys/api-eigen-example/python-rest-server:latest
-        ports: 
+        ports:
           - 5000:5000
       python-grpc-server:
         image: ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
-        ports: 
+        ports:
           - 50051:50051
 
     steps:
@@ -161,7 +182,7 @@ jobs:
 
       - name: Install project requirements
         run: |
-          sudo apt install libeigen3-dev
+          sudo apt install libeigen3-dev doxygen graphviz
           pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
           pip install -r requirements/requirements_build.txt .
           pip install -r requirements/requirements_docs.txt
@@ -169,7 +190,7 @@ jobs:
       - name: Build documentation
         run: |
           make -C doc html
-          
+
       - name: Upload documentation
         uses: actions/upload-artifact@v2
         with:
