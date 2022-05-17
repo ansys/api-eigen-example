@@ -15,10 +15,14 @@ link_libraries(${CONAN_LIBS})
 # Add the headers and sources for it to work
 set(headers 
     src/GRPCClient.hpp
+    src/generated/grpcdemo.pb.h
+    src/generated/grpcdemo.grpc.pb.h
 )
 
 set(sources 
     src/GRPCClient.cpp
+    src/generated/grpcdemo.pb.cc
+    src/generated/grpcdemo.grpc.pb.cc
 )
 # Add the example executable
 add_executable(cpp_grpc_client src/main.cpp)
