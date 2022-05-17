@@ -35,23 +35,23 @@ build/.deps_done: conanfile.txt .venv/.done
 	. $(VENV_ACTIVATE) && conan install -if build --build=* --profile=grpc_cpp_client .
 	@touch $@
 
-generated_src/.generate_done: $(PROTOS_DIR)/grpcdemo.proto build/.deps_done
+src/generated/.generate_done: $(PROTOS_DIR)/grpcdemo.proto build/.deps_done
 	@echo "### Compiling .proto file to C++ source ###"
 	$(PROTOC) \
       --proto_path=$(PROTOS_DIR) \
-      --cpp_out=generated_src \
-      --grpc_out=generated_src \
+      --cpp_out=src/generated \
+      --grpc_out=src/generated \
       --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) \
       grpcdemo.proto
 	@touch $@
 
-compile_project: build/.deps_done generated_src/.generate_done CMakeLists.txt
+compile_project: build/.deps_done src/generated/.generate_done CMakeLists.txt
 	@echo "### Setting up CMake ###"
 	cd build && cmake ..
 	@echo "### Compiling the C++ source ###"
 	$(MAKE) -C build
 
-install: build/.deps_done generated_src/.generate_done CMakeLists.txt
+install: build/.deps_done src/generated/.generate_done CMakeLists.txt
 	@echo "### Setting up CMake ###"
 	cd build && cmake ..
 	@echo "### Compiling the C++ source ###"
@@ -60,7 +60,7 @@ install: build/.deps_done generated_src/.generate_done CMakeLists.txt
 clean:
 	rm -rf .venv
 	rm -rf build/*
-	rm -rf generated_src/*
+	rm -rf src/generated/*
 	rm -rf **/.*done
 
 .PHONY: clean compile_project all
