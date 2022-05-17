@@ -216,10 +216,18 @@ subprocess.call(
 subprocess.call(
     "cd ../../src/ansys/eigen/cpp/rest/client/docs ; doxygen; cd -", shell=True
 )
+subprocess.call(
+    "cd ../../src/ansys/eigen/cpp/grpc/server/docs ; doxygen; cd -", shell=True
+)
+subprocess.call(
+    "cd ../../src/ansys/eigen/cpp/grpc/client/docs ; doxygen; cd -", shell=True
+)
 
 breathe_projects = {
     "cpp-rest-server": "../../src/ansys/eigen/cpp/rest/server/docs/xml/",
     "cpp-rest-client": "../../src/ansys/eigen/cpp/rest/client/docs/xml/",
+    "cpp-grpc-server": "../../src/ansys/eigen/cpp/grpc/server/docs/xml/",
+    "cpp-grpc-client": "../../src/ansys/eigen/cpp/grpc/client/docs/xml/",
 }
 breathe_default_project = "cpp-rest-server"
 
@@ -231,6 +239,14 @@ breathe_projects_source = {
     "cpp-rest-client": (
         "../../src/ansys/eigen/cpp/rest/client/src",
         ["EigenClient.hpp"],
+    ),
+    "cpp-grpc-server": (
+        "../../src/ansys/eigen/cpp/grpc/server/src",
+        ["GRPCServer.hpp", "GRPCService.hpp"],
+    ),
+    "cpp-grpc-client": (
+        "../../src/ansys/eigen/cpp/grpc/client/src",
+        ["GRPCClient.hpp"],
     ),
 }
 breathe_show_include = False
