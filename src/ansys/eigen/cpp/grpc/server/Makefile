@@ -45,17 +45,18 @@ src/generated/.generate_done: $(PROTOS_DIR)/grpcdemo.proto build/.deps_done
       grpcdemo.proto
 	@touch $@
 
-compile_project: build/.deps_done src/generated/.generate_done CMakeLists.txt
+build/.compile_project_done: build/.deps_done src/generated/.generate_done CMakeLists.txt
 	@echo "### Setting up CMake ###"
 	cd build && cmake ..
 	@echo "### Compiling the C++ source ###"
 	$(MAKE) -C build
+	@touch $@
 
-install: build/.deps_done src/generated/.generate_done CMakeLists.txt
-	@echo "### Setting up CMake ###"
-	cd build && cmake ..
-	@echo "### Compiling the C++ source ###"
+install: build/.compile_project_done
+	@echo "### Installing the library ###"
 	$(MAKE) -C build install
+
+compile: build/.compile_project_done
 
 clean:
 	rm -rf .venv
@@ -63,4 +64,4 @@ clean:
 	rm -rf src/generated/*
 	rm -rf **/.*done
 
-.PHONY: clean compile_project all
+.PHONY: clean compile all

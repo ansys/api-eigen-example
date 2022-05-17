@@ -146,6 +146,16 @@ jobs:
           sudo apt update && cd external/jsoncpp-v1.9.5/build && cmake -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp .. && sudo make install && cd - 
           cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build .
 
+      - name: Build C++ gRPC Server
+        run: |
+          cd src/ansys/eigen/cpp/grpc/server/
+          make compile
+
+      - name: Build C++ gRPC Client
+        run: |
+          cd src/ansys/eigen/cpp/grpc/client/
+          make compile
+
   build_doc:
     name: Build Documentation
     needs:
