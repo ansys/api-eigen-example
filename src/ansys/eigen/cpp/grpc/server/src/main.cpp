@@ -2,8 +2,10 @@
 
 int main() {
     // Let us instantiate our server
-    ansys::grpc::server::GRPCServer server{};
+    ansys::grpc::server::GRPCServer server;
 
-    // Start serving!
-    // server.serve();
+    // And let us start serving!
+    server.serve("0.0.0.0", 50000);
+
+    return 0;
 }
