@@ -6,3 +6,6 @@ build/*
 docs/html
 docs/latex
 docs/xml
+
+# Ignore virtual environment
+.venv
