@@ -21,8 +21,8 @@ set(headers
 
 set(sources 
     src/GRPCServer.cpp
-    generated_src/grpcdemo.pb.cc
-    generated_src/grpcdemo.grpc.pb.cc
+    src/generated/grpcdemo.pb.cc
+    src/generated/grpcdemo.grpc.pb.cc
 )
 
 # Add the example executable
