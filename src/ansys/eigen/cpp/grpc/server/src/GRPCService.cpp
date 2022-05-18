@@ -44,6 +44,7 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     // First, deserialize our vector into an Eigen::VectorXd object
     auto vec = deserialize_vector(request->vector_as_chunk(),
                                   request->vector_size(), request->data_type());
+    std::cout << "Incoming Vector: " << vec.transpose() << std::endl;
 
     // Flip the vector
     Eigen::VectorXd flip_vec = vec.reverse();
@@ -94,44 +95,40 @@ Eigen::VectorXd ansys::grpc::service::GRPCService::deserialize_vector(
             throw std::invalid_argument("Invalid Vector type!");
     }
 
-    // Turn into a const char*
-    auto ptr = bytes.data();
-    int idx{0};
-
     // Interpret the stream of bytes
     Eigen::VectorXd vector{};
     vector.resize(length);
-    while (idx < length) {
-        // Decode first (depending on data type)
-        switch (type) {
-            case grpcdemo::DataType::DOUBLE:
-                vector[idx] = std::atof(ptr);
-                break;
-            case grpcdemo::DataType::INTEGER:
-                vector[idx] = std::atoi(ptr);
-                break;
-        }
 
-        // Advance to next position
+    // Turn into a const char*
+    auto ptr = bytes.data();
+
+    // Loop over the stream of bytes
+    for (int idx = 0; idx < length; idx++) {
+        memcpy(&vector[idx], ptr, step);
         ptr += step;
-        idx++;
     }
 
+    // Return the vector
     return vector;
 }
 
 std::string ansys::grpc::service::GRPCService::serialize_vector(
     const Eigen::VectorXd& vector) {
+    // Initialize the serialized vector
     std::string vec_as_str{};
 
+    // Loop over all vector elements
     for (int idx = 0; idx < vector.size(); ++idx) {
         // We will assume that all elements are of type double
         const unsigned char* ptr =
             reinterpret_cast<const unsigned char*>(&vector[idx]);
+
+        // Serialize!
         for (size_t i = 0; i < sizeof(double); ++i)
             vec_as_str.push_back(ptr[i]);
     }
 
+    // Return the vector "serialized"
     return vec_as_str;
 }
 
@@ -151,56 +148,44 @@ Eigen::MatrixXd ansys::grpc::service::GRPCService::deserialize_matrix(
             throw std::invalid_argument("Invalid Matrix type!");
     }
 
-    // Turn into a const char*
-    auto ptr = bytes.data();
-    int idx{0};
-
     // Interpret the stream of bytes
     Eigen::MatrixXd matrix{};
     matrix.resize(rows, cols);
-    int row_idx{0}, col_idx{0};
 
-    while (idx < rows * cols) {
-        // Decode first (depending on data type)
-        switch (type) {
-            case grpcdemo::DataType::DOUBLE:
-                matrix(row_idx, col_idx) = std::atof(ptr);
-                break;
-            case grpcdemo::DataType::INTEGER:
-                matrix(row_idx, col_idx) = std::atoi(ptr);
-                break;
+    // Turn into a const char*
+    auto ptr = bytes.data();
+
+    // Loop over the stream of bytes
+    for (int row_idx = 0; row_idx < rows; row_idx++) {
+        for (int col_idx = 0; col_idx < cols; col_idx++) {
+            memcpy(&matrix(row_idx, col_idx), ptr, step);
+            ptr += step;
         }
-
-        // Move the row/col indices
-        if (col_idx < cols) {
-            col_idx++;
-        } else {
-            col_idx = 0;
-            row_idx++;
-        }
-
-        // Advance to next position
-        ptr += step;
-        idx++;
     }
 
+    // Return the matrix
     return matrix;
 }
 
 std::string ansys::grpc::service::GRPCService::serialize_matrix(
     const Eigen::MatrixXd& matrix) {
+    // Initialize the serialized matrix
     std::string mat_as_str{};
 
+    // Loop over all elements in the matrix: rows --> highest level
     for (int row_idx = 0; row_idx < matrix.rows(); ++row_idx) {
         for (int col_idx = 0; col_idx < matrix.cols(); ++col_idx) {
             // We will assume that all elements are of type double
             const unsigned char* ptr = reinterpret_cast<const unsigned char*>(
                 &matrix(row_idx, col_idx));
+
+            // Serialize!
             for (size_t i = 0; i < sizeof(double); ++i)
                 mat_as_str.push_back(ptr[i]);
         }
     }
 
+    // Return the matrix "serialized"
     return mat_as_str;
 }
 
