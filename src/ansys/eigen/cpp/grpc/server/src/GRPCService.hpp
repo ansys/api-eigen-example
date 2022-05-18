@@ -1,6 +1,6 @@
 #include <grpcpp/grpcpp.h>
 
-#include <eigen3/Eigen/Dense>
+#include <Eigen/Core>
 
 #include "generated/grpcdemo.grpc.pb.h"
 
@@ -111,9 +111,9 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
      * @brief Method used to deserialize a Vector message into an
      * Eigen::VectorXd object.
      *
-     * @param bytes : the chunk of bytes from where the vector is deserialized.
-     * @param length : the length of the vector we are deserializing.
-     * @param type : the type of data inside the vector (e.g. double, int...).
+     * @param bytes the chunk of bytes from where the vector is deserialized.
+     * @param length the length of the vector we are deserializing.
+     * @param type the type of data inside the vector (e.g. double, int...).
      * @return Eigen::VectorXd
      */
     Eigen::VectorXd deserialize_vector(const std::string& bytes,
@@ -123,7 +123,7 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
      * @brief Method used to serialize an Eigen::VectorXd object into a Vector
      * message.
      *
-     * @param vector : the Eigen::VectorXd to be serialized.
+     * @param vector the Eigen::VectorXd to be serialized.
      * @return std::string
      */
     std::string serialize_vector(const Eigen::VectorXd& vector);
@@ -132,10 +132,10 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
      * @brief Method used to deserialize a Matrix message into an
      * Eigen::MatrixXd object.
      *
-     * @param bytes : the chunk of bytes from where the matrix is deserialized.
-     * @param rows : the number of rows of the matrix we are deserializing.
-     * @param cols : the number of columns of the matrix we are deserializing.
-     * @param type : the type of data inside the matrix (e.g. double, int...).
+     * @param bytes the chunk of bytes from where the matrix is deserialized.
+     * @param rows the number of rows of the matrix we are deserializing.
+     * @param cols the number of columns of the matrix we are deserializing.
+     * @param type the type of data inside the matrix (e.g. double, int...).
      * @return Eigen::MatrixXd
      */
     Eigen::MatrixXd deserialize_matrix(const std::string& bytes, const int rows,
@@ -145,7 +145,7 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
      * @brief Method used to serialize an Eigen::MatrixXd object into a Matrix
      * message.
      *
-     * @param vector : the Eigen::MatrixXd to be serialized.
+     * @param matrix the Eigen::MatrixXd to be serialized.
      * @return std::string
      */
     std::string serialize_matrix(const Eigen::MatrixXd& matrix);
