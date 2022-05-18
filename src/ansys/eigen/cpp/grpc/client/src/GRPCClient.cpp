@@ -39,7 +39,7 @@ ansys::grpc::client::GRPCClient::~GRPCClient() {
 void ansys::grpc::client::GRPCClient::request_greeting(
     const std::string& name) {
     // Log the request
-    std::cout << "Requesting greeting for " << name << std::endl;
+    std::cout << ">>>> Requesting greeting for " << name << std::endl;
 
     // Build the context, reply and request messages
     ::grpc::ClientContext context;
@@ -54,9 +54,10 @@ void ansys::grpc::client::GRPCClient::request_greeting(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout << "Server answered --> " << reply.message() << std::endl;
+        std::cout << ">>>> Server answered --> " << reply.message()
+                  << std::endl;
     } else {
-        std::cout << "Request failed --> " << status.error_code() << ": "
+        std::cout << ">>>> Request failed --> " << status.error_code() << ": "
                   << status.error_message() << std::endl;
         throw std::runtime_error("Error while executing 'request_greeting'.");
     }
@@ -65,7 +66,7 @@ void ansys::grpc::client::GRPCClient::request_greeting(
 std::vector<double> ansys::grpc::client::GRPCClient::flip_vector(
     const std::vector<double>& vec) {
     // Log the request
-    std::cout << "Requesting vector flip!" << std::endl;
+    std::cout << ">>>> Requesting vector flip!" << std::endl;
 
     // Build the context, reply and request messages
     ::grpc::ClientContext context;
@@ -82,13 +83,13 @@ std::vector<double> ansys::grpc::client::GRPCClient::flip_vector(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout << "Server vector flip successful! Retrieving vector."
+        std::cout << ">>>> Server vector flip successful! Retrieving vector."
                   << std::endl;
         return deserialize_vector(reply.vector_as_chunk(), reply.vector_size(),
                                   reply.data_type());
 
     } else {
-        std::cout << "Request failed --> " << status.error_code() << ": "
+        std::cout << ">>>> Request failed --> " << status.error_code() << ": "
                   << status.error_message() << std::endl;
         throw std::runtime_error("Error while executing 'flip_vector'.");
     }
@@ -97,7 +98,7 @@ std::vector<double> ansys::grpc::client::GRPCClient::flip_vector(
 std::vector<double> ansys::grpc::client::GRPCClient::add_vectors(
     const std::vector<double>& vec1, const std::vector<double>& vec2) {
     // Log the request
-    std::cout << "Requesting vector addition!" << std::endl;
+    std::cout << ">>>> Requesting vector addition!" << std::endl;
 
     // Build the context, reply and request messages
     ::grpc::ClientContext context;
@@ -124,13 +125,14 @@ std::vector<double> ansys::grpc::client::GRPCClient::add_vectors(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout << "Server vector addition successful! Retrieving vector."
-                  << std::endl;
+        std::cout
+            << ">>>> Server vector addition successful! Retrieving vector."
+            << std::endl;
         return deserialize_vector(reply.vector_as_chunk(), reply.vector_size(),
                                   reply.data_type());
 
     } else {
-        std::cout << "Request failed --> " << status.error_code() << ": "
+        std::cout << ">>>> Request failed --> " << status.error_code() << ": "
                   << status.error_message() << std::endl;
         throw std::runtime_error("Error while executing 'add_vectors'.");
     }

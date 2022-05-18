@@ -27,7 +27,7 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     ::grpc::ServerContext* context, const ::grpcdemo::HelloRequest* request,
     ::grpcdemo::HelloReply* response) {
     // Log event
-    std::cout << "Greeting requested! Requested by " << request->name()
+    std::cout << ">>>> Greeting requested! Requested by " << request->name()
               << std::endl;
 
     // Define the response!
@@ -39,12 +39,12 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     ::grpc::ServerContext* context, const ::grpcdemo::Vector* request,
     ::grpcdemo::Vector* response) {
     // Log event
-    std::cout << "Vector flip requested!" << std::endl;
+    std::cout << ">>>> Vector flip requested!" << std::endl;
 
     // First, deserialize our vector into an Eigen::VectorXd object
     auto vec = deserialize_vector(request->vector_as_chunk(),
                                   request->vector_size(), request->data_type());
-    std::cout << "Incoming Vector: " << vec.transpose() << std::endl;
+    std::cout << ">>>> Incoming Vector: " << vec.transpose() << std::endl;
 
     // Flip the vector
     Eigen::VectorXd flip_vec = vec.reverse();
@@ -61,7 +61,7 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     ::grpc::ServerReader< ::grpcdemo::Vector>* reader,
     ::grpcdemo::Vector* response) {
     // Log event
-    std::cout << "Vector addition requested!" << std::endl;
+    std::cout << ">>>> Vector addition requested!" << std::endl;
 
     // Initialize our result variable
     Eigen::VectorXd result{};
@@ -74,7 +74,7 @@ ansys::grpc::service::GRPCService::~GRPCService() {
         auto vec =
             deserialize_vector(message.vector_as_chunk(), message.vector_size(),
                                message.data_type());
-        std::cout << "Incoming Vector: " << vec.transpose() << std::endl;
+        std::cout << ">>>> Incoming Vector: " << vec.transpose() << std::endl;
 
         // Perform some checks
         if (result.size() == 0) {
@@ -83,7 +83,8 @@ ansys::grpc::service::GRPCService::~GRPCService() {
         } else if (vec.size() != result.size()) {
             // This means that the incoming vectors have different sizes... This
             // is not supported!
-            std::string error{"ERR: Incoming vectors are of different sizes."};
+            std::string error{
+                ">>>> ERR: Incoming vectors are of different sizes."};
             std::cout << error << std::endl;
             return ::grpc::Status(::grpc::StatusCode::CANCELLED, error);
         } else {
