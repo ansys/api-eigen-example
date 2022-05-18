@@ -94,6 +94,48 @@ std::vector<double> ansys::grpc::client::GRPCClient::flip_vector(
     }
 }
 
+std::vector<double> ansys::grpc::client::GRPCClient::add_vectors(
+    const std::vector<double>& vec1, const std::vector<double>& vec2) {
+    // Log the request
+    std::cout << "Requesting vector addition!" << std::endl;
+
+    // Build the context, reply and request messages
+    ::grpc::ClientContext context;
+    grpcdemo::Vector reply;
+
+    // Create the writer for the sequenced/streamed RPC
+    auto writer = _stub->AddVectors(&context, &reply);
+
+    // Write the two vectors
+    grpcdemo::Vector request1;
+    request1.set_data_type(grpcdemo::DataType::DOUBLE);
+    request1.set_vector_size(vec1.size());
+    request1.set_vector_as_chunk(serialize_vector(vec1));
+    writer->Write(request1);
+
+    grpcdemo::Vector request2;
+    request2.set_data_type(grpcdemo::DataType::DOUBLE);
+    request2.set_vector_size(vec2.size());
+    request2.set_vector_as_chunk(serialize_vector(vec2));
+    writer->Write(request2);
+
+    writer->WritesDone();
+    ::grpc::Status status = writer->Finish();
+
+    // Act upon its status.
+    if (status.ok()) {
+        std::cout << "Server vector addition successful! Retrieving vector."
+                  << std::endl;
+        return deserialize_vector(reply.vector_as_chunk(), reply.vector_size(),
+                                  reply.data_type());
+
+    } else {
+        std::cout << "Request failed --> " << status.error_code() << ": "
+                  << status.error_message() << std::endl;
+        throw std::runtime_error("Error while executing 'add_vectors'.");
+    }
+}
+
 // ============================================================================
 // GRPCClient PRIVATE METHODS
 // ============================================================================

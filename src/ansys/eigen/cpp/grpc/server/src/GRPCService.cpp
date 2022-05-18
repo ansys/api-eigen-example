@@ -59,7 +59,45 @@ ansys::grpc::service::GRPCService::~GRPCService() {
 ::grpc::Status ansys::grpc::service::GRPCService::AddVectors(
     ::grpc::ServerContext* context,
     ::grpc::ServerReader< ::grpcdemo::Vector>* reader,
-    ::grpcdemo::Vector* response) {}
+    ::grpcdemo::Vector* response) {
+    // Log event
+    std::cout << "Vector addition requested!" << std::endl;
+
+    // Initialize our result variable
+    Eigen::VectorXd result{};
+
+    // First, deserialize our vectors into Eigen::VectorXd objects
+    grpcdemo::Vector message;
+
+    // Use the reader to process all messages individually
+    while (reader->Read(&message)) {
+        auto vec =
+            deserialize_vector(message.vector_as_chunk(), message.vector_size(),
+                               message.data_type());
+        std::cout << "Incoming Vector: " << vec.transpose() << std::endl;
+
+        // Perform some checks
+        if (result.size() == 0) {
+            // This means that our vector has not been initialized yet!
+            result = vec;
+        } else if (vec.size() != result.size()) {
+            // This means that the incoming vectors have different sizes... This
+            // is not supported!
+            std::string error{"ERR: Incoming vectors are of different sizes."};
+            std::cout << error << std::endl;
+            return ::grpc::Status(::grpc::StatusCode::CANCELLED, error);
+        } else {
+            // Otherwise, everything is OK... Perform the addition!
+            result += vec;
+        }
+    }
+
+    // Send the response
+    response->set_data_type(grpcdemo::DataType::DOUBLE);
+    response->set_vector_size(result.size());
+    response->set_vector_as_chunk(serialize_vector(result));
+    return ::grpc::Status::OK;
+}
 
 ::grpc::Status ansys::grpc::service::GRPCService::MultiplyVectors(
     ::grpc::ServerContext* context,
