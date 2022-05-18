@@ -1,5 +1,4 @@
 [requires]
-cmake/3.22.3
 grpc/1.39.1
 eigen/3.4.0
 
