@@ -103,7 +103,63 @@ ansys::grpc::service::GRPCService::~GRPCService() {
 ::grpc::Status ansys::grpc::service::GRPCService::MultiplyVectors(
     ::grpc::ServerContext* context,
     ::grpc::ServerReader< ::grpcdemo::Vector>* reader,
-    ::grpcdemo::Vector* response) {}
+    ::grpcdemo::Vector* response) {
+    // Log event
+    std::cout << ">>>> Vector dot product requested!" << std::endl;
+
+    // First, deserialize our vectors into Eigen::VectorXd objects
+    grpcdemo::Vector message;
+
+    // Use the reader to process all messages individually - Since it cannot be
+    // an infinite number of vectors, we will call the method twice manually
+    Eigen::VectorXd vec1{}, vec2{};
+    if (reader->Read(&message)) {
+        vec1 = deserialize_vector(message.vector_as_chunk(),
+                                  message.vector_size(), message.data_type());
+        std::cout << ">>>> Incoming Vector: " << vec1.transpose() << std::endl;
+    } else {
+        // This means that there are no incoming vectors... This is not
+        // supported!
+        std::string error{">>>> ERR: No incoming vector 1."};
+        std::cout << error << std::endl;
+        return ::grpc::Status(::grpc::StatusCode::CANCELLED, error);
+    }
+
+    if (reader->Read(&message)) {
+        vec2 = deserialize_vector(message.vector_as_chunk(),
+                                  message.vector_size(), message.data_type());
+        std::cout << ">>>> Incoming Vector: " << vec2.transpose() << std::endl;
+    } else {
+        // This means that there are no sufficient incoming vectors... This is
+        // not supported!
+        std::string error{">>>> ERR: No incoming vector 2."};
+        std::cout << error << std::endl;
+        return ::grpc::Status(::grpc::StatusCode::CANCELLED, error);
+    }
+
+    // Perform the dot product
+    double dot_product;
+    if (vec1.size() != vec2.size()) {
+        // This means that the incoming vectors have different sizes... This
+        // is not supported!
+        std::string error{">>>> ERR: Incoming vectors are of different sizes."};
+        std::cout << error << std::endl;
+        return ::grpc::Status(::grpc::StatusCode::CANCELLED, error);
+    } else {
+        dot_product = vec1.dot(vec2);
+    }
+
+    // Build the result Eigen::VectorXd
+    Eigen::VectorXd result{};
+    result.resize(1);
+    result << dot_product;
+
+    // Send the response
+    response->set_data_type(grpcdemo::DataType::DOUBLE);
+    response->set_vector_size(result.size());
+    response->set_vector_as_chunk(serialize_vector(result));
+    return ::grpc::Status::OK;
+}
 
 ::grpc::Status ansys::grpc::service::GRPCService::AddMatrices(
     ::grpc::ServerContext* context,

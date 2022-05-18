@@ -42,6 +42,10 @@ int main() {
     auto add_vec = client.add_vectors(vec1, vec2);
     print_vector("add_vec", add_vec);
 
+    // 2) Vector dot product
+    auto mul_vec = client.multiply_vectors(vec1, vec2);
+    print_vector("mul_vec", std::vector<double>{mul_vec});
+
     // ------------------------------------------------------------------------
     // Performing matrix operations
     // ------------------------------------------------------------------------
