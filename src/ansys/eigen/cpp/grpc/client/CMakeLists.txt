@@ -33,7 +33,7 @@ add_library(api_eigen_example_grpc_client SHARED
     ${sources}
 )
 set_target_properties(api_eigen_example_grpc_client PROPERTIES 
-    PUBLIC_HEADER src/GRPCClient.hpp
+    PUBLIC_HEADER ${headers}
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
 )

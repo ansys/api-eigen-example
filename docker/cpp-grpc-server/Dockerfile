@@ -11,7 +11,7 @@ ADD src/ansys/eigen/cpp/grpc/server /server/project/cpp/grpc/server
 ADD src/ansys/eigen/protos /server/project/protos
 
 # Next in line, we will build our server (lib installation is not required)
-RUN cd /server/project/cpp/grpc/server && make compile && cd -
+RUN cd /server/project/cpp/grpc/server && make compile && make install && ./deploy_dependencies.sh && cd -
 
 # Define the necessary env variables and exposed port for accesssing the server
 EXPOSE 50000

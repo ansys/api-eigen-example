@@ -4,6 +4,7 @@ eigen/3.4.0
 
 [generators]
 cmake
+deploy
 
 [imports]
 bin, protoc* -> . @ root_package=protobuf

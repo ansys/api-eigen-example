@@ -3,6 +3,7 @@ grpc/1.39.1
 
 [generators]
 cmake
+deploy
 
 [imports]
 bin, protoc* -> . @ root_package=protobuf
