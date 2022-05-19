@@ -42,3 +42,5 @@ include(GNUInstallDirs)
 install(TARGETS api_eigen_example_grpc_client
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/apieigen/grpc)
+
+install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/apieigen/grpc FILES_MATCHING PATTERN "*.h")
