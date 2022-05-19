@@ -30,6 +30,8 @@ jobs:
             "python-grpc-server",
             "cpp-rest-client",
             "cpp-rest-server",
+            "cpp-grpc-client",
+            "cpp-grpc-server",
           ]
 
     steps:
