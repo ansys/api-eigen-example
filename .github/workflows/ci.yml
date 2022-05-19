@@ -151,6 +151,9 @@ jobs:
     needs:
       - stylecheck
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [client, server]
 
     steps:
       - uses: actions/checkout@v2
@@ -160,14 +163,9 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Build C++ gRPC Server
+      - name: Build C++ gRPC ${{ matrix.package }}
         run: |
-          cd src/ansys/eigen/cpp/grpc/server/
-          make compile
-
-      - name: Build C++ gRPC Client
-        run: |
-          cd src/ansys/eigen/cpp/grpc/client/
+          cd src/ansys/eigen/cpp/grpc/${{ matrix.package }}/
           make compile
 
   build_doc:
