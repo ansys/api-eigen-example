@@ -11,7 +11,7 @@ ADD src/ansys/eigen/cpp/grpc/client /client/project/cpp/grpc/client
 ADD src/ansys/eigen/protos /client/project/protos
 
 # Next in line, we will build our client (lib installation is not required)
-RUN cd /client/project/cpp/grpc/client && make compile && make install && ./deploy_dependencies.sh && cd -
+RUN cd /client/project/cpp/grpc/client && make compile && make install && ./deploy_dependencies.sh && ldconfig && cd -
 
 # And add the demo! And some fun dependencies :)
 RUN conda install -c conda-forge jupyterlab
