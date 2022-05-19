@@ -1,3 +1,5 @@
+#include <grpcpp/grpcpp.h>
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -150,6 +152,28 @@ class GRPCClient {
      * @return std::string
      */
     std::string serialize_matrix(
+        const std::vector<std::vector<double>>& matrix);
+
+    /**
+     * @brief Method in charge of sending a message for stream-based inputs in
+     * RPC method. Targeted to Vector messages.
+     *
+     * @param writer the writer used for streaming the messages.
+     * @param vector the message to be streamed.
+     */
+    void send_vector(
+        std::unique_ptr<::grpc::ClientWriter<grpcdemo::Vector>>& writer,
+        const std::vector<double>& vector);
+
+    /**
+     * @brief  Method in charge of sending a message for stream-based inputs in
+     * RPC method. Targeted to Matrix messages.
+     *
+     * @param writer the writer used for streaming the messages.
+     * @param matrix the message to be streamed.
+     */
+    void send_matrix(
+        std::unique_ptr<::grpc::ClientWriter<grpcdemo::Matrix>>& writer,
         const std::vector<std::vector<double>>& matrix);
 };
 

@@ -49,6 +49,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     // Flip the vector
     Eigen::VectorXd flip_vec = vec.reverse();
 
+    // Log the result
+    std::cout << ">>>> Result of vector flip: " << flip_vec.transpose()
+              << std::endl;
+
     // Send the response
     response->set_data_type(request->data_type());
     response->set_vector_size(request->vector_size());
@@ -92,6 +96,9 @@ ansys::grpc::service::GRPCService::~GRPCService() {
             result += vec;
         }
     }
+
+    // Log the result
+    std::cout << ">>>> Result of addition: " << result.transpose() << std::endl;
 
     // Send the response
     response->set_data_type(grpcdemo::DataType::DOUBLE);
@@ -154,6 +161,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     result.resize(1);
     result << dot_product;
 
+    // Log the result
+    std::cout << ">>>> Result of dot product: " << std::endl;
+    std::cout << result << std::endl;
+
     // Send the response
     response->set_data_type(grpcdemo::DataType::DOUBLE);
     response->set_vector_size(result.size());
@@ -164,12 +175,102 @@ ansys::grpc::service::GRPCService::~GRPCService() {
 ::grpc::Status ansys::grpc::service::GRPCService::AddMatrices(
     ::grpc::ServerContext* context,
     ::grpc::ServerReader< ::grpcdemo::Matrix>* reader,
-    ::grpcdemo::Matrix* response) {}
+    ::grpcdemo::Matrix* response) {
+    // Log event
+    std::cout << ">>>> Matrix addition requested!" << std::endl;
+
+    // Initialize our result variable
+    Eigen::MatrixXd result{};
+
+    // First, deserialize our matrices into Eigen::MatrixXd objects
+    grpcdemo::Matrix message;
+
+    // Use the reader to process all messages individually
+    while (reader->Read(&message)) {
+        auto mat =
+            deserialize_matrix(message.matrix_as_chunk(), message.matrix_rows(),
+                               message.matrix_cols(), message.data_type());
+        std::cout << ">>>> Incoming Matrix: " << std::endl;
+        std::cout << mat << std::endl;
+
+        // Perform some checks
+        if (result.size() == 0) {
+            // This means that our matrix has not been initialized yet!
+            result = mat;
+        } else if (mat.rows() != result.rows() || mat.cols() != result.cols()) {
+            // This means that the incoming matrices have different sizes...
+            // This is not supported!
+            std::string error{
+                ">>>> ERR: Incoming matrices are of different sizes."};
+            std::cout << error << std::endl;
+            return ::grpc::Status(::grpc::StatusCode::CANCELLED, error);
+        } else {
+            // Otherwise, everything is OK... Perform the addition!
+            result += mat;
+        }
+    }
+
+    // Log the result
+    std::cout << ">>>> Resulting Matrix: " << std::endl;
+    std::cout << result << std::endl;
+
+    // Send the response
+    response->set_data_type(grpcdemo::DataType::DOUBLE);
+    response->set_matrix_rows(result.rows());
+    response->set_matrix_cols(result.cols());
+    response->set_matrix_as_chunk(serialize_matrix(result));
+    return ::grpc::Status::OK;
+}
 
 ::grpc::Status ansys::grpc::service::GRPCService::MultiplyMatrices(
     ::grpc::ServerContext* context,
     ::grpc::ServerReader< ::grpcdemo::Matrix>* reader,
-    ::grpcdemo::Matrix* response) {}
+    ::grpcdemo::Matrix* response) {
+    // Log event
+    std::cout << ">>>> Matrix multiplication requested!" << std::endl;
+
+    // Initialize our result variable
+    Eigen::MatrixXd result{};
+
+    // First, deserialize our matrices into Eigen::MatrixXd objects
+    grpcdemo::Matrix message;
+
+    // Use the reader to process all messages individually
+    while (reader->Read(&message)) {
+        auto mat =
+            deserialize_matrix(message.matrix_as_chunk(), message.matrix_rows(),
+                               message.matrix_cols(), message.data_type());
+        std::cout << ">>>> Incoming Matrix: " << std::endl;
+        std::cout << mat << std::endl;
+
+        // Perform some checks
+        if (result.size() == 0) {
+            // This means that our matrix has not been initialized yet!
+            result = mat;
+        } else if (mat.rows() != result.cols() || mat.cols() != result.rows()) {
+            // This means that the incoming matrices have incompatible sizes...
+            // This is not supported!
+            std::string error{
+                ">>>> ERR: Incoming matrices are of different sizes."};
+            std::cout << error << std::endl;
+            return ::grpc::Status(::grpc::StatusCode::CANCELLED, error);
+        } else {
+            // Otherwise, everything is OK... Perform the multiplication!
+            result *= mat;
+        }
+    }
+
+    // Log the result
+    std::cout << ">>>> Resulting Matrix: " << std::endl;
+    std::cout << result << std::endl;
+
+    // Send the response
+    response->set_data_type(grpcdemo::DataType::DOUBLE);
+    response->set_matrix_rows(result.rows());
+    response->set_matrix_cols(result.cols());
+    response->set_matrix_as_chunk(serialize_matrix(result));
+    return ::grpc::Status::OK;
+}
 
 // ============================================================================
 // GRPCService PRIVATE METHODS
