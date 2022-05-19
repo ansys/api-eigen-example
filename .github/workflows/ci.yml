@@ -117,8 +117,8 @@ jobs:
           path: cov_html
           retention-days: 7
 
-  cpp_build_test:
-    name: C++ - Build and Unit Testing
+  cpp_build_test_rest:
+    name: C++ - Build and Unit Testing - REST
     needs:
       - stylecheck
     runs-on: ubuntu-latest
@@ -146,6 +146,20 @@ jobs:
           sudo apt update && cd external/jsoncpp-v1.9.5/build && cmake -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp .. && sudo make install && cd - 
           cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build .
 
+  cpp_build_test_grpc:
+    name: C++ - Build and Unit Testing - gRPC
+    needs:
+      - stylecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
       - name: Build C++ gRPC Server
         run: |
           cd src/ansys/eigen/cpp/grpc/server/
@@ -160,7 +174,8 @@ jobs:
     name: Build Documentation
     needs:
       - python_build_test
-      - cpp_build_test
+      - cpp_build_test_rest
+      - cpp_build_test_grpc
     runs-on: ubuntu-latest
 
     services:
