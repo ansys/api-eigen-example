@@ -1,3 +1,4 @@
+pybind11-global
 pytest>=6.2.5
 pytest-benchmark>=3.4.1
 pygal

@@ -21,7 +21,7 @@ def testing_client():
 
 @pytest.mark.benchmark(group="add_vectors")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_add_vectors_rest(benchmark, testing_client, sz):
+def test_add_vectors_rest_python(benchmark, testing_client, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -34,7 +34,7 @@ def test_add_vectors_rest(benchmark, testing_client, sz):
 
 @pytest.mark.benchmark(group="multiply_vectors")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_multiply_vectors_rest(benchmark, testing_client, sz):
+def test_multiply_vectors_rest_python(benchmark, testing_client, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -47,7 +47,7 @@ def test_multiply_vectors_rest(benchmark, testing_client, sz):
 
 @pytest.mark.benchmark(group="add_matrices")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_add_matrices_rest(benchmark, testing_client, sz):
+def test_add_matrices_rest_python(benchmark, testing_client, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -60,7 +60,7 @@ def test_add_matrices_rest(benchmark, testing_client, sz):
 
 @pytest.mark.benchmark(group="multiply_matrices")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_multiply_matrices_rest(benchmark, testing_client, sz):
+def test_multiply_matrices_rest_python(benchmark, testing_client, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)

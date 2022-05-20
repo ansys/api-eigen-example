@@ -1,38 +1,8 @@
 import pytest
 
-from ansys.eigen.python.grpc.client import DemoGRPCClient
+from eigen_cpp_client import GRPCClient
 
 from .test_tools import SIZES, SIZES_IDS, mat_generator, vec_generator
-
-# ================================================================================
-# Point your stubs and service to test the client-server interaction
-#
-# These fixtures will provide us with the capability of doing client-server tests
-# ================================================================================
-
-
-@pytest.fixture(scope="module")
-def grpc_add_to_server():
-    from ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc import (
-        add_GRPCDemoServicer_to_server,
-    )
-
-    return add_GRPCDemoServicer_to_server
-
-
-@pytest.fixture(scope="module")
-def grpc_servicer():
-    from ansys.eigen.python.grpc.server import GRPCDemoServicer
-
-    return GRPCDemoServicer()
-
-
-@pytest.fixture(scope="module")
-def grpc_stub(grpc_channel):
-    from ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc import GRPCDemoStub
-
-    return GRPCDemoStub(grpc_channel)
-
 
 # ================================================================================
 # Unit tests for client-server interaction
@@ -41,11 +11,12 @@ def grpc_stub(grpc_channel):
 
 @pytest.mark.benchmark(group="add_vectors")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_add_vectors_grpc(benchmark, grpc_stub, sz):
+def test_add_vectors_grpc(benchmark, sz):
     """BM test to measure the time consumed so that the client gets the expected response
-    when performing the addition of two numpy arrays (as vectors)."""
+    when performing the addition of two lists (as vectors). Calling the C++
+    implementation of the client and server."""
 
-    client = DemoGRPCClient(test=grpc_stub)
+    client = GRPCClient("0.0.0.0", 50000)
 
     vec_1 = vec_generator(sz)
     vec_2 = vec_generator(sz)
@@ -57,9 +28,10 @@ def test_add_vectors_grpc(benchmark, grpc_stub, sz):
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
 def test_multiply_vectors_grpc(benchmark, grpc_stub, sz):
     """BM test to measure the time consumed so that the client gets the expected response
-    when performing the multiplication of two numpy arrays (as vectors)."""
+    when performing the multiplication of two lists (as vectors). Calling the C++
+    implementation of the client and server."""
 
-    client = DemoGRPCClient(test=grpc_stub)
+    client = GRPCClient("0.0.0.0", 50000)
 
     vec_1 = vec_generator(sz)
     vec_2 = vec_generator(sz)
@@ -71,9 +43,10 @@ def test_multiply_vectors_grpc(benchmark, grpc_stub, sz):
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
 def test_add_matrices_grpc(benchmark, grpc_stub, sz):
     """BM test to measure the time consumed so that the client gets the expected response
-    when performing the addition of two numpy arrays (as matrices)."""
+    when performing the addition of two lists (as matrices). Calling the C++
+    implementation of the client and server."""
 
-    client = DemoGRPCClient(test=grpc_stub)
+    client = GRPCClient("0.0.0.0", 50000)
 
     mat_1 = mat_generator(sz)
     mat_2 = mat_generator(sz)
@@ -85,8 +58,10 @@ def test_add_matrices_grpc(benchmark, grpc_stub, sz):
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
 def test_multiply_matrices_grpc(benchmark, grpc_stub, sz):
     """BM test to measure the time consumed so that the client gets the expected response
-    when performing the multiplication of two numpy arrays (as matrices)."""
-    client = DemoGRPCClient(test=grpc_stub)
+    when performing the multiplication of two lists (as matrices). Calling the C++
+    implementation of the client and server."""
+
+    client = GRPCClient("0.0.0.0", 50000)
 
     mat_1 = mat_generator(sz)
     mat_2 = mat_generator(sz)
