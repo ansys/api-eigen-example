@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.4...3.18)
 project(eigen_cpp_client)
 
+# Specify the C++ standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+
 # Add the pybind11 library to the CMake project - after being installed as " pip install "pybind11[global]" "
 find_package(pybind11 REQUIRED)
 include_directories(${PYBIND11_INCLUDE_DIR})
