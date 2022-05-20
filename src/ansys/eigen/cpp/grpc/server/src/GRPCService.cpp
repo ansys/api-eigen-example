@@ -10,7 +10,8 @@
 // GRPCService Ctor. & Dtor.
 // ----------------------------------------------------------------------------
 
-ansys::grpc::service::GRPCService::GRPCService() {
+ansys::grpc::service::GRPCService::GRPCService(const bool debug_log)
+    : _debug_log(debug_log) {
     // Start creating the GRPCService object
     std::cout << "GRPCService object created." << std::endl;
 }
@@ -44,14 +45,19 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     // First, deserialize our vector into an Eigen::VectorXd object
     auto vec = deserialize_vector(request->vector_as_chunk(),
                                   request->vector_size(), request->data_type());
-    std::cout << ">>>> Incoming Vector: " << vec.transpose() << std::endl;
+
+    if (_debug_log) {
+        std::cout << ">>>> Incoming Vector: " << vec.transpose() << std::endl;
+    }
 
     // Flip the vector
     Eigen::VectorXd flip_vec = vec.reverse();
 
     // Log the result
-    std::cout << ">>>> Result of vector flip: " << flip_vec.transpose()
-              << std::endl;
+    if (_debug_log) {
+        std::cout << ">>>> Result of vector flip: " << flip_vec.transpose()
+                  << std::endl;
+    }
 
     // Send the response
     response->set_data_type(request->data_type());
@@ -78,7 +84,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
         auto vec =
             deserialize_vector(message.vector_as_chunk(), message.vector_size(),
                                message.data_type());
-        std::cout << ">>>> Incoming Vector: " << vec.transpose() << std::endl;
+        if (_debug_log) {
+            std::cout << ">>>> Incoming Vector: " << vec.transpose()
+                      << std::endl;
+        }
 
         // Perform some checks
         if (result.size() == 0) {
@@ -98,7 +107,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     }
 
     // Log the result
-    std::cout << ">>>> Result of addition: " << result.transpose() << std::endl;
+    if (_debug_log) {
+        std::cout << ">>>> Result of addition: " << result.transpose()
+                  << std::endl;
+    }
 
     // Send the response
     response->set_data_type(grpcdemo::DataType::DOUBLE);
@@ -123,7 +135,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     if (reader->Read(&message)) {
         vec1 = deserialize_vector(message.vector_as_chunk(),
                                   message.vector_size(), message.data_type());
-        std::cout << ">>>> Incoming Vector: " << vec1.transpose() << std::endl;
+        if (_debug_log) {
+            std::cout << ">>>> Incoming Vector: " << vec1.transpose()
+                      << std::endl;
+        }
     } else {
         // This means that there are no incoming vectors... This is not
         // supported!
@@ -135,7 +150,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     if (reader->Read(&message)) {
         vec2 = deserialize_vector(message.vector_as_chunk(),
                                   message.vector_size(), message.data_type());
-        std::cout << ">>>> Incoming Vector: " << vec2.transpose() << std::endl;
+        if (_debug_log) {
+            std::cout << ">>>> Incoming Vector: " << vec2.transpose()
+                      << std::endl;
+        }
     } else {
         // This means that there are no sufficient incoming vectors... This is
         // not supported!
@@ -162,8 +180,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     result << dot_product;
 
     // Log the result
-    std::cout << ">>>> Result of dot product: " << std::endl;
-    std::cout << result << std::endl;
+    if (_debug_log) {
+        std::cout << ">>>> Result of dot product: " << std::endl;
+        std::cout << result << std::endl;
+    }
 
     // Send the response
     response->set_data_type(grpcdemo::DataType::DOUBLE);
@@ -190,8 +210,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
         auto mat =
             deserialize_matrix(message.matrix_as_chunk(), message.matrix_rows(),
                                message.matrix_cols(), message.data_type());
-        std::cout << ">>>> Incoming Matrix: " << std::endl;
-        std::cout << mat << std::endl;
+        if (_debug_log) {
+            std::cout << ">>>> Incoming Matrix: " << std::endl;
+            std::cout << mat << std::endl;
+        }
 
         // Perform some checks
         if (result.size() == 0) {
@@ -211,8 +233,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     }
 
     // Log the result
-    std::cout << ">>>> Resulting Matrix: " << std::endl;
-    std::cout << result << std::endl;
+    if (_debug_log) {
+        std::cout << ">>>> Resulting Matrix: " << std::endl;
+        std::cout << result << std::endl;
+    }
 
     // Send the response
     response->set_data_type(grpcdemo::DataType::DOUBLE);
@@ -240,8 +264,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
         auto mat =
             deserialize_matrix(message.matrix_as_chunk(), message.matrix_rows(),
                                message.matrix_cols(), message.data_type());
-        std::cout << ">>>> Incoming Matrix: " << std::endl;
-        std::cout << mat << std::endl;
+        if (_debug_log) {
+            std::cout << ">>>> Incoming Matrix: " << std::endl;
+            std::cout << mat << std::endl;
+        }
 
         // Perform some checks
         if (result.size() == 0) {
@@ -261,8 +287,10 @@ ansys::grpc::service::GRPCService::~GRPCService() {
     }
 
     // Log the result
-    std::cout << ">>>> Resulting Matrix: " << std::endl;
-    std::cout << result << std::endl;
+    if (_debug_log) {
+        std::cout << ">>>> Resulting Matrix: " << std::endl;
+        std::cout << result << std::endl;
+    }
 
     // Send the response
     response->set_data_type(grpcdemo::DataType::DOUBLE);
