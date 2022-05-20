@@ -212,7 +212,7 @@ the root of the repository. It will use the `conan <https://conan.io/>`_ package
 
 You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
 
-Once installed, you are ready to go with the C++ gRPC Server! Start writing your own C++ ``main.cpp`` file and
+Once installed, you are ready to go with the C++ gRPC server! Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 .. code:: cpp
