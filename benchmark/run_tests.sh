@@ -1,19 +1,22 @@
 #!/bin/bash
 
 # create a virtual environment and install requirements
+# -------------------------------------------------------------------------
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt -q
 
 # clear out old benchmarks (optional, should use a command line arg)
+# -------------------------------------------------------------------------
 rm -rf .benchmarks
 
 # clone api-eigen-example examples
+# -------------------------------------------------------------------------
 rm -rf api-eigen-example
 git clone --depth 1 https://github.com/ansys/api-eigen-example.git
 
 # Install the C++ Client libraries and other wrappers
-# -------------------------------------------------------------------------
+# ========================================================================
 # 0) Enter the api-eigen-example repo
 cd api-eigen-example
 
@@ -35,26 +38,45 @@ pip install -r requirements/requirements_build.txt
 
 # 99) Exit the api-eigen-example repo
 cd ..
-# -------------------------------------------------------------------------
-
-# Bind the C++ libraries
-pip install bindings/cpp-clients
+# ========================================================================
 
 # Run the Docker containers for the servers
+# -------------------------------------------------------------------------
 docker run -d -p  5000:5000  -it --name bm-python-rest-server ghcr.io/ansys/api-eigen-example/python-rest-server:latest
 docker run -d -p 50051:50051 -it --name bm-python-grpc-server ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
 docker run -d -p 18080:18080 -it --name bm-cpp-rest-server    ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest 
 docker run -d -p 50000:50000 -it --name bm-cpp-grpc-server    ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
 
-# Start running the benchmarks
-echo "Benchmarking api-eigen-example C++ & Python packages"
-pip install api-eigen-example/
-pytest tests/ --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-warmup=true --benchmark-min-rounds=500
-
-# Stop and remove the Docker containers for the servers
-docker stop bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server
-docker rm   bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server 
-
+# Clean the tmp results folder  
+# -------------------------------------------------------------------------
 mkdir hist -p
 rm hist/*
-pytest-benchmark compare --histogram hist/hist --group-by group --sort fullname 1> /dev/null
+
+# Python BM tests
+# -------------------------------------------------------------------------
+# Start running the benchmarks
+echo "Benchmarking api-eigen-example Python packages"
+pip install api-eigen-example/
+pytest tests/python/ --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-warmup=true --benchmark-min-rounds=500
+pytest-benchmark compare --group-by group --sort fullname --csv=data/python_bm_results.txt 1> /dev/null
+
+# C++ BM tests
+# -------------------------------------------------------------------------
+#
+#
+#
+#
+#
+
+# Plot the results
+# -------------------------------------------------------------------------
+#
+# Results should go to hist folder
+#
+#
+
+
+# Stop and remove the Docker containers for the servers
+# -------------------------------------------------------------------------
+docker stop bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server
+docker rm   bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server 
