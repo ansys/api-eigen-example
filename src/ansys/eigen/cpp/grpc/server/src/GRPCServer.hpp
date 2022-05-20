@@ -37,9 +37,10 @@ class GRPCServer {
      * Default: 0.0.0.0.
      * @param port the port in which we want to server our app. Default:
      * 50000.
+     * @param debug_log whether to show the enhanced debugging logs or not.
      */
     void serve(const std::string host = std::string{"0.0.0.0"},
-               const int port = 50000);
+               const int port = 50000, const bool debug_log = false);
 
    private:
     /**

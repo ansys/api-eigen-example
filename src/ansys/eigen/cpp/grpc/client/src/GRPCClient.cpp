@@ -10,7 +10,9 @@
 // ----------------------------------------------------------------------------
 
 ansys::grpc::client::GRPCClient::GRPCClient(const std::string host,
-                                            const int port) {
+                                            const int port,
+                                            const bool debug_log)
+    : _debug_log(debug_log) {
     // Compile the host and port into the target url
     const std::string target = {host + ":" + std::to_string(port)};
 
@@ -52,8 +54,10 @@ void ansys::grpc::client::GRPCClient::request_greeting(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout << ">>>> Server answered --> " << reply.message()
-                  << std::endl;
+        if (_debug_log) {
+            std::cout << ">>>> Server answered --> " << reply.message()
+                      << std::endl;
+        }
     } else {
         std::cout << ">>>> Request failed --> " << status.error_code() << ": "
                   << status.error_message() << std::endl;
@@ -81,8 +85,11 @@ std::vector<double> ansys::grpc::client::GRPCClient::flip_vector(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout << ">>>> Server vector flip successful! Retrieving vector."
-                  << std::endl;
+        if (_debug_log) {
+            std::cout
+                << ">>>> Server vector flip successful! Retrieving vector."
+                << std::endl;
+        }
         return deserialize_vector(reply.vector_as_chunk(), reply.vector_size(),
                                   reply.data_type());
 
@@ -115,9 +122,11 @@ std::vector<double> ansys::grpc::client::GRPCClient::add_vectors(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout
-            << ">>>> Server vector addition successful! Retrieving vector."
-            << std::endl;
+        if (_debug_log) {
+            std::cout
+                << ">>>> Server vector addition successful! Retrieving vector."
+                << std::endl;
+        }
         return deserialize_vector(reply.vector_as_chunk(), reply.vector_size(),
                                   reply.data_type());
 
@@ -150,9 +159,11 @@ double ansys::grpc::client::GRPCClient::multiply_vectors(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout
-            << ">>>> Server vector dot product successful! Retrieving result."
-            << std::endl;
+        if (_debug_log) {
+            std::cout << ">>>> Server vector dot product successful! "
+                         "Retrieving result."
+                      << std::endl;
+        }
         return deserialize_vector(reply.vector_as_chunk(), reply.vector_size(),
                                   reply.data_type())
             .at(0);
@@ -187,9 +198,11 @@ std::vector<std::vector<double>> ansys::grpc::client::GRPCClient::add_matrices(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout
-            << ">>>> Server matrix addition successful! Retrieving matrix."
-            << std::endl;
+        if (_debug_log) {
+            std::cout
+                << ">>>> Server matrix addition successful! Retrieving matrix."
+                << std::endl;
+        }
         return deserialize_matrix(reply.matrix_as_chunk(), reply.matrix_rows(),
                                   reply.matrix_cols(), reply.data_type());
 
@@ -223,9 +236,12 @@ ansys::grpc::client::GRPCClient::multiply_matrices(
 
     // Act upon its status.
     if (status.ok()) {
-        std::cout << ">>>> Server matrix multiplication successful! Retrieving "
-                     "matrix."
-                  << std::endl;
+        if (_debug_log) {
+            std::cout
+                << ">>>> Server matrix multiplication successful! Retrieving "
+                   "matrix."
+                << std::endl;
+        }
         return deserialize_matrix(reply.matrix_as_chunk(), reply.matrix_rows(),
                                   reply.matrix_cols(), reply.data_type());
 

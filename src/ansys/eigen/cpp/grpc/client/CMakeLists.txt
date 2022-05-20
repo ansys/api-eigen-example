@@ -4,6 +4,7 @@ project(api_eigen_example_grpc_client VERSION 1.0 DESCRIPTION "The API Eigen Exa
 # Specify the C++ standard
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
 # Call the CONAN setup
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)

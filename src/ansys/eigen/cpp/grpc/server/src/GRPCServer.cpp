@@ -25,12 +25,13 @@ ansys::grpc::server::GRPCServer::~GRPCServer() {
 // ----------------------------------------------------------------------------
 
 void ansys::grpc::server::GRPCServer::serve(const std::string host,
-                                            const int port) {
+                                            const int port,
+                                            const bool debug_log) {
     // Start by defining our server address
     std::string server_address = host + ":" + std::to_string(port);
 
     // Initialize our service
-    ansys::grpc::service::GRPCService service;
+    ansys::grpc::service::GRPCService service{debug_log};
 
     ::grpc::ServerBuilder builder;
     // Listen on the given address without any authentication mechanism.

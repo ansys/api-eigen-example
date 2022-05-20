@@ -17,7 +17,7 @@ int main() {
     // Deploying the client
     // ------------------------------------------------------------------------
     // Instantiate an GRPCClient
-    ansys::grpc::client::GRPCClient client{"0.0.0.0", 50000};
+    ansys::grpc::client::GRPCClient client{"0.0.0.0", 50000, true};
 
     // ------------------------------------------------------------------------
     // REQUESTING GREETING - A.K.A "Hello World"
