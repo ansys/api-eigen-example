@@ -1,3 +1,5 @@
-venv
-build
-.*done
+.benchmarks/
+__pycache__/
+hist/
+.venv/
+api-eigen-example/
