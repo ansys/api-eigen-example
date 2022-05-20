@@ -13,7 +13,9 @@
 ansys::rest::client::EigenClient::EigenClient(const std::string& baseUrl,
                                               const std::string& user,
                                               const std::string& pwd,
-                                              int timeout) {
+                                              const int timeout,
+                                              const bool debug_log)
+    : _debug_log(debug_log) {
     // Start creating the EigenClient object
     std::cout << "EigenClient object created." << std::endl;
 
@@ -59,7 +61,7 @@ void ansys::rest::client::EigenClient::request_greeting() {
     auto response = _conn->get("/");
 
     // Print out the server's response
-    print_response(response);
+    if (_debug_log) print_response(response);
 }
 
 std::vector<double> ansys::rest::client::EigenClient::add_vectors(
@@ -88,7 +90,8 @@ std::vector<double> ansys::rest::client::EigenClient::add_vectors(
         result.body.c_str() + static_cast<int>(result.body.length()),
         &aux_value, &err);
 
-    print_response(result);
+    if (_debug_log) print_response(result);
+
     if (!success) {
         std::cerr << "Failure parsing server response." << std::endl;
         return std::vector<double>{};
@@ -123,7 +126,8 @@ double ansys::rest::client::EigenClient::multiply_vectors(
         result.body.c_str() + static_cast<int>(result.body.length()),
         &aux_value, &err);
 
-    print_response(result);
+    if (_debug_log) print_response(result);
+
     if (!success) {
         std::cerr << "Failure parsing server response." << std::endl;
         return 0.0;
@@ -159,7 +163,8 @@ std::vector<std::vector<double>> ansys::rest::client::EigenClient::add_matrices(
         result.body.c_str() + static_cast<int>(result.body.length()),
         &aux_value, &err);
 
-    print_response(result);
+    if (_debug_log) print_response(result);
+
     if (!success) {
         std::cerr << "Failure parsing server response." << std::endl;
         return std::vector<std::vector<double>>{};
@@ -196,7 +201,8 @@ ansys::rest::client::EigenClient::multiply_matrices(
         result.body.c_str() + static_cast<int>(result.body.length()),
         &aux_value, &err);
 
-    print_response(result);
+    if (_debug_log) print_response(result);
+
     if (!success) {
         std::cerr << "Failure parsing server response." << std::endl;
         return std::vector<std::vector<double>>{};
@@ -224,7 +230,9 @@ int ansys::rest::client::EigenClient::post_vector(
 
     Json::FastWriter fastWriter;
     std::string output = fastWriter.write(aux_value);
-    std::cout << "Request: POST /Vectors Content: " << output << std::endl;
+    if (_debug_log) {
+        std::cout << "Request: POST /Vectors Content: " << output << std::endl;
+    }
 
     auto response = _conn->post("/Vectors", output);
     aux_value.clear();
@@ -239,7 +247,8 @@ int ansys::rest::client::EigenClient::post_vector(
         response.body.c_str() + static_cast<int>(response.body.length()),
         &aux_value, &err);
 
-    print_response(response);
+    if (_debug_log) print_response(response);
+
     if (!success) {
         std::cerr << "Failure parsing server response." << std::endl;
         return -1;
@@ -267,7 +276,9 @@ int ansys::rest::client::EigenClient::post_matrix(
 
     Json::FastWriter fastWriter;
     std::string output = fastWriter.write(aux_value);
-    std::cout << "Request: POST /Matrices Content: " << output << std::endl;
+    if (_debug_log) {
+        std::cout << "Request: POST /Matrices Content: " << output << std::endl;
+    }
 
     auto response = _conn->post("/Matrices", output);
     aux_value.clear();
@@ -282,7 +293,8 @@ int ansys::rest::client::EigenClient::post_matrix(
         response.body.c_str() + static_cast<int>(response.body.length()),
         &aux_value, &err);
 
-    print_response(response);
+    if (_debug_log) print_response(response);
+
     if (!success) {
         std::cerr << "Failure parsing server response." << std::endl;
         return -1;
