@@ -197,5 +197,111 @@ And run your client application!
 
     ./myClientApp
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installation of the C++ gRPC Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Installing the C++ gRPC server manually is a very simple process. Just run the following command lines from
+the root of the repository. It will use the `conan <https://conan.io/>`_ package manager to install its dependencies.
+
+.. code:: bash
+
+    cd src/ansys/eigen/cpp/grpc/server/
+    make compile && make install && ./deploy_dependencies.sh
+
+
+You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
+
+Once installed, you are ready to go with the C++ gRPC server! Start writing your own C++ ``main.cpp`` file and
+include the project header files as follows:
+
+.. code:: cpp
+
+    #include <apieigen/grpc/GRPCServer.hpp>
+
+    int main() {
+       // Let us instantiate our server
+       ansys::grpc::server::GRPCServer server{};
+
+       // Start serving!
+       server.serve();
+    }
+
+
+For compiling, just link the library as follows:
+
+.. code:: bash
+
+    g++ -o myServer main.cpp -lapi_eigen_example_grpc_server
+
+And run your server!
+
+.. code:: bash
+
+    ./myServer
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installation of the C++ gRPC Client
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Installing the C++ gRPC client manually is a very simple process. Just run the following command lines from
+the root of the repository. It will use the `conan <https://conan.io/>`_  package manager to install its dependencies.
+
+.. code:: bash
+
+    cd src/ansys/eigen/cpp/grpc/client/
+    make compile && make install && ./deploy_dependencies.sh
+
+
+You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
+
+Once installed, you are ready to go with the C++ gRPC client! Start writing your own C++ ``main.cpp`` file and
+include the project header files as follows:
+
+.. code:: cpp
+
+    #include <vector>
+    #include <apieigen/grpc/GRPCClient.hpp>
+
+    int main() {
+        // ------------------------------------------------------------------------
+        // Deploying the client
+        // ------------------------------------------------------------------------
+        // Instantiate an GRPCClient
+        ansys::grpc::client::GRPCClient client{"0.0.0.0", 50000};
+
+        // ------------------------------------------------------------------------
+        // REQUESTING GREETING - A.K.A "Hello World"
+        // ------------------------------------------------------------------------
+        // Let us request a greeting!
+        client.request_greeting("Michael");
+
+        // ------------------------------------------------------------------------
+        // Performing vector operations
+        // ------------------------------------------------------------------------
+        // Let us create some reference vectors
+        std::vector<double> vec1{1.0, 2.0, 3.0, 50.0};
+        std::vector<double> vec2{4.0, 5.0, 8.0, 10.0};
+
+        // Let us add them
+        auto result = client.add_vectors(vec1, vec2);
+
+        // Exit successfully
+        return 0;
+    }
+
+
+For compiling, just link the library as follows:
+
+.. code:: bash
+
+    g++ -o myClientApp main.cpp -lapi_eigen_example_grpc_client
+
+
+And run your client!
+
+.. code:: bash
+
+    ./myClientApp
 

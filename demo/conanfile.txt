@@ -1,9 +1,0 @@
-[requires]
-grpc/1.39.1
-
-[generators]
-cmake
-
-[imports]
-bin, protoc* -> . @ root_package=protobuf
-bin, grpc_cpp_plugin -> . @ root_package=grpc

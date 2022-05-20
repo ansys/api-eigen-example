@@ -3,11 +3,13 @@
 #ifndef SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_EIGENFUNCTIONALITIES_HPP
 #define SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_EIGENFUNCTIONALITIES_HPP
 
+namespace ansys {
+
 /**
  * @brief Namespace exposing functionalities of interest from the Eigen library
  * for the API Eigen Example project.
  */
-namespace ansys::eigen {
+namespace eigen {
 /**
  * @brief Wrapper method to Matrix multiplication carried out by Eigen
  * operators.
@@ -86,6 +88,7 @@ std::string write_vector(const Eigen::VectorXd& input);
  */
 std::string write_matrix(const Eigen::MatrixXd& input);
 
-}  // namespace ansys::eigen
+}  // namespace eigen
+}  // namespace ansys
 
 #endif /* SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_EIGENFUNCTIONALITIES_HPP */

@@ -17,3 +17,4 @@ Here we should discuss the different API modules at a high level.
    python-rest/index
    python-grpc/index
    cpp-rest/index
+   cpp-grpc/index

@@ -5,10 +5,13 @@
 #ifndef SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTSERVER_HPP
 #define SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTSERVER_HPP
 
+namespace ansys {
+namespace rest {
+
 /**
  * @brief Namespace including the API Eigen Example Server implemented in C++.
  */
-namespace ansys::rest::server {
+namespace server {
 
 /**
  * @brief Class containing the server logic.
@@ -116,6 +119,8 @@ class RestServer {
     crow::response multiply_matrices(int id1, int id2);
 };
 
-};  // namespace ansys::rest::server
+};  // namespace server
+}  // namespace rest
+}  // namespace ansys
 
 #endif /* SRC_ANSYS_EIGEN_CPP_REST_SERVER_SRC_RESTSERVER_HPP */

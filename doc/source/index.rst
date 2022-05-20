@@ -41,7 +41,7 @@ This demo project contains basically 4 different examples:
   has a wrapping over the Eigen library using pybind11.
 - A **C++ REST API** demo using both client-server features, 
   with direct interaction with the Eigen Library on the server side.
-- [IN PROGRESS] A C++ gRPC demo using both client-server features, with
+- A **C++ gRPC API** demo using both client-server features, with
   direct interaction with the Eigen Library on the server side.
 
 Features

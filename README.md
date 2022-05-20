@@ -1,5 +1,30 @@
 # API Eigen example project
 
+## IMPORTANT NOTE!!
+
+This repository is **for demonstration purposes only**. It is not intended to expose the
+Eigen Library as a service, nor is it expected to be used as a product. This demo is intended to be used for demonstrating
+the REST and gRPC protocols via client-server interaction, with interactive examples, documentation and resources.
+
+It provides a baseline (or guidelines) for future projects which may have to deal with API protocols such as REST and gRPC, in different languages,
+with a higher level of complexity than a simple "Hello World" project.
+
+
+## Table of contents
+
+<!--ts-->
+   * [Introduction](#introduction)
+   * [Documentation](#documentation)
+   * [Getting Started with the Python Packages](#getting-started-with-the-python-packages)
+      * [Installation](#installation)
+      * [Starting to use it](#starting-to-use-it)
+   * [Getting Started with the C++ Packages](#getting-started-with-the-c-packages)
+      * [Installing the C++ REST Server](#installing-the-c-rest-server)
+      * [Installing the C++ REST Client](#installing-the-c-rest-client)
+      * [Installing the C++ gRPC Server](#installing-the-c-grpc-server)
+      * [Installing the C++ gRPC Client](#installing-the-c-grpc-client)
+<!--te-->
+
 ## Introduction
 
 The API Eigen example package is a simple project which intends to show PyAnsys
@@ -19,6 +44,12 @@ The client is intended to aid the end-users since it provides them with the tool
 communicating with the server without needing to know the specifics of the protocol implemented.
 However, feel free to interact directly by your own means with the server (e.g. API REST communication 
 can also be easily performed using CURL commands).
+
+## Documentation
+
+An automatically generated version of the project's documentation is published every night under the following [link](https://apieigen.docs.pyansys.com/).
+
+Please, feel free to search on it more specific documentation of the project itself.
 
 ## Getting Started with the Python packages
 
@@ -107,7 +138,7 @@ include the project header files as follows:
 For compiling, just link the library as follows:
 
 ```bash
-    g++ -o myServer main.cpp -lapieigen_example_rest_server
+    g++ -o myServer main.cpp -lapi_eigen_example_rest_server
 ```
 
 And run your server!
@@ -170,7 +201,7 @@ include the project header files as follows:
 For compiling, just link the library as follows:
 
 ```bash
-    g++ -o myClientApp client.cpp -lapieigen_example_rest_client
+    g++ -o myClientApp client.cpp -lapi_eigen_example_rest_client
 ```
 
 And run your client application!
@@ -179,17 +210,100 @@ And run your client application!
     ./myClientApp
 ```
 
-## Documentation
+### Installing the C++ gRPC Server
 
-An automatically generated version of the project's documentation is published every night under the following [link](https://apieigen.docs.pyansys.com/).
+Installing the C++ gRPC server manually is a very simple process. Just run the following command lines from
+the root of the repository. It will use the [conan](https://conan.io/) package manager to install its dependencies.
 
-Please, feel free to search on it more specific documentation of the project itself.
+```bash
+    cd src/ansys/eigen/cpp/grpc/server/
+    make compile && make install && ./deploy_dependencies.sh
+```
 
-## IMPORTANT NOTE!!
+You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
 
-This repository is **for demonstration purposes only**. It is not intended to expose the
-Eigen Library as a service, nor is it expected to be used as a product. This demo is intended to be used for demonstrating
-the REST and gRPC protocols via client-server interaction, with interactive examples, documentation and resources.
+Once installed, you are ready to go with the C++ gRPC server! Start writing your own C++ ``main.cpp`` file and
+include the project header files as follows:
 
-It provides a baseline (or guidelines) for future projects which may have to deal with API protocols such as REST and gRPC, in different languages,
-with a higher level of complexity than a simple "Hello World" project.
+```cpp
+    #include <apieigen/grpc/GRPCServer.hpp>
+
+    int main() {
+       // Let us instantiate our server
+       ansys::grpc::server::GRPCServer server{};
+
+       // Start serving!
+       server.serve();
+    }
+```
+
+For compiling, just link the library as follows:
+
+```bash
+    g++ -o myServer main.cpp -lapi_eigen_example_grpc_server
+```
+
+And run your server!
+
+```bash
+    ./myServer
+```
+
+### Installing the C++ gRPC Client
+
+Installing the C++ gRPC client manually is a very simple process. Just run the following command lines from
+the root of the repository. It will use the [conan](https://conan.io/) package manager to install its dependencies.
+
+```bash
+    cd src/ansys/eigen/cpp/grpc/client/
+    make compile && make install && ./deploy_dependencies.sh
+```
+
+You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
+
+Once installed, you are ready to go with the C++ gRPC client! Start writing your own C++ ``main.cpp`` file and
+include the project header files as follows:
+
+```cpp
+    #include <vector>
+    #include <apieigen/grpc/GRPCClient.hpp>
+
+    int main() {
+        // ------------------------------------------------------------------------
+        // Deploying the client
+        // ------------------------------------------------------------------------
+        // Instantiate an GRPCClient
+        ansys::grpc::client::GRPCClient client{"0.0.0.0", 50000};
+
+        // ------------------------------------------------------------------------
+        // REQUESTING GREETING - A.K.A "Hello World"
+        // ------------------------------------------------------------------------
+        // Let us request a greeting!
+        client.request_greeting("Michael");
+
+        // ------------------------------------------------------------------------
+        // Performing vector operations
+        // ------------------------------------------------------------------------
+        // Let us create some reference vectors
+        std::vector<double> vec1{1.0, 2.0, 3.0, 50.0};
+        std::vector<double> vec2{4.0, 5.0, 8.0, 10.0};
+
+        // Let us add them
+        auto result = client.add_vectors(vec1, vec2);
+
+        // Exit successfully
+        return 0;
+    }
+```
+
+For compiling, just link the library as follows:
+
+```bash
+    g++ -o myClientApp main.cpp -lapi_eigen_example_grpc_client
+```
+
+And run your client!
+
+```bash
+    ./myClientApp
+```

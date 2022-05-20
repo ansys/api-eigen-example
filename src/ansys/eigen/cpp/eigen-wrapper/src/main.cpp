@@ -5,22 +5,25 @@
 
 namespace py = pybind11;
 
-// It is needed to use type py::EigenDRef<Eigen::MatrixXd> for matrix operations, since numpy arrays are
-// characterized for ordering its values differently to Eigen.
+// It is needed to use type py::EigenDRef<Eigen::MatrixXd> for matrix
+// operations, since numpy arrays are characterized for ordering its values
+// differently to Eigen.
 //
-// Ideally, and for performance reasons, we should avoid using Dynamic MAtrixTypes, to take advantage of
-// the vectorization Eigen does when solving matrix operations.
+// Ideally, and for performance reasons, we should avoid using Dynamic
+// MAtrixTypes, to take advantage of the vectorization Eigen does when solving
+// matrix operations.
 
 /**
- * @brief Wrapper method to Matrix multiplication carried out by Eigen operators.
+ * @brief Wrapper method to Matrix multiplication carried out by Eigen
+ * operators.
  *
  * @param a The first matrix.
  * @param b The second matrix.
  *
  * @return Eigen::MatrixXd
  */
-Eigen::MatrixXd multiply_matrices(const py::EigenDRef<Eigen::MatrixXd> a, const py::EigenDRef<Eigen::MatrixXd> b)
-{
+Eigen::MatrixXd multiply_matrices(const py::EigenDRef<Eigen::MatrixXd> a,
+                                  const py::EigenDRef<Eigen::MatrixXd> b) {
     return a * b;
 }
 
@@ -32,21 +35,22 @@ Eigen::MatrixXd multiply_matrices(const py::EigenDRef<Eigen::MatrixXd> a, const 
  *
  * @return Eigen::MatrixXd
  */
-Eigen::MatrixXd add_matrices(const py::EigenDRef<Eigen::MatrixXd> a, const py::EigenDRef<Eigen::MatrixXd> b)
-{
+Eigen::MatrixXd add_matrices(const py::EigenDRef<Eigen::MatrixXd> a,
+                             const py::EigenDRef<Eigen::MatrixXd> b) {
     return a + b;
 }
 
 /**
- * @brief Wrapper method to Vector multiplication (dot product) carried out by Eigen operators.
+ * @brief Wrapper method to Vector multiplication (dot product) carried out by
+ * Eigen operators.
  *
  * @param v The first vector.
  * @param w The second vector.
  *
  * @return double
  */
-double multiply_vectors(const Eigen::Ref<Eigen::VectorXd> v, const Eigen::Ref<Eigen::VectorXd> w)
-{
+double multiply_vectors(const Eigen::Ref<Eigen::VectorXd> v,
+                        const Eigen::Ref<Eigen::VectorXd> w) {
     return v.dot(w);
 }
 
@@ -58,13 +62,12 @@ double multiply_vectors(const Eigen::Ref<Eigen::VectorXd> v, const Eigen::Ref<Ei
  *
  * @return Eigen::VectorXd
  */
-Eigen::VectorXd add_vectors(const Eigen::Ref<Eigen::VectorXd> v, const Eigen::Ref<Eigen::VectorXd> w)
-{
+Eigen::VectorXd add_vectors(const Eigen::Ref<Eigen::VectorXd> v,
+                            const Eigen::Ref<Eigen::VectorXd> w) {
     return v + w;
 }
 
-PYBIND11_MODULE(demo_eigen_wrapper, m)
-{
+PYBIND11_MODULE(demo_eigen_wrapper, m) {
     m.doc() = R"pbdoc(
         Pybind11 example eigen-wrapper
         ------------------------------

@@ -161,7 +161,7 @@ If you know compiled the ``server.cpp`` file once the library is installed such 
 
 .. code:: bash
 
-   g++ -o myServer server.cpp -lapieigen_example_rest_server
+   g++ -o myServer server.cpp -lapi_eigen_example_rest_server
 
 You would just have to run the outcoming executable from the compilation:
 
@@ -230,7 +230,7 @@ In order to compile the client, one should do as follows:
 
 .. code:: bash
 
-   g++ -o myClientApp client.cpp -lapieigen_example_rest_client
+   g++ -o myClientApp client.cpp -lapi_eigen_example_rest_client
 
 And then you would just have to run the outcoming executable from the compilation:
 
@@ -244,4 +244,130 @@ Enjoy creating your own apps!
 The API gRPC Eigen Example C++ Projects
 ---------------------------------------
 
-Coming soon!
+First of all, you would need to install the projects! In order to do so, please follow the instructions in
+:ref:`getting_started`
+
+Assuming you have already installed them, let's do some simple includes:
+
+.. code:: cpp
+
+   #include <apieigen/grpc/GRPCClient.hpp>
+   #include <apieigen/grpc/GRPCServer.hpp>
+
+
+The API gRPC C++ server is characterized for being a standalone gRPC application. This server is intended
+to be run easily with the following commands. 
+
+If you created a simple ``server.cpp`` file, you could do the following:
+
+.. code:: cpp
+
+   #include <apieigen/grpc/GRPCServer.hpp>
+
+   int main() {
+      // Let us instantiate our server
+      ansys::grpc::server::GRPCServer server{};
+
+      // Start serving!
+      server.serve();
+   }
+
+If you know compiled the ``server.cpp`` file once the library is installed such that:
+
+.. code:: bash
+
+   g++ -o myServer server.cpp -lapi_eigen_example_grpc_server
+
+You would just have to run the outcoming executable from the compilation:
+
+.. code:: bash
+   
+   ./myServer
+
+And now, your server would be deployed!
+
+.. code:: bash
+
+   >>> Instantiating our server...
+   >>> GRPCService object created.
+   >>> Server listening on 0.0.0.0:50000
+
+This will deploy the server by its default parameters, though you can always deploy it with your own custom
+parameters, by providing the optional inputs in the `serve(...)` method.
+
+Now, let us look into the client!
+
+The C++ client contains a class called ``GRPCClient``, which basically provide the end-user the tools to interact
+directly with the previously deployed server. For example, if we wanted to create an API gRPC client for interacting with
+our previously deployed server we would, in a new C++ file which we will call ``client.cpp``:
+
+.. code:: cpp
+
+   #include <vector>
+
+   #include <apieigen/grpc/GRPCClient.hpp>
+
+   int main() {
+       // ------------------------------------------------------------------------
+       // Deploying the client
+       // ------------------------------------------------------------------------
+       // Instantiate an GRPCClient
+       ansys::grpc::client::GRPCClient client{"0.0.0.0", 50000};
+
+       // ------------------------------------------------------------------------
+       // REQUESTING GREETING - A.K.A "Hello World"
+       // ------------------------------------------------------------------------
+       // Let us request a greeting!
+       client.request_greeting("Michael");
+
+       // ------------------------------------------------------------------------
+       // Performing vector operations
+       // ------------------------------------------------------------------------
+       // Let us create some reference vectors
+       std::vector<double> vec1{1.0, 2.0, 3.0, 50.0};
+       std::vector<double> vec2{4.0, 5.0, 8.0, 10.0};
+
+       // Let us add them
+       auto result = client.add_vectors(vec1, vec2);
+
+       // Exit successfully
+       return 0;
+   }
+
+
+The previous client, for example, would deal with a vector addition operation via gRPC API interaction
+with our server, apart from requesting a greeting!
+
+In order to compile the client application, one should do as follows:
+
+.. code:: bash
+
+   g++ -o myClientApp client.cpp -lapi_eigen_example_grpc_client
+
+And then you would just have to run the outcoming executable from the compilation:
+
+.. code:: bash
+   
+   ./myClientApp
+
+.. code:: bash
+
+   GRPCClient object created.
+   >>>> Requesting greeting for Michael
+   >>>> Server answered --> Hello, Michael!
+   >>>> Requesting vector addition!
+   >>>> Server vector addition successful! Retrieving vector.
+   GRPCClient object destroyed.
+
+And on the server side you would be seeing these logs:
+
+.. code:: bash
+
+   >>>> Greeting requested! Requested by Michael
+   >>>> Vector addition requested!
+   >>>> Incoming Vector:  1  2  3 50
+   >>>> Incoming Vector:  4  5  8 10
+   >>>> Result of addition:  5  7 11 60
+   Enjoy creating your own apps!
+
+Enjoy creating your own apps!
