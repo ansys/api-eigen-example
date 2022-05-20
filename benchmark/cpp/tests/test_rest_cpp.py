@@ -1,6 +1,5 @@
-import pytest
-
 from eigen_cpp_client import RESTClient
+import pytest
 
 from .test_tools import SIZES, SIZES_IDS, mat_generator, vec_generator
 
