@@ -2,6 +2,8 @@
 
 from random import random, seed
 
+import numpy as np
+
 # Modifiable parameter -- NVALUES
 #
 # This parameter defines the amount of runs (and consequently, powers of 2)
@@ -32,9 +34,22 @@ def gen_value():
 
 # Auxiliary function to generate random vectors
 def vec_generator(vec_length):
-    return [gen_value() for _ in range(0, vec_length)]
+    return np.array([gen_value() for _ in range(0, vec_length)], dtype=np.float64)
 
 
 # Auxiliary function to generate random square matrices
 def mat_generator(mat_size):
+    return np.array(
+        [[gen_value() for _ in range(0, mat_size)] for _ in range(0, mat_size)],
+        dtype=np.float64,
+    )
+
+
+# Auxiliary function to generate random vectors (as a list)
+def vec_generator_list(vec_length):
+    return [gen_value() for _ in range(0, vec_length)]
+
+
+# Auxiliary function to generate random square matrices (as a list)
+def mat_generator_list(mat_size):
     return [[gen_value() for _ in range(0, mat_size)] for _ in range(0, mat_size)]

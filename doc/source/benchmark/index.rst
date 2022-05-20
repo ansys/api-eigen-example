@@ -19,9 +19,12 @@ is currently set to 128, but it is easily adaptable.
 
 Now, let us see the results!
 
-**************************
-Benchmark tests for Python
-**************************
+*****************
+Benchmark results
+*****************
+
+Benchmark results layout
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Let us explain the layout of the figures:
 
@@ -31,46 +34,51 @@ Let us explain the layout of the figures:
 
 If we applied this to the first test shown, the order would be as follows (from left to right):
 
-* gRPC "add_vectors" test with vectors of 2 elements.
-* gRPC "add_vectors" test with vectors of 4 elements.
-* gRPC "add_vectors" test with vectors of 8 elements.
+* gRPC "add_vectors" test with vectors of 2 elements in C++.
+* gRPC "add_vectors" test with vectors of 4 elements in C++.
+* gRPC "add_vectors" test with vectors of 8 elements in C++.
 * ...
-* REST "add_vectors" test with vectors of 2 elements.
-* REST "add_vectors" test with vectors of 4 elements.
-* REST "add_vectors" test with vectors of 8 elements.
+* gRPC "add_vectors" test with vectors of 2 elements in Python.
+* gRPC "add_vectors" test with vectors of 4 elements in Python.
+* gRPC "add_vectors" test with vectors of 8 elements in Python.
+* ...
+* REST "add_vectors" test with vectors of 2 elements in C++.
+* REST "add_vectors" test with vectors of 4 elements in C++.
+* REST "add_vectors" test with vectors of 8 elements in C++.
+* ...
+* REST "add_vectors" test with vectors of 2 elements in Python.
+* REST "add_vectors" test with vectors of 4 elements in Python.
+* REST "add_vectors" test with vectors of 8 elements in Python.
 * ...
 
-By analyzing the name format of the tests one can also identify its characteristics. For example
+By analyzing the name format of the tests one can also identify its characteristics. For example:
 
-* **test_add_vectors_grpc[0128]** is telling us that we are running the "add_vectors" test, for the gRPC protocol with random vectors of size 128.
-* **test_multiply_matrices_rest[0064]** is telling us that we are running the "multiply_matrices" test, for the REST protocol with random square matrices of size 64.
+* **test_add_vectors_grpc_python[0128]** is telling us that we are running the "add_vectors" test, for the gRPC protocol, with the Python version of the implementation and with random vectors of size 128.
+* **test_multiply_matrices_rest_cpp[0064]** is telling us that we are running the "multiply_matrices" test, for the REST protocol, with the C++ version of the implementation and with random square matrices of size 64.
+
+
 
 Adding vectors
 ~~~~~~~~~~~~~~
 
 .. raw:: html
-    :file: images/python/hist-add_vectors.svg
+    :file: images/hist-add_vectors.svg
 
 Multiplying vectors
 ~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
-    :file: images/python/hist-multiply_vectors.svg
+    :file: images/hist-multiply_vectors.svg
 
 Adding matrices
 ~~~~~~~~~~~~~~~
 
 .. raw:: html
-    :file: images/python/hist-add_matrices.svg
+    :file: images/hist-add_matrices.svg
 
 Multiplying matrices
 ~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
-    :file: images/python/hist-multiply_matrices.svg
+    :file: images/hist-multiply_matrices.svg
 
-***********************
-Benchmark tests for C++
-***********************
-
-Coming soon!

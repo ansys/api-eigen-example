@@ -12,7 +12,7 @@ rm -rf .benchmarks
 rm -rf api-eigen-example
 git clone --depth 1 https://github.com/ansys/api-eigen-example.git
 
-# Install the C++ Client libraries 
+# Install the C++ Client libraries and other wrappers
 # -------------------------------------------------------------------------
 # 0) Enter the api-eigen-example repo
 cd api-eigen-example
@@ -25,6 +25,11 @@ cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build . && sudo
 # 2) Installing the gRPC Client
 cd src/ansys/eigen/cpp/grpc/client && make compile && sudo ./deploy_dependencies.sh && sudo make install && cd -
 
+# 3) Install the eigen wrapper and requirements for api-eigen-example
+pip install -r requirements/requirements_eigen_wrapper.txt
+pip install src/ansys/eigen/cpp/eigen-wrapper
+pip install -r requirements/requirements_build.txt
+
 # 99) Exit the api-eigen-example repo
 cd ..
 # -------------------------------------------------------------------------
@@ -33,15 +38,19 @@ cd ..
 pip install bindings/cpp-clients
 
 # Run the Docker containers for the servers
-docker run -d -p 18080:18080 -it --name bm-cpp-rest-server ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest 
-docker run -d -p 50000:50000 -it --name bm-cpp-grpc-server ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
+docker run -d -p  5000:5000  -it --name bm-python-rest-server ghcr.io/ansys/api-eigen-example/python-rest-server:latest
+docker run -d -p 50051:50051 -it --name bm-python-grpc-server ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
+docker run -d -p 18080:18080 -it --name bm-cpp-rest-server    ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest 
+docker run -d -p 50000:50000 -it --name bm-cpp-grpc-server    ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
 
-# Start running the benchmark tests
-echo "Benchmarking api-eigen-example C++ packages"
+# Start running the benchmarks
+echo "Benchmarking api-eigen-example C++ & Python packages"
+pip install api-eigen-example/
 pytest tests/ --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-warmup=true --benchmark-min-rounds=500
 
 # Stop and remove the Docker containers for the servers
-docker stop bm-cpp-rest-server bm-cpp-grpc-server && docker rm bm-cpp-rest-server bm-cpp-grpc-server
+docker stop bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server
+docker rm   bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server 
 
 mkdir hist -p
 rm hist/*
