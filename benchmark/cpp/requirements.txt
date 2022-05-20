@@ -1,4 +1,6 @@
-pybind11-global
+setuptools>=41.0.0
+wheel>=0.33.0
+pybind11-global==2.9.2
 pytest>=6.2.5
 pytest-benchmark>=3.4.1
 pygal

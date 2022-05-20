@@ -10,7 +10,7 @@ from .test_tools import SIZES, SIZES_IDS, mat_generator, vec_generator
 
 @pytest.mark.benchmark(group="add_vectors")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_add_vectors_grpc(benchmark, sz):
+def test_add_vectors_grpc_cpp(benchmark, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two lists (as vectors). Calling the C++
     implementation of the client and server."""
@@ -25,7 +25,7 @@ def test_add_vectors_grpc(benchmark, sz):
 
 @pytest.mark.benchmark(group="multiply_vectors")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_multiply_vectors_grpc(benchmark, grpc_stub, sz):
+def test_multiply_vectors_grpc_cpp(benchmark, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two lists (as vectors). Calling the C++
     implementation of the client and server."""
@@ -40,7 +40,7 @@ def test_multiply_vectors_grpc(benchmark, grpc_stub, sz):
 
 @pytest.mark.benchmark(group="add_matrices")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_add_matrices_grpc(benchmark, grpc_stub, sz):
+def test_add_matrices_grpc_cpp(benchmark, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the addition of two lists (as matrices). Calling the C++
     implementation of the client and server."""
@@ -55,7 +55,7 @@ def test_add_matrices_grpc(benchmark, grpc_stub, sz):
 
 @pytest.mark.benchmark(group="multiply_matrices")
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_multiply_matrices_grpc(benchmark, grpc_stub, sz):
+def test_multiply_matrices_grpc_cpp(benchmark, sz):
     """BM test to measure the time consumed so that the client gets the expected response
     when performing the multiplication of two lists (as matrices). Calling the C++
     implementation of the client and server."""
