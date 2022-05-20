@@ -25,7 +25,10 @@ cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build . && sudo
 # 2) Installing the gRPC Client
 cd src/ansys/eigen/cpp/grpc/client && make compile && sudo ./deploy_dependencies.sh && sudo make install && cd -
 
-# 3) Install the eigen wrapper and requirements for api-eigen-example
+# 3) Update the dynamic libraries
+ldconfig -v
+
+# 4) Install the eigen wrapper and requirements for api-eigen-example
 pip install -r requirements/requirements_eigen_wrapper.txt
 pip install src/ansys/eigen/cpp/eigen-wrapper
 pip install -r requirements/requirements_build.txt
