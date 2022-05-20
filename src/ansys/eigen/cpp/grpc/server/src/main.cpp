@@ -5,7 +5,7 @@ int main() {
     ansys::grpc::server::GRPCServer server;
 
     // And let us start serving!
-    server.serve("0.0.0.0", 50000);
+    server.serve("0.0.0.0", 50000, false);
 
     return 0;
 }

@@ -23,8 +23,10 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
    public:
     /**
      * @brief Construct a new GRPCDemo Service object.
+     *
+     * @param debug_log whether to show the enhanced debugging logs or not.
      */
-    GRPCService();
+    GRPCService(const bool debug_log);
 
     /**
      * @brief Destroy the GRPCDemo Service object.
@@ -107,6 +109,11 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
         ::grpcdemo::Matrix* response);
 
    private:
+    /**
+     * @brief Boolean indicating whether to show the debugging logs or not
+     */
+    bool _debug_log;
+
     /**
      * @brief Method used to deserialize a Vector message into an
      * Eigen::VectorXd object.

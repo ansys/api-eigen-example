@@ -36,10 +36,13 @@ class EigenClient {
      * mechanism required. Default: empty.
      * @param timeout (optional) the timeout to be set for aborting connection.
      * Default: 10.
+     * @param debug_log whether to show the enhanced debugging logs or not.
+     * Default: false.
      */
     EigenClient(const std::string& baseUrl,
                 const std::string& user = std::string{},
-                const std::string& pwd = std::string{}, int timeout = 10);
+                const std::string& pwd = std::string{}, const int timeout = 10,
+                const bool debug_log = false);
 
     /**
      * @brief Destroy the Eigen Client object.
@@ -102,6 +105,11 @@ class EigenClient {
      * @brief The connection pointer to the endpoint server.
      */
     RestClient::Connection* _conn{nullptr};
+
+    /**
+     * @brief Boolean indicating whether to show the debugging logs or not.
+     */
+    bool _debug_log;
 
     /**
      * @brief Method in charge of connecting to the endpoint server to POST a

@@ -31,9 +31,11 @@ class GRPCClient {
      * Default: 0.0.0.0.
      * @param port the port through which the server is exposed. Default:
      * 50000.
+     * @param debug_log whether to show the enhanced debugging logs or not.
+     * Default: false.
      */
     GRPCClient(const std::string host = std::string{"0.0.0.0"},
-               const int port = 50000);
+               const int port = 50000, const bool debug_log = false);
 
     /**
      * @brief Destroy the GRPC Client object.
@@ -108,6 +110,11 @@ class GRPCClient {
      * (Channel).
      */
     std::unique_ptr<grpcdemo::GRPCDemo::Stub> _stub;
+
+    /**
+     * @brief Boolean indicating whether to show the debugging logs or not
+     */
+    bool _debug_log;
 
     /**
      * @brief Method used to deserialize a Vector message into an
