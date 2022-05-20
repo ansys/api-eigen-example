@@ -311,7 +311,7 @@ our previously deployed server we would, in a new C++ file which we will call ``
        // ------------------------------------------------------------------------
        // Deploying the client
        // ------------------------------------------------------------------------
-       // Instantiate an GRPCClient
+       // Instantiate a GRPCClient
        ansys::grpc::client::GRPCClient client{"0.0.0.0", 50000};
 
        // ------------------------------------------------------------------------

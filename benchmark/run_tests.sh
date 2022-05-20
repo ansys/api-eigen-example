@@ -79,4 +79,4 @@ pytest-benchmark compare --group-by group --sort fullname --csv=data/python_bm_r
 # Stop and remove the Docker containers for the servers
 # -------------------------------------------------------------------------
 docker stop bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server
-docker rm   bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server 
+docker rm   bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server

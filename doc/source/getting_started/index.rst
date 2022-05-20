@@ -268,7 +268,7 @@ include the project header files as follows:
         // ------------------------------------------------------------------------
         // Deploying the client
         // ------------------------------------------------------------------------
-        // Instantiate an GRPCClient
+        // Instantiate a GRPCClient
         ansys::grpc::client::GRPCClient client{"0.0.0.0", 50000};
 
         // ------------------------------------------------------------------------
