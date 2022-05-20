@@ -58,7 +58,7 @@ rm hist/*
 echo "Benchmarking api-eigen-example Python packages"
 pip install api-eigen-example/
 pytest tests/python/ --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-warmup=true --benchmark-min-rounds=500
-pytest-benchmark compare --group-by group --sort fullname --csv=data/python_bm_results.txt 1> /dev/null
+pytest-benchmark compare --group-by group --sort fullname --csv=data/python_bm_results.csv 1> /dev/null
 
 # C++ BM tests
 # -------------------------------------------------------------------------
