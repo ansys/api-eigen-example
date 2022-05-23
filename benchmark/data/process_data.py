@@ -27,12 +27,29 @@ cpp_tests.set_axis(labels=["name", "mean"], axis=1)
 print("Data parsed!")
 
 # Plotting vector addition
-for test_type in [
+x_axis_el = ["2", "4", "8", "16", "32", "64", "128", "256", "512", "1024", "2048"]
+x_axis_sq = [
+    "2^2",
+    "4^2",
+    "8^2",
+    "16^2",
+    "32^2",
+    "64^2",
+    "128^2",
+    "256^2",
+    "512^2",
+    "1024^2",
+    "2048^2",
+]
+x_axis_tests = [x_axis_el, x_axis_el, x_axis_sq, x_axis_sq]
+test_types = [
     "add_vectors",
     "multiply_vectors",
     "add_matrices",
     "multiply_matrices",
-]:
+]
+
+for (test_type, x_axis) in zip(test_types, x_axis_tests):
 
     print("Plotting %s test..." % test_type)
 
@@ -53,7 +70,6 @@ for test_type in [
         .sort_values(by=[0], ascending=True)[1]
         .to_numpy()
     )
-    x_axis = ["2", "4", "8", "16", "32", "64", "128"]
 
     figure = plt.figure()
     plt.plot(

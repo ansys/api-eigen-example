@@ -8,7 +8,7 @@ import numpy as np
 #
 # This parameter defines the amount of runs (and consequently, powers of 2)
 # which will define the size of our arrays.. See below, SIZES
-NVALUES = 8
+NVALUES = 12
 
 # ==================================================================================
 # IT IS NOT RECOMMENDED TO MODIFY THE SCRIPT BEYOND THIS POINT WITHOUT KNOWLEDGE

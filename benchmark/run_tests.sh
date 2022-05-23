@@ -56,7 +56,7 @@ rm -rf data/*.svg data/*.txt data/*.csv
 # Start running the benchmarks
 echo "Benchmarking api-eigen-example Python packages"
 pip install api-eigen-example/
-pytest tests/python/ --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-warmup=true --benchmark-min-rounds=500
+pytest tests/python/ --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-min-rounds=100
 pytest-benchmark compare --group-by group --sort fullname --csv=data/python_bm_results.csv 1> /dev/null
 
 # C++ BM tests
