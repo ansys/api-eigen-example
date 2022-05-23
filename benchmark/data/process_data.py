@@ -1,9 +1,9 @@
-from numpy import average
-import pandas as pd
-import glob
 import csv
-import matplotlib.pyplot as plt
+import glob
 import statistics
+
+import matplotlib.pyplot as plt
+import pandas as pd
 
 MICRO = 1e6
 
