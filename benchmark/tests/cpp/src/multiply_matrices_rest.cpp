@@ -17,11 +17,11 @@ constexpr int MAX = 10;
 
 int main() {
     // Define the test file naming convention and tests to run
-    const std::string file_prefix{"multiply_matrices_rest"};
-    const std::string file_suffix{".txt"};
+    const std::string file_prefix{"multiply_matrices_rest["};
+    const std::string file_suffix{"].txt"};
     const std::vector<int> sizes{2, 4, 8, 16, 32, 64, 128};
-    const std::vector<std::string> str_sizes{"0002", "0004", "0008", "0016",
-                                             "0032", "0064", "0128"};
+    const std::vector<std::string> str_sizes{"00002", "00004", "00008", "00016",
+                                             "00032", "00064", "00128"};
 
     // Instantiate an EigenClient
     auto client = ansys::rest::client::EigenClient("http://0.0.0.0:18080");
