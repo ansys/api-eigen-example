@@ -1,6 +1,6 @@
 # API Eigen Example Benchmarks using Python
 
-Benchmarks for [API Eigen Example](https://github.com/ansys/api-eigen-example) using Python (for both REST and gRPC).
+Benchmarks for [API Eigen Example](https://github.com/ansys/api-eigen-example) using Python and C++ (for both REST and gRPC).
 
 Run with
 ```

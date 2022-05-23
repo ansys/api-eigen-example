@@ -49,8 +49,7 @@ docker run -d -p 50000:50000 -it --name bm-cpp-grpc-server    ghcr.io/ansys/api-
 
 # Clean the tmp results folder  
 # -------------------------------------------------------------------------
-mkdir hist -p
-rm hist/*
+rm -rf data/*.svg data/*.txt data/*.csv
 
 # Python BM tests
 # -------------------------------------------------------------------------
@@ -62,21 +61,25 @@ pytest-benchmark compare --group-by group --sort fullname --csv=data/python_bm_r
 
 # C++ BM tests
 # -------------------------------------------------------------------------
-#
-#
-#
-#
-#
-
-# Plot the results
-# -------------------------------------------------------------------------
-#
-# Results should go to hist folder
-#
-#
-
+echo "Benchmarking api-eigen-example C++ packages"
+cd tests/cpp/build
+rm -rf *
+cmake .. && cmake --build .
+for test in add_vectors_rest add_vectors_grpc multiply_vectors_rest multiply_vectors_grpc add_matrices_rest add_matrices_grpc multiply_matrices_rest multiply_matrices_grpc
+do
+    echo "Running $test test..."
+    ./$test > /dev/null
+done
+mv *].txt ../../../data/
+cd -
 
 # Stop and remove the Docker containers for the servers
 # -------------------------------------------------------------------------
 docker stop bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server
 docker rm   bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server
+
+# Plot the results
+# -------------------------------------------------------------------------
+cd data
+python process_data.py
+cd -
