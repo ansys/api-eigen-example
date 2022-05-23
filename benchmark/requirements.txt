@@ -2,3 +2,5 @@ pytest>=6.2.5
 pytest-benchmark>=3.4.1
 pygal
 pygaljs
+pandas
+matplotlib
