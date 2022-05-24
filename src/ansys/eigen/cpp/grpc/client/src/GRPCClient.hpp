@@ -117,6 +117,60 @@ class GRPCClient {
     bool _debug_log;
 
     /**
+     * @brief Method in charge of defining the Client Metadata in the
+     * bidirectional stream transfer of Vector messages.
+     *
+     * @param context the gRPC context.
+     * @param vec1 the vector to be transmitted.
+     * @param vec2 (optional) the second vector to be transmitted.
+     * @return std::vector<std::vector<int>>
+     */
+    std::vector<std::vector<int>> define_vecstream_metadata(
+        ::grpc::ClientContext* context, const std::vector<double>& vec1,
+        const std::vector<double>& vec2 = {});
+
+    /**
+     * @brief Set the Vector-specific message metadata (i.e. how many partial
+     * Vector messages constitute an entire Vector).
+     *
+     * @param context the gRPC context.
+     * @param vec the vector to be transmitted.
+     * @param vec_name the identifier of the vector.
+     * @return std::vector<int>
+     */
+    std::vector<int> set_vector_metadata(::grpc::ClientContext* context,
+                                         const std::vector<double>& vec,
+                                         const std::string& vec_name);
+
+    /**
+     * @brief Method in charge of defining the Client Metadata in the
+     * bidirectional stream transfer of Matrix messages.
+     *
+     * @param context the gRPC context.
+     * @param mat1 the first matrix to be transmitted.
+     * @param mat2 the second matrix to be transmitted.
+     * @return std::vector<std::vector<int>>
+     */
+    std::vector<std::vector<int>> define_matstream_metadata(
+        ::grpc::ClientContext* context,
+        const std::vector<std::vector<double>>& mat1,
+        const std::vector<std::vector<double>>& mat2);
+
+    /**
+     * @brief Set the Matrix-specific message metadata (i.e. how many partial
+     * Matrix messages constitute an entire Matrix).
+     *
+     * @param context the gRPC context.
+     * @param mat the matrix to be transmitted.
+     * @param mat_name the identifier of the matrix.
+     * @return std::vector<int>
+     */
+    std::vector<int> set_matrix_metadata(
+        ::grpc::ClientContext* context,
+        const std::vector<std::vector<double>>& mat,
+        const std::string& mat_name);
+
+    /**
      * @brief Method used to deserialize a Vector message into an
      *  std::vector<double> object.
      *
@@ -132,10 +186,13 @@ class GRPCClient {
      * @brief Method used to serialize an  std::vector<double> object into a
      * Vector message.
      *
-     * @param vector the  std::vector<double> to be serialized.
+     * @param vector the std::vector<double> to be serialized.
+     * @param start the starting index to serialize.
+     * @param end the last index to serialize (not included).
      * @return std::string
      */
-    std::string serialize_vector(const std::vector<double>& vector);
+    std::string serialize_vector(const std::vector<double>& vector,
+                                 const int start, const int end);
 
     /**
      * @brief Method used to deserialize a Matrix message into an
@@ -156,32 +213,66 @@ class GRPCClient {
      * object into a Matrix message.
      *
      * @param matrix the std::vector<std::vector<double>> to be serialized.
+     * @param start the starting row index to serialize.
+     * @param end the last row index to serialize (not included).
      * @return std::string
      */
-    std::string serialize_matrix(
-        const std::vector<std::vector<double>>& matrix);
+    std::string serialize_matrix(const std::vector<std::vector<double>>& matrix,
+                                 const int start, const int end);
 
     /**
      * @brief Method in charge of sending a message for stream-based inputs in
      * RPC method. Targeted to Vector messages.
      *
-     * @param writer the writer used for streaming the messages.
+     * @param reader_writer the writer used for streaming the messages.
      * @param vector the message to be streamed.
+     * @param chunks number of elements in each individual Vector message.
      */
-    void send_vector(
-        std::unique_ptr<::grpc::ClientWriter<grpcdemo::Vector>>& writer,
-        const std::vector<double>& vector);
+    void send_vector(std::unique_ptr<::grpc::ClientReaderWriter<
+                         grpcdemo::Vector, grpcdemo::Vector>>& reader_writer,
+                     const std::vector<double>& vector,
+                     const std::vector<int>& chunks);
 
     /**
      * @brief  Method in charge of sending a message for stream-based inputs in
      * RPC method. Targeted to Matrix messages.
      *
-     * @param writer the writer used for streaming the messages.
+     * @param reader_writer the writer used for streaming the messages.
      * @param matrix the message to be streamed.
+     * @param chunks number of elements in each individual Vector message.
      */
-    void send_matrix(
-        std::unique_ptr<::grpc::ClientWriter<grpcdemo::Matrix>>& writer,
-        const std::vector<std::vector<double>>& matrix);
+    void send_matrix(std::unique_ptr<::grpc::ClientReaderWriter<
+                         grpcdemo::Matrix, grpcdemo::Matrix>>& reader_writer,
+                     const std::vector<std::vector<double>>& matrix,
+                     const std::vector<int>& chunks);
+
+    /**
+     * @brief Method in charge of providing the resulting Vector of an operation
+     * requested to the server from a stream of partial Vector messages.
+     *
+     * @param reader_writer the gRPC reader-writer in the bidirectional stream
+     * protocol.
+     * @param context the gRPC context.
+     * @return std::vector<double>
+     */
+    std::vector<double> receive_vector(
+        std::unique_ptr<::grpc::ClientReaderWriter<
+            grpcdemo::Vector, grpcdemo::Vector>>& reader_writer,
+        ::grpc::ClientContext* context);
+
+    /**
+     * @brief Method in charge of providing the resulting Matrix of an operation
+     * requested to the server from a stream of partial Matrix messages.
+     *
+     * @param reader_writer the gRPC reader-writer in the bidirectional stream
+     * protocol.
+     * @param context the gRPC context.
+     * @return std::vector<std::vector<double>>
+     */
+    std::vector<std::vector<double>> receive_matrix(
+        std::unique_ptr<::grpc::ClientReaderWriter<
+            grpcdemo::Matrix, grpcdemo::Matrix>>& reader_writer,
+        ::grpc::ClientContext* context);
 };
 
 }  // namespace client
