@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0egrpcdemo.proto\x12\x08grpcdemo\"]\n\x06Vector\x12%\n\tdata_type\x18\x01 \x01(\x0e\x32\x12.grpcdemo.DataType\x12\x13\n\x0bvector_size\x18\x02 \x01(\x05\x12\x17\n\x0fvector_as_chunk\x18\x03 \x01(\x0c\"r\n\x06Matrix\x12%\n\tdata_type\x18\x01 \x01(\x0e\x32\x12.grpcdemo.DataType\x12\x13\n\x0bmatrix_rows\x18\x02 \x01(\x05\x12\x13\n\x0bmatrix_cols\x18\x03 \x01(\x05\x12\x17\n\x0fmatrix_as_chunk\x18\x04 \x01(\x0c\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t*#\n\x08\x44\x61taType\x12\x0b\n\x07INTEGER\x10\x00\x12\n\n\x06\x44OUBLE\x10\x01\x32\xde\x02\n\x08GRPCDemo\x12:\n\x08SayHello\x12\x16.grpcdemo.HelloRequest\x1a\x14.grpcdemo.HelloReply\"\x00\x12\x32\n\nFlipVector\x12\x10.grpcdemo.Vector\x1a\x10.grpcdemo.Vector\"\x00\x12\x34\n\nAddVectors\x12\x10.grpcdemo.Vector\x1a\x10.grpcdemo.Vector\"\x00(\x01\x12\x39\n\x0fMultiplyVectors\x12\x10.grpcdemo.Vector\x1a\x10.grpcdemo.Vector\"\x00(\x01\x12\x35\n\x0b\x41\x64\x64Matrices\x12\x10.grpcdemo.Matrix\x1a\x10.grpcdemo.Matrix\"\x00(\x01\x12:\n\x10MultiplyMatrices\x12\x10.grpcdemo.Matrix\x1a\x10.grpcdemo.Matrix\"\x00(\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0egrpcdemo.proto\x12\x08grpcdemo\"]\n\x06Vector\x12%\n\tdata_type\x18\x01 \x01(\x0e\x32\x12.grpcdemo.DataType\x12\x13\n\x0bvector_size\x18\x02 \x01(\x05\x12\x17\n\x0fvector_as_chunk\x18\x03 \x01(\x0c\"r\n\x06Matrix\x12%\n\tdata_type\x18\x01 \x01(\x0e\x32\x12.grpcdemo.DataType\x12\x13\n\x0bmatrix_rows\x18\x02 \x01(\x05\x12\x13\n\x0bmatrix_cols\x18\x03 \x01(\x05\x12\x17\n\x0fmatrix_as_chunk\x18\x04 \x01(\x0c\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t*#\n\x08\x44\x61taType\x12\x0b\n\x07INTEGER\x10\x00\x12\n\n\x06\x44OUBLE\x10\x01\x32\xea\x02\n\x08GRPCDemo\x12:\n\x08SayHello\x12\x16.grpcdemo.HelloRequest\x1a\x14.grpcdemo.HelloReply\"\x00\x12\x36\n\nFlipVector\x12\x10.grpcdemo.Vector\x1a\x10.grpcdemo.Vector\"\x00(\x01\x30\x01\x12\x36\n\nAddVectors\x12\x10.grpcdemo.Vector\x1a\x10.grpcdemo.Vector\"\x00(\x01\x30\x01\x12;\n\x0fMultiplyVectors\x12\x10.grpcdemo.Vector\x1a\x10.grpcdemo.Vector\"\x00(\x01\x30\x01\x12\x37\n\x0b\x41\x64\x64Matrices\x12\x10.grpcdemo.Matrix\x1a\x10.grpcdemo.Matrix\"\x00(\x01\x30\x01\x12<\n\x10MultiplyMatrices\x12\x10.grpcdemo.Matrix\x1a\x10.grpcdemo.Matrix\"\x00(\x01\x30\x01\x62\x06proto3')
 
 _DATATYPE = DESCRIPTOR.enum_types_by_name['DataType']
 DataType = enum_type_wrapper.EnumTypeWrapper(_DATATYPE)
@@ -70,5 +70,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _HELLOREPLY._serialized_start=269
   _HELLOREPLY._serialized_end=298
   _GRPCDEMO._serialized_start=338
-  _GRPCDEMO._serialized_end=688
+  _GRPCDEMO._serialized_end=700
 # @@protoc_insertion_point(module_scope)
