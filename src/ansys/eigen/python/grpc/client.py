@@ -342,7 +342,7 @@ class DemoGRPCClient:
                     result = np.frombuffer(vector.vector_as_chunk, dtype=result_dtype)
                 else:
                     tmp = np.frombuffer(vector.vector_as_chunk, dtype=result_dtype)
-                    result = np.concatenate(result, tmp)
+                    result = np.concatenate((result, tmp))
 
             # Check if the final Vector has the desired size
             if result.size != result_size:
@@ -392,7 +392,7 @@ class DemoGRPCClient:
                     result = np.frombuffer(matrix.matrix_as_chunk, dtype=result_dtype)
                 else:
                     tmp = np.frombuffer(matrix.matrix_as_chunk, dtype=result_dtype)
-                    result = np.concatenate(result, tmp)
+                    result = np.concatenate((result, tmp))
 
             # Check if the final Matrix has the desired size
             if result.size != result_rows * result_cols:

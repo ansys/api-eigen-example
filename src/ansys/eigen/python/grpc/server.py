@@ -364,7 +364,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
                     vector = np.frombuffer(chunk_vec.vector_as_chunk, dtype=dtype)
                 else:
                     tmp = np.frombuffer(chunk_vec.vector_as_chunk, dtype=dtype)
-                    vector = np.concatenate(vector, tmp)
+                    vector = np.concatenate((vector, tmp))
 
             # Check if the final Vector has the desired size
             if vector.size != size[0]:
@@ -441,7 +441,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
                     matrix = np.frombuffer(chunk_mat.matrix_as_chunk, dtype=dtype)
                 else:
                     tmp = np.frombuffer(chunk_mat.matrix_as_chunk, dtype=dtype)
-                    matrix = np.concatenate(matrix, tmp)
+                    matrix = np.concatenate((matrix, tmp))
 
             # Check if the final Matrix has the desired size
             if matrix.size != size[0] * size[1]:
