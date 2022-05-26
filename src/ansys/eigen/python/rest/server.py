@@ -284,8 +284,8 @@ def create_app():
         # Finally, announce that the object has been added to the DB and..-
         click.echo(
             str_type.capitalize()
-            + " "
-            + str_value
+            + " with id "
+            + str(id_in_db)
             + " has been inserted into the server's DB."
         )
 
