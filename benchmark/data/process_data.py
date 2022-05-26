@@ -121,12 +121,11 @@ for (test_type, x_axis) in zip(test_types, x_axis_tests):
         shadow=True,
         ncol=4,
     )
+
+    # Plot in logscale
+    plt.yscale("log")
+
     plt.tight_layout()
     figure.savefig("%s.svg" % test_type, format="svg")
-
-    # convert y-axis to Logarithmic scale
-    plt.yscale("log")
-    plt.tight_layout()
-    figure.savefig("%s_log.svg" % test_type, format="svg")
 
     print("Plot for %s test saved!" % test_type)
