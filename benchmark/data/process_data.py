@@ -79,7 +79,7 @@ for (test_type, x_axis) in zip(test_types, x_axis_tests):
         marker="o",
         linestyle="dashed",
         linewidth=2,
-        markersize=12,
+        markersize=10,
     )
     plt.plot(
         x_axis,
@@ -88,7 +88,7 @@ for (test_type, x_axis) in zip(test_types, x_axis_tests):
         marker="o",
         linestyle="dashed",
         linewidth=2,
-        markersize=12,
+        markersize=10,
     )
     plt.plot(
         x_axis,
@@ -97,7 +97,7 @@ for (test_type, x_axis) in zip(test_types, x_axis_tests):
         marker="o",
         linestyle="dashed",
         linewidth=2,
-        markersize=12,
+        markersize=10,
     )
     plt.plot(
         x_axis,
@@ -106,21 +106,28 @@ for (test_type, x_axis) in zip(test_types, x_axis_tests):
         marker="o",
         linestyle="dashed",
         linewidth=2,
-        markersize=12,
+        markersize=10,
     )
     plt.xlabel("Number of elements [-]")
     plt.ylabel("Duration [us]")
     plt.title("Avg. Speed in microseconds [us] of %s" % test_type)
+    plt.xticks(fontsize=8, rotation=45)
     plt.grid(alpha=0.5, linestyle="dashed")
     plt.legend(
         ["REST - Python", "gRPC - Python", "REST - C++", "gRPC - C++"],
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.15),
+        bbox_to_anchor=(0.48, -0.20),
         fancybox=True,
         shadow=True,
         ncol=4,
     )
     plt.tight_layout()
     figure.savefig("%s.svg" % test_type, format="svg")
+    
+    # convert y-axis to Logarithmic scale
+    plt.yscale("log")
+    plt.tight_layout()
+    figure.savefig("%s_log.svg" % test_type, format="svg")
+    
 
     print("Plot for %s test saved!" % test_type)
