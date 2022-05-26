@@ -466,9 +466,13 @@ std::vector<Eigen::VectorXd> ansys::grpc::service::GRPCService::receive_vectors(
                                                      request.data_type());
 
                 // Append the aux_vector to the glued_vector
-                Eigen::VectorXd tmp_vector = glued_vector;
-                glued_vector.resize(tmp_vector.size() + aux_vector.size());
-                glued_vector << tmp_vector, aux_vector;
+                if (glued_vector.size() == 0) {
+                    glued_vector = aux_vector;
+                } else {
+                    Eigen::VectorXd tmp_vector = glued_vector;
+                    glued_vector.resize(tmp_vector.size() + aux_vector.size());
+                    glued_vector << tmp_vector, aux_vector;
+                }
             }
 
             // Once all partial messages have been processed, append!
@@ -553,10 +557,14 @@ ansys::grpc::service::GRPCService::receive_matrices(
                     request.matrix_cols(), request.data_type());
 
                 // Append the aux_matrix to the glued_matrix
-                Eigen::MatrixXd tmp_matrix = glued_matrix;
-                glued_matrix.resize(tmp_matrix.rows() + aux_matrix.rows(),
-                                    tmp_matrix.cols());
-                glued_matrix << tmp_matrix, aux_matrix;
+                if (glued_matrix.size() == 0) {
+                    glued_matrix = aux_matrix;
+                } else {
+                    Eigen::MatrixXd tmp_matrix = glued_matrix;
+                    glued_matrix.resize(tmp_matrix.rows() + aux_matrix.rows(),
+                                        tmp_matrix.cols());
+                    glued_matrix << tmp_matrix, aux_matrix;
+                }
             }
 
             // Once all partial messages have been processed, append!
