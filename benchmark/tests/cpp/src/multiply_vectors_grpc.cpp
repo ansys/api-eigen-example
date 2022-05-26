@@ -19,7 +19,8 @@ int main() {
     // Define the test file naming convention and tests to run
     const std::string file_prefix{"multiply_vectors_grpc{"};
     const std::string file_suffix{"].txt"};
-    const std::vector<int> sizes{2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048};
+    const std::vector<int> sizes{2,   4,   8,   16,   32,  64,
+                                 128, 256, 512, 1024, 2048};
     const std::vector<std::string> str_sizes{"00002", "00004", "00008", "00016",
                                              "00032", "00064", "00128", "00256",
                                              "00512", "01024", "02048"};
