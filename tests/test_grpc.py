@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from ansys.eigen.python.grpc.client import DemoGRPCClient
-from ansys.eigen.python.tests.test_tools import (
+from ansys.eigen.python.testing.test_tools import (
     SIZES,
     SIZES_IDS,
     mat_generator,
@@ -44,7 +44,7 @@ def grpc_stub(grpc_channel):
 # ================================================================================
 
 
-def test_greeting(capsys, grpc_stub):
+def test_greeting_grpc(capsys, grpc_stub):
     """Unit test to verify that the client gets the expected response
     when performing a simple greeting request."""
 
@@ -60,7 +60,7 @@ def test_greeting(capsys, grpc_stub):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_flip_vector(grpc_stub, sz):
+def test_flip_vector_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing a simple vector-flipping request."""
 
@@ -74,7 +74,7 @@ def test_flip_vector(grpc_stub, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_add_vectors(grpc_stub, sz):
+def test_add_vectors_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
 
@@ -88,7 +88,7 @@ def test_add_vectors(grpc_stub, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_add_four_vectors(grpc_stub, sz):
+def test_add_four_vectors_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of four numpy arrays (as vectors).
 
@@ -106,7 +106,7 @@ def test_add_four_vectors(grpc_stub, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_multiply_vectors(grpc_stub, sz):
+def test_multiply_vectors_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
 
@@ -120,7 +120,7 @@ def test_multiply_vectors(grpc_stub, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_add_matrices(grpc_stub, sz):
+def test_add_matrices_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
 
@@ -135,7 +135,7 @@ def test_add_matrices(grpc_stub, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_multiply_matrices(grpc_stub, sz):
+def test_multiply_matrices_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
     client = DemoGRPCClient(test=grpc_stub)

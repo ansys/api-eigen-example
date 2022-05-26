@@ -3,7 +3,7 @@ import pytest
 
 from ansys.eigen.python.rest.client import DemoRESTClient
 from ansys.eigen.python.rest.server import create_app
-from ansys.eigen.python.tests.test_tools import (
+from ansys.eigen.python.testing.test_tools import (
     SIZES,
     SIZES_IDS,
     mat_generator,
@@ -25,7 +25,7 @@ def testing_client():
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_client_add_vectors(testing_client, sz):
+def test_client_add_vectors_rest_cli(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -38,7 +38,7 @@ def test_client_add_vectors(testing_client, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_client_subtract_vectors(testing_client, sz):
+def test_client_subtract_vectors_rest_cli(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the subtraction of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -52,7 +52,7 @@ def test_client_subtract_vectors(testing_client, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_client_multiply_vectors(testing_client, sz):
+def test_client_multiply_vectors_rest_cli(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -66,7 +66,7 @@ def test_client_multiply_vectors(testing_client, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_client_add_matrices(testing_client, sz):
+def test_client_add_matrices_rest_cli(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -80,7 +80,7 @@ def test_client_add_matrices(testing_client, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_client_subtract_matrices(testing_client, sz):
+def test_client_subtract_matrices_rest_cli(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the subtraction of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -94,7 +94,7 @@ def test_client_subtract_matrices(testing_client, sz):
 
 
 @pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
-def test_client_multiply_matrices(testing_client, sz):
+def test_client_multiply_matrices_rest_cli(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
@@ -145,7 +145,7 @@ def test_client_connection_details(capsys, testing_client):
     assert captured.out == "Using a test client. Unnecessary info.\n"
 
 
-def test_client_errors(testing_client):
+def test_client_errors_rest(testing_client):
     """Unit test to verify multiple client error conditions."""
     client = DemoRESTClient(None, None, client=testing_client)
     error_client = DemoRESTClient("http://127.0.0.1", 5000)
