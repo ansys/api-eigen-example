@@ -3,6 +3,12 @@ import pytest
 
 from ansys.eigen.python.rest.client import DemoRESTClient
 from ansys.eigen.python.rest.server import create_app
+from ansys.eigen.python.tests.test_tools import (
+    SIZES,
+    SIZES_IDS,
+    vec_generator,
+    mat_generator,
+)
 
 
 @pytest.fixture(scope="module")
@@ -18,81 +24,87 @@ def testing_client():
             yield testing_client  # this is where the testing happens!
 
 
-def test_client_add_vectors(testing_client):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_client_add_vectors(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
-    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+    vec_1 = vec_generator(sz)
+    vec_2 = vec_generator(sz)
 
     vec_add = client.add(vec_1, vec_2)
-    np.testing.assert_allclose(vec_add, np.array([6, 6, 5, 4]))
+    np.testing.assert_allclose(vec_add, vec_1 + vec_2)
 
 
-def test_client_subtract_vectors(testing_client):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_client_subtract_vectors(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the subtraction of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
-    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+    vec_1 = vec_generator(sz)
+    vec_2 = vec_generator(sz)
 
     vec_subt = client.subtract(vec_1, vec_2)
 
-    np.testing.assert_allclose(vec_subt, np.array([-4, -2, 1, 4]))
+    np.testing.assert_allclose(vec_subt, vec_1 - vec_2)
 
 
-def test_client_multiply_vectors(testing_client):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_client_multiply_vectors(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
-    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+    vec_1 = vec_generator(sz)
+    vec_2 = vec_generator(sz)
 
     vec_mult = client.multiply(vec_1, vec_2)
 
-    assert vec_mult == 19
+    np.testing.assert_allclose(vec_mult, vec_1.dot(vec_2))
 
 
-def test_client_add_matrices(testing_client):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_client_add_matrices(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
-    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
-    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+    mat_1 = mat_generator(sz)
+    mat_2 = mat_generator(sz)
 
     mat_add = client.add(mat_1, mat_2)
 
-    np.testing.assert_allclose(mat_add, np.array([[6, 6], [5, 4]]))
+    np.testing.assert_allclose(mat_add, mat_1 + mat_2)
 
 
-def test_client_subtract_matrices(testing_client):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_client_subtract_matrices(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the subtraction of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
-    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
-    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+    mat_1 = mat_generator(sz)
+    mat_2 = mat_generator(sz)
 
     mat_subt = client.subtract(mat_1, mat_2)
 
-    np.testing.assert_allclose(mat_subt, np.array([[-4, -2], [1, 4]]))
+    np.testing.assert_allclose(mat_subt, mat_1 - mat_2)
 
 
-def test_client_multiply_matrices(testing_client):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_client_multiply_matrices(testing_client, sz):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
     client = DemoRESTClient(None, None, client=testing_client)
 
-    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
-    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+    mat_1 = mat_generator(sz)
+    mat_2 = mat_generator(sz)
 
     mat_mult = client.multiply(mat_1, mat_2)
 
-    np.testing.assert_allclose(mat_mult, np.array([[9, 4], [23, 12]]))
+    np.testing.assert_allclose(mat_mult, np.matmul(mat_1 ,mat_2))
 
 
 def test_client_connection_details(capsys, testing_client):
