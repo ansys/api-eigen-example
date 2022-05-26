@@ -5,8 +5,8 @@ from ansys.eigen.python.grpc.client import DemoGRPCClient
 from ansys.eigen.python.tests.test_tools import (
     SIZES,
     SIZES_IDS,
-    vec_generator,
     mat_generator,
+    vec_generator,
 )
 
 # ================================================================================
@@ -145,4 +145,4 @@ def test_multiply_matrices(grpc_stub, sz):
 
     mat_mult = client.multiply_matrices(mat_1, mat_2)
 
-    np.testing.assert_allclose(mat_mult, np.matmul(mat_1 ,mat_2))
+    np.testing.assert_allclose(mat_mult, np.matmul(mat_1, mat_2))

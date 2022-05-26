@@ -6,8 +6,8 @@ from ansys.eigen.python.rest.server import create_app
 from ansys.eigen.python.tests.test_tools import (
     SIZES,
     SIZES_IDS,
-    vec_generator,
     mat_generator,
+    vec_generator,
 )
 
 
@@ -104,7 +104,7 @@ def test_client_multiply_matrices(testing_client, sz):
 
     mat_mult = client.multiply(mat_1, mat_2)
 
-    np.testing.assert_allclose(mat_mult, np.matmul(mat_1 ,mat_2))
+    np.testing.assert_allclose(mat_mult, np.matmul(mat_1, mat_2))
 
 
 def test_client_connection_details(capsys, testing_client):
