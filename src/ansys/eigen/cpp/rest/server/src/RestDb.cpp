@@ -23,7 +23,8 @@ std::string ansys::rest::db::dbtype_to_str(const DbTypes &value) {
 static int ansys::rest::db::callback(void *value, int argc, char **argv,
                                      char **azColName) {
     for (int i = 0; i < argc; i++) {
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+        // Activate if improved DB logging required...
+        // printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
 
         // Store Value if provided as argument... safe-check cast is performed-
         if (std::string *castedValue = reinterpret_cast<std::string *>(value)) {
@@ -126,7 +127,7 @@ std::string ansys::rest::db::RestDb::load_resource(const DbTypes &type,
     returnCode = sqlite3_exec(_db, sql_str.c_str(), callback, &value, &zErrMsg);
 
     // Check the return code... if everything went fine, return the value.
-    if (returnCode != SQLITE_OK) {
+    if (returnCode != SQLITE_OK || value.empty()) {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
         throw std::runtime_error("Search unsuccessful!");

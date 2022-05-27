@@ -2,6 +2,12 @@ import numpy as np
 import pytest
 
 from ansys.eigen.python.grpc.client import DemoGRPCClient
+from ansys.eigen.python.testing.test_tools import (
+    SIZES,
+    SIZES_IDS,
+    mat_generator,
+    vec_generator,
+)
 
 # ================================================================================
 # Point your stubs and service to test the client-server interaction
@@ -38,7 +44,7 @@ def grpc_stub(grpc_channel):
 # ================================================================================
 
 
-def test_greeting(capsys, grpc_stub):
+def test_greeting_grpc(capsys, grpc_stub):
     """Unit test to verify that the client gets the expected response
     when performing a simple greeting request."""
 
@@ -53,33 +59,36 @@ def test_greeting(capsys, grpc_stub):
     )
 
 
-def test_flip_vector(grpc_stub):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_flip_vector_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing a simple vector-flipping request."""
 
     client = DemoGRPCClient(test=grpc_stub)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
+    vec_1 = vec_generator(sz)
 
     vec_flip = client.flip_vector(vec_1)
 
     np.testing.assert_allclose(vec_flip, np.flip(vec_1))
 
 
-def test_add_vectors(grpc_stub):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_add_vectors_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as vectors)."""
 
     client = DemoGRPCClient(test=grpc_stub)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
-    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+    vec_1 = vec_generator(sz)
+    vec_2 = vec_generator(sz)
 
     vec_add = client.add_vectors(vec_1, vec_2)
-    np.testing.assert_allclose(vec_add, np.array([6, 6, 5, 4]))
+    np.testing.assert_allclose(vec_add, vec_1 + vec_2)
 
 
-def test_add_four_vectors(grpc_stub):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_add_four_vectors_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of four numpy arrays (as vectors).
 
@@ -87,50 +96,53 @@ def test_add_four_vectors(grpc_stub):
 
     client = DemoGRPCClient(test=grpc_stub)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
-    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
-    vec_3 = np.array([-5, -4, -2, 0], dtype=np.float64)
-    vec_4 = np.array([-1, -2, -3, -4], dtype=np.float64)
+    vec_1 = vec_generator(sz)
+    vec_2 = vec_generator(sz)
+    vec_3 = vec_generator(sz)
+    vec_4 = vec_generator(sz)
 
     vec_add = client.add_vectors(vec_1, vec_2, vec_3, vec_4)
-    np.testing.assert_allclose(vec_add, np.array([0.0, 0.0, 0.0, 0.0]))
+    np.testing.assert_allclose(vec_add, vec_1 + vec_2 + vec_3 + vec_4)
 
 
-def test_multiply_vectors(grpc_stub):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_multiply_vectors_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as vectors)."""
 
     client = DemoGRPCClient(test=grpc_stub)
 
-    vec_1 = np.array([1, 2, 3, 4], dtype=np.float64)
-    vec_2 = np.array([5, 4, 2, 0], dtype=np.float64)
+    vec_1 = vec_generator(sz)
+    vec_2 = vec_generator(sz)
 
     vec_mult = client.multiply_vectors(vec_1, vec_2)
-    np.testing.assert_allclose(vec_mult, np.array([19.0]))
+    np.testing.assert_allclose(vec_mult, vec_1.dot(vec_2))
 
 
-def test_add_matrices(grpc_stub):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_add_matrices_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the addition of two numpy arrays (as matrices)."""
 
     client = DemoGRPCClient(test=grpc_stub)
 
-    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
-    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+    mat_1 = mat_generator(sz)
+    mat_2 = mat_generator(sz)
 
     mat_add = client.add_matrices(mat_1, mat_2)
 
-    np.testing.assert_allclose(mat_add, np.array([[6, 6], [5, 4]]))
+    np.testing.assert_allclose(mat_add, mat_1 + mat_2)
 
 
-def test_multiply_matrices(grpc_stub):
+@pytest.mark.parametrize("sz", SIZES, ids=SIZES_IDS)
+def test_multiply_matrices_grpc(grpc_stub, sz):
     """Unit test to verify that the client gets the expected response
     when performing the multiplication of two numpy arrays (as matrices)."""
     client = DemoGRPCClient(test=grpc_stub)
 
-    mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
-    mat_2 = np.array([[5, 4], [2, 0]], dtype=np.float64)
+    mat_1 = mat_generator(sz)
+    mat_2 = mat_generator(sz)
 
     mat_mult = client.multiply_matrices(mat_1, mat_2)
 
-    np.testing.assert_allclose(mat_mult, np.array([[9, 4], [23, 12]]))
+    np.testing.assert_allclose(mat_mult, np.matmul(mat_1, mat_2))

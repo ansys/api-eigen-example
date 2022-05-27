@@ -25,27 +25,27 @@ class GRPCDemoStub(object):
                 request_serializer=grpcdemo__pb2.HelloRequest.SerializeToString,
                 response_deserializer=grpcdemo__pb2.HelloReply.FromString,
                 )
-        self.FlipVector = channel.unary_unary(
+        self.FlipVector = channel.stream_stream(
                 '/grpcdemo.GRPCDemo/FlipVector',
                 request_serializer=grpcdemo__pb2.Vector.SerializeToString,
                 response_deserializer=grpcdemo__pb2.Vector.FromString,
                 )
-        self.AddVectors = channel.stream_unary(
+        self.AddVectors = channel.stream_stream(
                 '/grpcdemo.GRPCDemo/AddVectors',
                 request_serializer=grpcdemo__pb2.Vector.SerializeToString,
                 response_deserializer=grpcdemo__pb2.Vector.FromString,
                 )
-        self.MultiplyVectors = channel.stream_unary(
+        self.MultiplyVectors = channel.stream_stream(
                 '/grpcdemo.GRPCDemo/MultiplyVectors',
                 request_serializer=grpcdemo__pb2.Vector.SerializeToString,
                 response_deserializer=grpcdemo__pb2.Vector.FromString,
                 )
-        self.AddMatrices = channel.stream_unary(
+        self.AddMatrices = channel.stream_stream(
                 '/grpcdemo.GRPCDemo/AddMatrices',
                 request_serializer=grpcdemo__pb2.Matrix.SerializeToString,
                 response_deserializer=grpcdemo__pb2.Matrix.FromString,
                 )
-        self.MultiplyMatrices = channel.stream_unary(
+        self.MultiplyMatrices = channel.stream_stream(
                 '/grpcdemo.GRPCDemo/MultiplyMatrices',
                 request_serializer=grpcdemo__pb2.Matrix.SerializeToString,
                 response_deserializer=grpcdemo__pb2.Matrix.FromString,
@@ -68,7 +68,7 @@ class GRPCDemoServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def FlipVector(self, request, context):
+    def FlipVector(self, request_iterator, context):
         """Flips a vector [A, B, C, D] --> [D, C, B, A]
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -111,27 +111,27 @@ def add_GRPCDemoServicer_to_server(servicer, server):
                     request_deserializer=grpcdemo__pb2.HelloRequest.FromString,
                     response_serializer=grpcdemo__pb2.HelloReply.SerializeToString,
             ),
-            'FlipVector': grpc.unary_unary_rpc_method_handler(
+            'FlipVector': grpc.stream_stream_rpc_method_handler(
                     servicer.FlipVector,
                     request_deserializer=grpcdemo__pb2.Vector.FromString,
                     response_serializer=grpcdemo__pb2.Vector.SerializeToString,
             ),
-            'AddVectors': grpc.stream_unary_rpc_method_handler(
+            'AddVectors': grpc.stream_stream_rpc_method_handler(
                     servicer.AddVectors,
                     request_deserializer=grpcdemo__pb2.Vector.FromString,
                     response_serializer=grpcdemo__pb2.Vector.SerializeToString,
             ),
-            'MultiplyVectors': grpc.stream_unary_rpc_method_handler(
+            'MultiplyVectors': grpc.stream_stream_rpc_method_handler(
                     servicer.MultiplyVectors,
                     request_deserializer=grpcdemo__pb2.Vector.FromString,
                     response_serializer=grpcdemo__pb2.Vector.SerializeToString,
             ),
-            'AddMatrices': grpc.stream_unary_rpc_method_handler(
+            'AddMatrices': grpc.stream_stream_rpc_method_handler(
                     servicer.AddMatrices,
                     request_deserializer=grpcdemo__pb2.Matrix.FromString,
                     response_serializer=grpcdemo__pb2.Matrix.SerializeToString,
             ),
-            'MultiplyMatrices': grpc.stream_unary_rpc_method_handler(
+            'MultiplyMatrices': grpc.stream_stream_rpc_method_handler(
                     servicer.MultiplyMatrices,
                     request_deserializer=grpcdemo__pb2.Matrix.FromString,
                     response_serializer=grpcdemo__pb2.Matrix.SerializeToString,
@@ -170,7 +170,7 @@ class GRPCDemo(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def FlipVector(request,
+    def FlipVector(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -180,7 +180,7 @@ class GRPCDemo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpcdemo.GRPCDemo/FlipVector',
+        return grpc.experimental.stream_stream(request_iterator, target, '/grpcdemo.GRPCDemo/FlipVector',
             grpcdemo__pb2.Vector.SerializeToString,
             grpcdemo__pb2.Vector.FromString,
             options, channel_credentials,
@@ -197,7 +197,7 @@ class GRPCDemo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_unary(request_iterator, target, '/grpcdemo.GRPCDemo/AddVectors',
+        return grpc.experimental.stream_stream(request_iterator, target, '/grpcdemo.GRPCDemo/AddVectors',
             grpcdemo__pb2.Vector.SerializeToString,
             grpcdemo__pb2.Vector.FromString,
             options, channel_credentials,
@@ -214,7 +214,7 @@ class GRPCDemo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_unary(request_iterator, target, '/grpcdemo.GRPCDemo/MultiplyVectors',
+        return grpc.experimental.stream_stream(request_iterator, target, '/grpcdemo.GRPCDemo/MultiplyVectors',
             grpcdemo__pb2.Vector.SerializeToString,
             grpcdemo__pb2.Vector.FromString,
             options, channel_credentials,
@@ -231,7 +231,7 @@ class GRPCDemo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_unary(request_iterator, target, '/grpcdemo.GRPCDemo/AddMatrices',
+        return grpc.experimental.stream_stream(request_iterator, target, '/grpcdemo.GRPCDemo/AddMatrices',
             grpcdemo__pb2.Matrix.SerializeToString,
             grpcdemo__pb2.Matrix.FromString,
             options, channel_credentials,
@@ -248,7 +248,7 @@ class GRPCDemo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_unary(request_iterator, target, '/grpcdemo.GRPCDemo/MultiplyMatrices',
+        return grpc.experimental.stream_stream(request_iterator, target, '/grpcdemo.GRPCDemo/MultiplyMatrices',
             grpcdemo__pb2.Matrix.SerializeToString,
             grpcdemo__pb2.Matrix.FromString,
             options, channel_credentials,

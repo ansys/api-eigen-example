@@ -12,7 +12,7 @@ rm -rf .benchmarks
 
 # clone api-eigen-example examples
 # -------------------------------------------------------------------------
-rm -rf api-eigen-example
+sudo rm -rf api-eigen-example
 git clone --depth 1 https://github.com/ansys/api-eigen-example.git
 
 # Install the C++ Client libraries and other wrappers
@@ -40,27 +40,41 @@ pip install -r requirements/requirements_build.txt
 cd ..
 # ========================================================================
 
-# Run the Docker containers for the servers
-# -------------------------------------------------------------------------
-docker run -d -p  5000:5000  -it --name bm-python-rest-server ghcr.io/ansys/api-eigen-example/python-rest-server:latest
-docker run -d -p 50051:50051 -it --name bm-python-grpc-server ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
-docker run -d -p 18080:18080 -it --name bm-cpp-rest-server    ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest 
-docker run -d -p 50000:50000 -it --name bm-cpp-grpc-server    ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
-
 # Clean the tmp results folder  
 # -------------------------------------------------------------------------
 rm -rf data/*.svg data/*.txt data/*.csv
 
 # Python BM tests
+# ========================================================================
+# 
+# Run the Docker containers for the servers
 # -------------------------------------------------------------------------
+docker run -d -p  5000:5000  -it --name bm-python-rest-server ghcr.io/ansys/api-eigen-example/python-rest-server:latest
+docker run -d -p 50051:50051 -it --name bm-python-grpc-server ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
+
 # Start running the benchmarks
 echo "Benchmarking api-eigen-example Python packages"
 pip install api-eigen-example/
-pytest tests/python/ --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-warmup=true --benchmark-min-rounds=500
+
+# Decompose the tests run to ease the execution
+pytest tests/python/ -k 'grpc_python' --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-min-rounds=100
+pytest tests/python/test_rest_python.py -k 'vectors_rest_python' --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-min-rounds=100
+pytest tests/python/test_rest_python.py -k 'add_matrices_rest_python' --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-min-rounds=50
+pytest tests/python/test_rest_python.py -k 'multiply_matrices_rest_python' --benchmark-save=main --benchmark-quiet --disable-warnings --no-header --benchmark-min-rounds=50
 pytest-benchmark compare --group-by group --sort fullname --csv=data/python_bm_results.csv 1> /dev/null
 
-# C++ BM tests
+# Stop and remove the Docker containers for the servers
 # -------------------------------------------------------------------------
+docker stop bm-python-grpc-server bm-python-rest-server && docker rm bm-python-grpc-server bm-python-rest-server
+
+# C++ BM tests
+# ========================================================================
+# 
+# Run the Docker containers for the servers
+# -------------------------------------------------------------------------
+docker run -d -p 18080:18080 -it --name bm-cpp-rest-server    ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest 
+docker run -d -p 50000:50000 -it --name bm-cpp-grpc-server    ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
+
 echo "Benchmarking api-eigen-example C++ packages"
 cd tests/cpp/build
 rm -rf *
@@ -68,15 +82,17 @@ cmake .. && cmake --build .
 for test in add_vectors_rest add_vectors_grpc multiply_vectors_rest multiply_vectors_grpc add_matrices_rest add_matrices_grpc multiply_matrices_rest multiply_matrices_grpc
 do
     echo "Running $test test..."
-    ./$test > /dev/null
+    ./$test &> /dev/null
+    echo "Finished running $test test!"
+    sleep 5
 done
 mv *].txt ../../../data/
 cd -
 
 # Stop and remove the Docker containers for the servers
 # -------------------------------------------------------------------------
-docker stop bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server
-docker rm   bm-python-rest-server bm-python-grpc-server bm-cpp-rest-server bm-cpp-grpc-server
+docker stop bm-cpp-rest-server bm-cpp-grpc-server
+docker rm   bm-cpp-rest-server bm-cpp-grpc-server
 
 # Plot the results
 # -------------------------------------------------------------------------

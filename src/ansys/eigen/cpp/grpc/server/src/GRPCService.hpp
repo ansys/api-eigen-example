@@ -43,70 +43,67 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
      */
     ::grpc::Status SayHello(::grpc::ServerContext* context,
                             const ::grpcdemo::HelloRequest* request,
-                            ::grpcdemo::HelloReply* response);
+                            ::grpcdemo::HelloReply* response) override;
 
     /**
      * @brief Method to provide a flipped vector to the client.
      *
      * @param context the gRPC Server context.
-     * @param request the gRPC request.
-     * @param response the gRPC response this method will fill.
+     * @param stream the gRPC stream.
      * @return ::grpc::Status
      */
-    ::grpc::Status FlipVector(::grpc::ServerContext* context,
-                              const ::grpcdemo::Vector* request,
-                              ::grpcdemo::Vector* response);
+    ::grpc::Status FlipVector(
+        ::grpc::ServerContext* context,
+        ::grpc::ServerReaderWriter<::grpcdemo::Vector, ::grpcdemo::Vector>*
+            stream) override;
 
     /**
      * @brief Method to provide the addition of Vector messages.
      *
      * @param context the gRPC Server context.
-     * @param reader the reader for the stream of requests.
-     * @param response the gRPC response this method will fill.
+     * @param stream the gRPC stream.
      * @return ::grpc::Status
      */
-    ::grpc::Status AddVectors(::grpc::ServerContext* context,
-                              ::grpc::ServerReader< ::grpcdemo::Vector>* reader,
-                              ::grpcdemo::Vector* response);
+    ::grpc::Status AddVectors(
+        ::grpc::ServerContext* context,
+        ::grpc::ServerReaderWriter<::grpcdemo::Vector, ::grpcdemo::Vector>*
+            stream) override;
 
     /**
      * @brief Method to provide the dot product of Vector messages.
      *
      * @param context the gRPC Server context.
-     * @param reader the reader for the stream of requests.
-     * @param response the gRPC response this method will fill.
+     * @param stream the gRPC stream.
      * @return ::grpc::Status
      */
     ::grpc::Status MultiplyVectors(
         ::grpc::ServerContext* context,
-        ::grpc::ServerReader< ::grpcdemo::Vector>* reader,
-        ::grpcdemo::Vector* response);
+        ::grpc::ServerReaderWriter<::grpcdemo::Vector, ::grpcdemo::Vector>*
+            stream) override;
 
     /**
      * @brief Method to provide the addition of Matrix messages.
      *
      * @param context the gRPC Server context.
-     * @param reader the reader for the stream of requests.
-     * @param response the gRPC response this method will fill.
+     * @param stream the gRPC stream.
      * @return ::grpc::Status
      */
     ::grpc::Status AddMatrices(
         ::grpc::ServerContext* context,
-        ::grpc::ServerReader< ::grpcdemo::Matrix>* reader,
-        ::grpcdemo::Matrix* response);
+        ::grpc::ServerReaderWriter<::grpcdemo::Matrix, ::grpcdemo::Matrix>*
+            stream) override;
 
     /**
      * @brief Method to provide the multiplication of Matrix messages.
      *
      * @param context the gRPC Server context.
-     * @param reader the reader for the stream of requests.
-     * @param response the gRPC response this method will fill.
+     * @param stream the gRPC stream.
      * @return ::grpc::Status
      */
     ::grpc::Status MultiplyMatrices(
         ::grpc::ServerContext* context,
-        ::grpc::ServerReader< ::grpcdemo::Matrix>* reader,
-        ::grpcdemo::Matrix* response);
+        ::grpc::ServerReaderWriter<::grpcdemo::Matrix, ::grpcdemo::Matrix>*
+            stream) override;
 
    private:
     /**
@@ -131,9 +128,12 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
      * message.
      *
      * @param vector the Eigen::VectorXd to be serialized.
+     * @param start the starting index to serialize.
+     * @param end the last index to serialize (not included).
      * @return std::string
      */
-    std::string serialize_vector(const Eigen::VectorXd& vector);
+    std::string serialize_vector(const Eigen::VectorXd& vector, const int start,
+                                 const int end);
 
     /**
      * @brief Method used to deserialize a Matrix message into an
@@ -153,9 +153,68 @@ class GRPCService final : public grpcdemo::GRPCDemo::Service {
      * message.
      *
      * @param matrix the Eigen::MatrixXd to be serialized.
+     * @param start the starting index to serialize.
+     * @param end the last index to serialize (not included).
      * @return std::string
      */
-    std::string serialize_matrix(const Eigen::MatrixXd& matrix);
+    std::string serialize_matrix(const Eigen::MatrixXd& matrix, const int start,
+                                 const int end);
+
+    /**
+     * @brief Method in charge of providing a set of Eigen::VectorXd objects
+     * from a stream of Vector messages.
+     *
+     * @param reader_writer the gRPC reader-writer in the bidirectional stream
+     * protocol.
+     * @param context the gRPC context.
+     * @return std::vector<Eigen::VectorXd>
+     */
+    std::vector<Eigen::VectorXd> receive_vectors(
+        ::grpc::ServerReaderWriter<grpcdemo::Vector, grpcdemo::Vector>*
+            reader_writer,
+        ::grpc::ServerContext* context);
+
+    /**
+     * @brief Method in charge of providing a set of Eigen::MatrixXd objects
+     * from a stream of Matrix messages.
+     *
+     * @param reader_writer the gRPC reader-writer in the bidirectional stream
+     * protocol.
+     * @param context the gRPC context.
+     * @return std::vector<Eigen::MatrixXd>
+     */
+    std::vector<Eigen::MatrixXd> receive_matrices(
+        ::grpc::ServerReaderWriter<grpcdemo::Matrix, grpcdemo::Matrix>*
+            reader_writer,
+        ::grpc::ServerContext* context);
+
+    /**
+     * @brief Method in charge of sending the resulting vector of the operation
+     * through the protocol.
+     *
+     * @param reader_writer the gRPC reader-writer in the bidirectional stream
+     * protocol.
+     * @param context the gRPC context.
+     * @param vector the vector to be sent.
+     */
+    void send_vector(
+        ::grpc::ServerReaderWriter<grpcdemo::Vector, grpcdemo::Vector>*
+            reader_writer,
+        ::grpc::ServerContext* context, const Eigen::VectorXd& vector);
+
+    /**
+     * @brief Method in charge of sending the resulting matrix of the operation
+     * through the protocol.
+     *
+     * @param reader_writer the gRPC reader-writer in the bidirectional stream
+     * protocol.
+     * @param context the gRPC context.
+     * @param matrix the matrix to be sent.
+     */
+    void send_matrix(
+        ::grpc::ServerReaderWriter<grpcdemo::Matrix, grpcdemo::Matrix>*
+            reader_writer,
+        ::grpc::ServerContext* context, const Eigen::MatrixXd& matrix);
 };
 
 }  // namespace service

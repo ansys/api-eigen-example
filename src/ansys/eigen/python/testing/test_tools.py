@@ -1,4 +1,4 @@
-""" Tools for BM tests """
+""" Tools for tests """
 
 from random import random, seed
 
@@ -12,9 +12,8 @@ NVALUES = 12
 
 # ==================================================================================
 # IT IS NOT RECOMMENDED TO MODIFY THE SCRIPT BEYOND THIS POINT WITHOUT KNOWLEDGE
-# OF HOW THE BENCHMARK TESTS ARE RUN. USE WITH CAUTION...
+# OF HOW THE TESTS ARE RUN. USE WITH CAUTION...
 # ==================================================================================
-
 
 # MIN and MAX values for our random numbers
 MIN = 0.0
@@ -23,6 +22,7 @@ MAX = 10.0
 # The amount of sizes of numpy.ndarrays to be processed
 SIZES = [pow(2, n) for n in range(1, NVALUES)]
 SIZES_IDS = [f"{i:05d}" for i in SIZES]
+
 
 # Initialize our seed
 seed(1)
@@ -43,13 +43,3 @@ def mat_generator(mat_size):
         [[gen_value() for _ in range(0, mat_size)] for _ in range(0, mat_size)],
         dtype=np.float64,
     )
-
-
-# Auxiliary function to generate random vectors (as a list)
-def vec_generator_list(vec_length):
-    return [gen_value() for _ in range(0, vec_length)]
-
-
-# Auxiliary function to generate random square matrices (as a list)
-def mat_generator_list(mat_size):
-    return [[gen_value() for _ in range(0, mat_size)] for _ in range(0, mat_size)]

@@ -5,6 +5,9 @@ from sys import getsizeof
 
 import numpy as np
 
+MAX_CHUNKSIZE = 1024 * 1024 * 3
+"""The maximum chunk size for transmitting in gRPC."""
+
 NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
 """Dictionary of constants showing the translation between the handled numpy dtypes and the gRPC DataType enum values."""
 

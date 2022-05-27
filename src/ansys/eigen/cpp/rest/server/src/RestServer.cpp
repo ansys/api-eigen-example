@@ -64,7 +64,7 @@ void ansys::rest::server::RestServer::vector_resource_endpoints() {
             ansys::eigen::read_vector(req.body);
 
             // Inform the user that the processing was successful
-            CROW_LOG_INFO << "Entry successfully processed: " + req.body;
+            CROW_LOG_INFO << "Entry successfully processed.";
             CROW_LOG_INFO << "Attempting to store in DB...";
 
             // Store into the DB and retrieve its ID
@@ -117,7 +117,7 @@ void ansys::rest::server::RestServer::matrix_resource_endpoints() {
             ansys::eigen::read_matrix(req.body);
 
             // Inform the user that the processing was successful
-            CROW_LOG_INFO << "Entry successfully processed: " + req.body;
+            CROW_LOG_INFO << "Entry successfully processed.";
             CROW_LOG_INFO << "Attempting to store in DB...";
 
             // Store into the DB and retrieve its ID

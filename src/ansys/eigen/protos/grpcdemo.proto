@@ -52,17 +52,17 @@ service GRPCDemo {
     rpc SayHello (HelloRequest) returns (HelloReply) {}
 
     // Flips a vector [A, B, C, D] --> [D, C, B, A]
-    rpc FlipVector(Vector) returns (Vector) {}
+    rpc FlipVector(stream Vector) returns (stream Vector) {}
 
     // Adds two vectors
-    rpc AddVectors(stream Vector) returns (Vector) {}
+    rpc AddVectors(stream Vector) returns (stream Vector) {}
 
     // Vector dot product
-    rpc MultiplyVectors(stream Vector) returns (Vector) {}
+    rpc MultiplyVectors(stream Vector) returns (stream Vector) {}
 
     // Adds two matrices
-    rpc AddMatrices(stream Matrix) returns (Matrix) {}
+    rpc AddMatrices(stream Matrix) returns (stream Matrix) {}
 
     // Multiplies two matrices
-    rpc MultiplyMatrices(stream Matrix) returns (Matrix) {}
+    rpc MultiplyMatrices(stream Matrix) returns (stream Matrix) {}
 }

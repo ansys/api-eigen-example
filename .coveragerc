@@ -1,0 +1,2 @@
+[run]
+omit = **grpcdemo_pb2*, **run_codegen.py

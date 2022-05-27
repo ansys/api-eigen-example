@@ -19,12 +19,15 @@ int main() {
     // Define the test file naming convention and tests to run
     const std::string file_prefix{"multiply_vectors_rest["};
     const std::string file_suffix{"].txt"};
-    const std::vector<int> sizes{2, 4, 8, 16, 32, 64, 128};
+    const std::vector<int> sizes{2,   4,   8,   16,   32,  64,
+                                 128, 256, 512, 1024, 2048};
     const std::vector<std::string> str_sizes{"00002", "00004", "00008", "00016",
-                                             "00032", "00064", "00128"};
+                                             "00032", "00064", "00128", "00256",
+                                             "00512", "01024", "02048"};
 
     // Instantiate an EigenClient
-    auto client = ansys::rest::client::EigenClient("http://0.0.0.0:18080");
+    auto client = ansys::rest::client::EigenClient(
+        "http://0.0.0.0:18080", std::string{}, std::string{}, 40, false);
 
     // Instantiate our randomizer
     std::random_device rd;
@@ -43,7 +46,7 @@ int main() {
         std::ofstream ofs;
         ofs.open(file, std::ofstream::out | std::ofstream::trunc);
 
-        int iterations{500};
+        int iterations{100};
         for (int i = 0; i < iterations; i++) {
             // Get a randomized set of two vectors
             auto vec1 = gen_random_vector(elem, eng, distr);
