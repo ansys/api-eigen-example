@@ -48,8 +48,8 @@ jobs:
           files: doc/source
           reporter: github-pr-check
           level: error
-          # filter: diff_context --> This should be the option to be implemented everywhere
-          filter: nofilter # Using this option to demonstrate its use
+          # filter_mode: diff_context --> This should be the option to be implemented everywhere
+          filter_mode: nofilter # Using this option to demonstrate its use
           fail_on_error: true
 
   python_test_import:
