@@ -47,6 +47,7 @@ jobs:
         with:
           files: doc/source
           reporter: github-pr-check
+          level: error
           fail_on_error: true
           # filter: diff_context --> This should be the option to be implemented everywhere
           filter: nofilter # Using this option to demonstrate its use
