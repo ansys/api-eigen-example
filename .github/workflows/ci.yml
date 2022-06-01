@@ -40,16 +40,12 @@ jobs:
       - name: Running Vale
         uses: errata-ai/vale-action@reviewdog
         env:
-          # Required, set by GitHub actions automatically:
-          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          python-version: 3.9
         with:
-          files: doc/source
+          files: doc
           reporter: github-pr-check
           level: error
-          # filter_mode: diff_context --> This should be the option to be implemented everywhere
-          filter_mode: nofilter # Using this option to demonstrate its use
+          filter_mode: nofilter
           fail_on_error: true
 
   python_test_import:
