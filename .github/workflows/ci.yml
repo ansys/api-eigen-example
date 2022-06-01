@@ -31,6 +31,23 @@ jobs:
       - name: Run pre-commit
         run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
 
+  docs-style:
+    name: Documentation Style Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Running Vale
+        uses: errata-ai/vale-action@reviewdog
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          files: doc
+          reporter: github-pr-check
+          level: error
+          filter_mode: nofilter
+          fail_on_error: true
+
   python_test_import:
     name: Python - Smoke Tests
     runs-on: ${{ matrix.os }}
@@ -171,6 +188,7 @@ jobs:
   build_doc:
     name: Build Documentation
     needs:
+      - docs-style
       - python_build_test
       - cpp_build_test_rest
       - cpp_build_test_grpc
