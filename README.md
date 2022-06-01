@@ -67,8 +67,8 @@ distributions it is as easy as running the following:
 ```
 
 To install a local version of the API Eigen Example project, you need to clone the repository through
-GitHub Enterprise (https://github.com/ansys/api-eigen-example).
-Other Ansys Python packages are also available here or through www.pypi.org. 
+GitHub (https://github.com/ansys/api-eigen-example). Other Ansys Python packages are also available
+here or through www.pypi.org. 
 
 ```
     git clone https://github.com/ansys/api-eigen-example.git
