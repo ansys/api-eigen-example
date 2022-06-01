@@ -24,7 +24,7 @@ mode:
     pip install -r requirements/requirements_eigen_wrapper.txt ./python/eigen-wrapper
     pip install -r requirements/requirements_build.txt .
 
-Building Documentation
+Building documentation
 ----------------------
 To build the documentation locally you need to follow these steps at the root
 directory of the repository:
@@ -35,21 +35,21 @@ directory of the repository:
     cd doc
     make html
 
-After the build completes the html documentation is located in the
+After the build completes the HTML documentation is located in the
 ``_builds/html`` directory and you can load the ``index.html`` into a web
-browser.  To clean the documentation you can execute this command:
+browser. To clean the documentation you can execute this command:
 
 .. code::
 
     make clean
 
-Posting Issues
+Posting issues
 --------------
 Use the `API Eigen Example Issues <https://github.com/ansys/api-eigen-example/issues>`_ page to
 submit questions, report bugs, and request new features.
 
 
-Code Style
+Code style
 ----------
 API Eigen Examples is compliant with `PyAnsys Development Code Style Guide
 <https://dev.docs.pyansys.com/coding_style/index.html>`_.  Code style is checked

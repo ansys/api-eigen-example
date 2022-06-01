@@ -11,8 +11,14 @@ subpackage
 yml
 html
 HTML
+API Eigen Example Documentation
 API Eigen Example Repository
+API Eigen Example
 Python
 python
 C\+\+
 C\#
+CMake
+cmake
+conan
+outcoming

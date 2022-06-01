@@ -1,17 +1,17 @@
 .. _getting_started:
 
 ***************
-Getting Started
+Getting started
 ***************
 
 The API Eigen example package is a simple project which intends to show PyAnsys
 users and developers the differences existing between API REST communication protocol
 and the well-known gRPC protocol, extensively used through the PyAnsys community.
 
-This project has multiple language implementations as we will see in this chapter.
+This project has multiple language implementations as it is seen in this document.
 
 ================================
-API Eigen Example Python Project
+API Eigen Example Python project
 ================================
 
 To use the API Eigen Example project in its Python version you do not need any specific requirements or
@@ -37,8 +37,8 @@ Other Ansys Python packages are also available here or through https://www.pypi.
 
 	git clone https://github.com/ansys/api-eigen-example.git
 
-In case we wanted to use the Python versions of the API Eigen Example project, it is necessary
-that we first install the demo-eigen-wrapper (a wrapper to the Eigen library using pybind11).
+In case of wanting to use the Python versions of the API Eigen Example project, it is necessary
+to first install the demo-eigen-wrapper (a wrapper to the Eigen library using pybind11).
 
 .. code:: bash
 
@@ -54,8 +54,8 @@ And finally, you can install the project by doing as follows:
 Starting to use it
 ------------------
 
-Once the API Eigen Example project has been installed, we can start to make use of the Python
-packages by importing them as follows
+Once the API Eigen Example project has been installed, start to make use of the Python
+packages by importing them as follows:
 
 .. code:: python
 
@@ -68,7 +68,7 @@ For more examples, please refer to the :ref:`user_guide`.
 
 
 =============================
-API Eigen Example C++ Project
+API Eigen Example C++ project
 =============================
 
 ------------
@@ -83,7 +83,7 @@ First of all, you would need to install the following packaged libraries: cmake.
     sudo apt install cmake
 
 
-Now depending on the C++ project, the dependencies may vary. Go into your sections of interest from the ones below!
+Now depending on the C++ project, the dependencies may vary. Go into your sections of interest from the ones below.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Installation of the C++ REST Server
@@ -99,7 +99,7 @@ the root of the repository.
     conan install .. && cmake .. && cmake --build . && sudo make install
 
 
-You are ready to go with the C++ REST Server! Start writing your own C++ ``main.cpp`` file and
+You are ready to go with the C++ REST Server. Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 .. code:: cpp
@@ -122,7 +122,7 @@ For compiling, just link the library as follows:
     g++ -o myServer main.cpp -lapieigen_example_rest_server
 
 
-And run your server!
+And run your server.
 
 .. code:: bash
 
@@ -133,16 +133,16 @@ And run your server!
 Installation of the C++ REST Client
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Installing the C++ REST client manually is a little bit more complex process. We will have to install some
+Installing the C++ REST client manually is a little bit more complex process. It is necessary to install some
 development libraries and compile (in place) some additional external libraries.
 
-First, we need to install a ``dev`` version of ``libcurl``. Using an Ubuntu package manager as ``apt``, one should have to do as follows:
+First, install a ``dev`` version of ``libcurl``. Using an Ubuntu package manager as ``apt``, one should have to do as follows:
 
 .. code:: bash
 
     sudo apt install libcurl4-openssl-dev
 
-Once we have ``libcurl-dev`` installed, we now have to compile some external projects. These external projects have been frozen at a given version
+Once ``libcurl-dev`` is installed, we now have to compile some external projects. These external projects have been frozen at a given version
 within this repository and they can be found in the ``external`` folder. To install them, just follow the next steps:
 
 .. code:: bash
@@ -151,14 +151,14 @@ within this repository and they can be found in the ``external`` folder. To inst
     sudo apt update && cd external/jsoncpp-v1.9.5/build && cmake -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp .. && sudo make install && cd - 
 
 
-Now, once we have all dependencies installed, we will build and install the client library!
+Now, once all dependencies are installed, build, and install the client library.
 
 .. code:: bash
 
     cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build . && sudo make install && cd -
 
 
-And that's it! You are ready to use the REST C++ Client library. Start writing your own C++ ``client.cpp`` file and
+And that's it. You are ready to use the REST C++ Client library. Start writing your own C++ ``client.cpp`` file and
 include the project header files as follows:
 
 .. code:: cpp
@@ -191,7 +191,7 @@ For compiling, just link the library as follows:
     g++ -o myClientApp client.cpp -lapieigen_example_rest_client
 
 
-And run your client application!
+And run your client app.
 
 .. code:: bash
 
@@ -202,7 +202,7 @@ Installation of the C++ gRPC Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Installing the C++ gRPC server manually is a very simple process. Just run the following command lines from
-the root of the repository. It will use the `conan <https://conan.io/>`_ package manager to install its dependencies.
+the root of the repository. It uses the `conan <https://conan.io/>`_ package manager to install its dependencies.
 
 .. code:: bash
 
@@ -212,7 +212,7 @@ the root of the repository. It will use the `conan <https://conan.io/>`_ package
 
 You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
 
-Once installed, you are ready to go with the C++ gRPC server! Start writing your own C++ ``main.cpp`` file and
+Once installed, you are ready to go with the C++ gRPC server. Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 .. code:: cpp
@@ -234,7 +234,7 @@ For compiling, just link the library as follows:
 
     g++ -o myServer main.cpp -lapi_eigen_example_grpc_server
 
-And run your server!
+And run your server.
 
 .. code:: bash
 
@@ -246,7 +246,7 @@ Installation of the C++ gRPC Client
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Installing the C++ gRPC client manually is a very simple process. Just run the following command lines from
-the root of the repository. It will use the `conan <https://conan.io/>`_  package manager to install its dependencies.
+the root of the repository. It uses the `conan <https://conan.io/>`_  package manager to install its dependencies.
 
 .. code:: bash
 
@@ -256,7 +256,7 @@ the root of the repository. It will use the `conan <https://conan.io/>`_  packag
 
 You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
 
-Once installed, you are ready to go with the C++ gRPC client! Start writing your own C++ ``main.cpp`` file and
+Once installed, you are ready to go with the C++ gRPC client. Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 .. code:: cpp
@@ -299,7 +299,7 @@ For compiling, just link the library as follows:
     g++ -o myClientApp main.cpp -lapi_eigen_example_grpc_client
 
 
-And run your client!
+And run your client.
 
 .. code:: bash
 
