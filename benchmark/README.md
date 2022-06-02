@@ -16,4 +16,4 @@ And commit to the repository.
 
 ## Results
 
-Please, refer to the following [file](https://github.com/ansys/api-eigen-example/edit/feat/bm-results/benchmark/python/results/README.md) for going through the latest benchmark results published.
+Please, refer to the following [file](https://github.com/ansys/api-eigen-example/blob/main/benchmark/results/README.md) for going through the latest benchmark results published.
