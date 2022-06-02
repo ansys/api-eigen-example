@@ -17,12 +17,12 @@ They are categorized according to their implementation language in the following
 The parametrized sizes for these benchmark tests are shown in the graphs, and are basically a sequence of powers of 2 (that is, '2, 4, 8, 16 etc.'). The final value
 is currently set to 128, but it is easily adaptable.
 
-*****************
-Benchmark results
-*****************
+**********************
+Benchmark test results
+**********************
 
-Benchmark results layout
-~~~~~~~~~~~~~~~~~~~~~~~~
+Layout
+~~~~~~
 
 The layout of the figures is characterized as follows:
 
