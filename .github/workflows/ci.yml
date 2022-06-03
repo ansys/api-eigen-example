@@ -47,6 +47,7 @@ jobs:
           level: error
           filter_mode: nofilter
           fail_on_error: true
+          vale_flags: "--config=doc/.vale.ini"
 
   python_test_import:
     name: Python - Smoke Tests
