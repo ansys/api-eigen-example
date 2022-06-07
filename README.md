@@ -47,7 +47,7 @@ can also be easily performed using CURL commands).
 
 ## Documentation
 
-An automatically generated version of the project's documentation is published every night under the following [link](https://apieigen.docs.pyansys.com/).
+An automatically generated version of the project's documentation is published every night under the following [link](https://apieigen.docs.ansys.com/).
 
 Please, feel free to search on it more specific documentation of the project itself.
 
