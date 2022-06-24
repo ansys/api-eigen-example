@@ -1,7 +1,5 @@
 """The Python implementation of the gRPC API Eigen example client."""
 
-import time
-
 import grpc
 import numpy as np
 
@@ -41,18 +39,17 @@ class DemoGRPCClient:
         self._channel_str = "%s:%d" % (ip, port)
 
         self.channel = grpc.insecure_channel(self._channel_str)
-        self._state = grpc.channel_ready_future(self.channel)
-        self._stub = grpcdemo_pb2_grpc.GRPCDemoStub(self.channel)
 
         # Verify connection
-        tstart = time.time()
-        while ((time.time() - tstart) < timeout) and not self._state._matured:
-            time.sleep(0.01)
-
-        if not self._state._matured:
+        try:
+            grpc.channel_ready_future(self.channel).result(timeout=timeout)
+        except grpc.FutureTimeoutError:
             raise IOError("Unable to connect to server at %s" % self._channel_str)
-        else:
-            print("Connected to server at %s:%d" % (ip, port))
+
+        # Set up the stub
+        self._stub = grpcdemo_pb2_grpc.GRPCDemoStub(self.channel)
+
+        print("Connected to server at %s:%d" % (ip, port))
 
     # =================================================================================================
     # PUBLIC METHODS for Client operations
