@@ -223,7 +223,7 @@ to install dependencies, run the following command lines from the root of the re
 
 You might need to run the previous ``install`` and ``deploy`` commands with root privileges.
 
-Once dependecies are installed, you can use the C++ gRPC server. Start writing your own C++ ``main.cpp`` file and
+Once dependencies are installed, you can use the C++ gRPC server. Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 ```cpp
@@ -262,7 +262,7 @@ to install its dependencies, run the following commands from the root of the rep
 
 You might need to run the previous ``install`` and ``deploy`` commands with root privileges.
 
-Once dependecies are installed, you can use the C++ gRPC client. Start writing your own C++ ``main.cpp`` file and
+Once dependencies are installed, you can use the C++ gRPC client. Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 ```cpp

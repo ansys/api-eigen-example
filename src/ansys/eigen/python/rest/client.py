@@ -281,7 +281,7 @@ class DemoRESTClient:
         id2 : int
             ID (in the destination server) of the second argument in the operation.
         ops : str
-            Type of operation to performe.
+            Type of operation to perform.
         resource : str
             Type of resource involved in the operation.
 

@@ -129,7 +129,7 @@ class DemoGRPCClient:
         Returns
         -------
         numpy.ndarray
-            Result of the multiplication of numpy.ndarray vactors. Despite returning a numpy.ndarray, the result only contains one value because it is a dot product.
+            Result of the multiplication of numpy.ndarray vectors. Despite returning a numpy.ndarray, the result only contains one value because it is a dot product.
         """
         # Generate the metadata and the amount of chunks per vector
         md, chunks = self._generate_md("vectors", "vec", *args)
