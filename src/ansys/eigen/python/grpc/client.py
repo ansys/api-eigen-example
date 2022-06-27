@@ -1,4 +1,4 @@
-"""The Python implementation of the gRPC API Eigen example client."""
+"""Python implementation of the gRPC API Eigen Example client."""
 
 import grpc
 import numpy as np
@@ -9,7 +9,7 @@ import ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc as grpcdemo_pb2_grpc
 
 
 class DemoGRPCClient:
-    """The API Eigen Example client class for interacting via gRPC."""
+    """Provides the API Eigen Example client class for interacting via gRPC."""
 
     def __init__(self, ip="127.0.0.1", port=50051, timeout=1, test=None):
         """Initialize connection to the API Eigen server.
@@ -17,18 +17,18 @@ class DemoGRPCClient:
         Parameters
         ----------
         ip : str, optional
-            The IP or DNS to which we want to connect, by default "127.0.0.1".
+            IP or DNS to which to connect. The default is "127.0.0.1".
         port : int, optional
-            The port which we want to connect to, by default 50051.
+            Port to connect to. The default is 50051.
         timeout : int, optional
-            The number of seconds we will wait before returning a timeout in the connection, by default 1.
+            Number of seconds to wait before returning a timeout in the connection. The default is 1.
         test : object, optional
-            The test GRPCDemoStub we will connect to in case provided, by default None. This argument is only intended for test puposes.
+            Test GRPCDemoStub to connect to. The default is ``None``. This argument is only intended for test purposes.
 
         Raises
         ------
         IOError
-            In case our client was unable to connect to the server.
+            Error if the client was unable to connect to the server.
         """
         # For test purposes, provide a stub directly
         if test is not None:
@@ -56,12 +56,12 @@ class DemoGRPCClient:
     # =================================================================================================
 
     def request_greeting(self, name):
-        """Method which requests a greeting from the server.
+        """Method that requests a greeting from the server.
 
         Parameters
         ----------
         name : str
-            The name of the "client" (e.g. "Michael").
+            Name of the "client". For example, "Michael".
         """
         # Build the greeting request
         request = grpcdemo_pb2.HelloRequest(name=name)
@@ -73,19 +73,19 @@ class DemoGRPCClient:
         print("The server answered: " + response.message)
 
     def flip_vector(self, vector):
-        """Method to flip a numpy.ndarray vector psoitions, such that [A, B, C, D] --> [D, C, B, A].
+        """Flip the position of a numpy.ndarray vector such that [A, B, C, D] --> [D, C, B, A].
 
         Parameters
         ----------
         vector : numpy.ndarray
-            The vector we want to flip.
+            Vector to flip.
 
         Returns
         -------
         numpy.ndarray
-            The flipped vector.
+            Flipped vector.
         """
-        # Generate the metadata and the amount of chunks per Vector
+        # Generate the metadata and the amount of chunks per vector
         md, chunks = self._generate_md("vectors", "vec", vector)
 
         # Build the stream (i.e. generator)
@@ -97,18 +97,18 @@ class DemoGRPCClient:
         # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
         nparray = self._read_nparray_from_vector(response_iterator)
 
-        # Return only the first element (we are expecting a single vector)
+        # Return only the first element (expecting a single vector)
         return nparray[0]
 
     def add_vectors(self, *args):
-        """Method to add numpy.ndarray vectors using the Eigen library on the server side.
+        """Add numpy.ndarray vectors using the Eigen library on the server side.
 
         Returns
         -------
         numpy.ndarray
-            The result of the addition of the given numpy.ndarrays.
+            Result of the given numpy.ndarrays.
         """
-        # Generate the metadata and the amount of chunks per Vector
+        # Generate the metadata and the amount of chunks per vector
         md, chunks = self._generate_md("vectors", "vec", *args)
 
         # Build the stream (i.e. generator)
@@ -120,39 +120,39 @@ class DemoGRPCClient:
         # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
         nparray = self._read_nparray_from_vector(response_iterator)
 
-        # Return only the first element (we are expecting a single vector)
+        # Return only the first element (expecting a single vector)
         return nparray[0]
 
     def multiply_vectors(self, *args):
-        """Method to perform dot product of numpy.ndarray vectors using the Eigen library on the server side.
+        """Multiply numpy.ndarray vectors using the Eigen library on the server side.
 
         Returns
         -------
         numpy.ndarray
-            The result of the dot product. Despite returning a numpy.ndarray, it will only contain one value since it is a dot product.
+            Result of the multiplication of numpy.ndarray vactors. Despite returning a numpy.ndarray, the result only contains one value because it is a dot product.
         """
-        # Generate the metadata and the amount of chunks per Vector
+        # Generate the metadata and the amount of chunks per vector
         md, chunks = self._generate_md("vectors", "vec", *args)
 
-        # Build the stream (i.e. generator)
+        # Build the stream (generator)
         vector_iterator = self._generate_vector_stream(chunks, *args)
 
         # Call the server method and retrieve the result
         response_iterator = self._stub.MultiplyVectors(vector_iterator, metadata=md)
 
-        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        # Convert to a numpy.ndarray to continue nominal operations (outside the client)
         nparray = self._read_nparray_from_vector(response_iterator)
 
-        # Return only the first element (we are expecting a single vector)
+        # Return only the first element (expecting a single vector)
         return nparray[0]
 
     def add_matrices(self, *args):
-        """Method to add numpy.ndarray matrices using the Eigen library on the server side.
+        """Add numpy.ndarray matrices using the Eigen library on the server side.
 
         Returns
         -------
         numpy.ndarray
-            The resulting numpy.ndarray of the matrices addition.
+            Resulting numpy.ndarray of the matrices addition.
         """
         # Generate the metadata and the amount of chunks per Matrix
         md, chunks = self._generate_md("matrices", "mat", *args)
@@ -166,18 +166,18 @@ class DemoGRPCClient:
         # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
         nparray = self._read_nparray_from_matrix(response_iterator)
 
-        # Return only the first element (we are expecting a single matrix)
+        # Return only the first element (expecting a single matrix)
         return nparray[0]
 
     def multiply_matrices(self, *args):
-        """Method to perform the product of numpy.ndarray matrices using the Eigen library on the server side.
+        """Multiply numpy.ndarray matrices using the Eigen library on the server side.
 
         Returns
         -------
         numpy.ndarray
-            The resulting numpy.ndarray of the matrices multiplication.
+            Resulting numpy.ndarray of the matrices' multiplication.
         """
-        # Generate the metadata and the amount of chunks per Matrix
+        # Generate the metadata and the amount of chunks per matrix
         md, chunks = self._generate_md("matrices", "mat", *args)
 
         # Build the stream (i.e. generator)
@@ -186,10 +186,10 @@ class DemoGRPCClient:
         # Call the server method and retrieve the result
         response_iterator = self._stub.MultiplyMatrices(matrix_iterator, metadata=md)
 
-        # Now, convert to a numpy.ndarray to continue nominal operations (outside the client)
+        # Convert to a numpy.ndarray to continue nominal operations (outside the client)
         nparray = self._read_nparray_from_matrix(response_iterator)
 
-        # Return only the first element (we are expecting a single matrix)
+        # Return only the first element (expecting a single matrix)
         return nparray[0]
 
     # =================================================================================================
@@ -201,7 +201,7 @@ class DemoGRPCClient:
         md = []
         chunks = []
 
-        # Find how many arguments we are transmitting
+        # Find how many arguments are transmitting
         md.append(("full-" + message_type, str(len(args))))
 
         # Loop over all input arguments
@@ -218,7 +218,7 @@ class DemoGRPCClient:
             # Check the size of the arrays
             # If size is surpassed, determine chunks needed
             if arg.nbytes > constants.MAX_CHUNKSIZE:
-                # Let us determine how many chunks we will need
+                # Determine how many chunks are needed
                 #
                 # Max amount of elements per chunk
                 max_elems = constants.MAX_CHUNKSIZE // arg.itemsize
@@ -229,30 +229,30 @@ class DemoGRPCClient:
                 # The remainder amount of elements (if any)
                 remainder = arg.size % max_elems
 
-                # This list will preovide us with the last index up to which to
-                # process in each partial Vector/Matrix message
+                # This list provides the last index up to which to
+                # process in each partial vector or matrix message
                 last_idx_chunk = []
                 for i in range(1, bulk_chunks + 1):
                     last_idx_chunk.append(i * max_elems)
 
-                # Take into account that if there is a remainder, we should
-                # include one last partial Vector/Matrix message.
+                # Take into account that if there is a remainder, include
+                # one last partial vector or mMatrix message
                 if remainder != 0:
                     last_idx_chunk.append(arg.size)
 
-                # Finally append the results
+                # Append the results
                 md.append((abbrev + str(idx) + "-messages", str(len(last_idx_chunk))))
                 chunks.append(last_idx_chunk)
 
             else:
-                # Otherwise we are dealing with a single message.. Append results!
+                # Otherwise deal with a single message... Append results.
                 md.append((abbrev + str(idx) + "-messages", str(1)))
                 chunks.append([arg.size])
 
             # Increase idx by 1
             idx += 1
 
-        # Return the metadata and the chunks list for each Vector/Matrix
+        # Return the metadata and the chunks list for each vector or matrix
         return md, chunks
 
     def _generate_vector_stream(self, chunks: "list[list[int]]", *args: np.ndarray):
@@ -261,7 +261,7 @@ class DemoGRPCClient:
             # Perform some argument input sanity checks
             self._sanity_check_vector(arg)
 
-            # If sanity checks went fine... yield the corresponding Vector message
+            # If sanity checks are fine... yield the corresponding vector message
             #
             # Loop over the chunk indices
             processed_idx = 0
@@ -280,12 +280,12 @@ class DemoGRPCClient:
     def _generate_matrix_stream(self, chunks: "list[list[int]]", *args: np.ndarray):
         # Loop over all input arguments
         for arg, matrix_chunks in zip(args, chunks):
-            # Perform some argument input sanity checks
+            # Perform some argument input sanity checks.
             self._sanity_check_matrix(arg)
 
-            # If sanity checks went fine... yield the corresponding Matrix message
+            # If sanity checks are fine... yield the corresponding matrix message
             #
-            # Since we are dealing with matrices, ravel it to a 1D array (avoids copy)
+            # When dealing with matrices, ravel it to a 1D array (avoids copy)
             arg_as_vec = arg.ravel()
 
             # Loop over the chunk indices
@@ -295,7 +295,7 @@ class DemoGRPCClient:
                 tmp_idx = processed_idx
                 processed_idx = last_idx_chunk
 
-                # Yield!
+                # Yield
                 yield grpcdemo_pb2.Matrix(
                     data_type=constants.NP_DTYPE_TO_DATATYPE[arg.dtype.type],
                     matrix_rows=arg.shape[0],
@@ -304,7 +304,7 @@ class DemoGRPCClient:
                 )
 
     def _read_nparray_from_vector(self, response_iterator):
-        # First, get the metadata
+        # Get the metadata
         response_md = response_iterator.initial_metadata()
 
         # Parse the server's metadata
@@ -313,7 +313,7 @@ class DemoGRPCClient:
         # Initialize the output list
         resulting_vectors = []
 
-        # Let us start processing messages independently
+        # Start processing messages independently
         for msg in range(full_msg):
             # Init the resulting numpy.ndarray to None, its size and its type
             result = None
@@ -325,7 +325,7 @@ class DemoGRPCClient:
                 # Read a message
                 vector = next(response_iterator)
 
-                # If it is the first chunk we are processing, parse dtype and size
+                # If it is the first chunk being processed, parse dtype and size
                 if chunk_idx == 0:
                     if vector.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
                         result_dtype = np.int32
@@ -341,18 +341,18 @@ class DemoGRPCClient:
                     tmp = np.frombuffer(vector.vector_as_chunk, dtype=result_dtype)
                     result = np.concatenate((result, tmp))
 
-            # Check if the final Vector has the desired size
+            # Check if the final vector has the desired size
             if result.size != result_size:
                 raise RuntimeError("Problems reading server full Vector message...")
             else:
-                # If everything went fine, append to resulting_vectors list
+                # If everything is fine, append to resulting_vectors list
                 resulting_vectors.append(result)
 
         # Return the resulting_vectors list
         return resulting_vectors
 
     def _read_nparray_from_matrix(self, response_iterator):
-        # First, get the metadata
+        # Get the metadata
         response_md = response_iterator.initial_metadata()
 
         # Parse the server's metadata
@@ -361,9 +361,9 @@ class DemoGRPCClient:
         # Initialize the output list
         resulting_matrices = []
 
-        # Let us start processing messages independently
+        # Start processing messages independently
         for msg in range(full_msg):
-            # Init the resulting numpy.ndarray to None, its size (rows,cols) and its type
+            # Init the resulting numpy.ndarray to None, its size (rows,cols), and its type
             result = None
             result_rows = 0
             result_cols = 0
@@ -374,7 +374,7 @@ class DemoGRPCClient:
                 # Read a message
                 matrix = next(response_iterator)
 
-                # If it is the first chunk we are processing, parse dtype and size (rows,cols)
+                # If it is the first chunk being processing, parse dtype and size (rows,cols)
                 if chunk_idx == 0:
                     if matrix.data_type == grpcdemo_pb2.DataType.Value("INTEGER"):
                         result_dtype = np.int32
@@ -391,11 +391,11 @@ class DemoGRPCClient:
                     tmp = np.frombuffer(matrix.matrix_as_chunk, dtype=result_dtype)
                     result = np.concatenate((result, tmp))
 
-            # Check if the final Matrix has the desired size
+            # Check if the final matrix has the desired size
             if result.size != result_rows * result_cols:
-                raise RuntimeError("Problems reading server full Matrix message...")
+                raise RuntimeError("Problems reading server full matrix message...")
             else:
-                # If everything went fine, append to resulting_matrices list
+                # If everything is fine, append to resulting_matrices list
                 resulting_matrices.append(
                     np.reshape(
                         result,
@@ -410,26 +410,26 @@ class DemoGRPCClient:
         return resulting_matrices
 
     def _sanity_check_vector(self, arg):
-        # Perform some argument input sanity checks
+        # Perform some argument input sanity checks.
         if type(arg) is not np.ndarray:
-            raise RuntimeError("Invalid argument. Only numpy.ndarrays allowed.")
+            raise RuntimeError("Invalid argument. Only numpy.ndarrays are allowed.")
         elif arg.dtype.type not in constants.NP_DTYPE_TO_DATATYPE.keys():
             raise RuntimeError(
-                "Invalid argument. Only numpy.ndarrays of type int32 and float64 allowed."
+                "Invalid argument. Only numpy.ndarrays of type int32 and float64 are allowed."
             )
         elif arg.ndim != 1:
-            raise RuntimeError("Invalid argument. Only 1D numpy.ndarrays allowed.")
+            raise RuntimeError("Invalid argument. Only 1D numpy.ndarrays are allowed.")
 
     def _sanity_check_matrix(self, arg):
-        # Perform some argument input sanity checks
+        # Perform some argument input sanity checks.
         if type(arg) is not np.ndarray:
-            raise RuntimeError("Invalid argument. Only numpy.ndarrays allowed.")
+            raise RuntimeError("Invalid argument. Only numpy.ndarrays are allowed.")
         elif arg.dtype.type not in constants.NP_DTYPE_TO_DATATYPE.keys():
             raise RuntimeError(
-                "Invalid argument. Only numpy.ndarrays of type int32 and float64 allowed."
+                "Invalid argument. Only numpy.ndarrays of type int32 and float64 are allowed."
             )
         elif arg.ndim != 2:
-            raise RuntimeError("Invalid argument. Only 2D numpy.ndarrays allowed.")
+            raise RuntimeError("Invalid argument. Only 2D numpy.ndarrays are allowed.")
 
     def _parse_server_metadata(self, response_md: "list[tuple]"):
         # Init the return variables: amount of full messages received
@@ -437,12 +437,12 @@ class DemoGRPCClient:
         full_msg = 0
         chunks_per_msg = []
 
-        # First, find out how many full messages we will be processing
+        # Find out how many full messages are to be processed
         for md in response_md:
             if md[0] == "full-vectors" or md[0] == "full-matrices":
                 full_msg = int(md[1])
 
-        # Now, identify the chunks per message (only if we were successful previously)
+        # Identify the chunks per message (only if successful previously)
         if full_msg != 0:
             for i in range(1, full_msg + 1):
                 for md in response_md:

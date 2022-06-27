@@ -1,4 +1,4 @@
-""" Tools for tests """
+"""Tools for tests """
 
 from random import random, seed
 
@@ -6,16 +6,16 @@ import numpy as np
 
 # Modifiable parameter -- NVALUES
 #
-# This parameter defines the amount of runs (and consequently, powers of 2)
-# which will define the size of our arrays.. See below, SIZES
+# This parameter defines the number of runs (and consequently, powers of 2)
+# that define the size of arrays. See SIZES below.
 NVALUES = 12
 
 # ==================================================================================
-# IT IS NOT RECOMMENDED TO MODIFY THE SCRIPT BEYOND THIS POINT WITHOUT KNOWLEDGE
+# YOU SHOULD NOT MODIFY THE SCRIPT BEYOND THIS POINT WITHOUT KNOWLEDGE
 # OF HOW THE TESTS ARE RUN. USE WITH CAUTION...
 # ==================================================================================
 
-# MIN and MAX values for our random numbers
+# MIN and MAX values for random numbers
 MIN = 0.0
 MAX = 10.0
 
@@ -24,7 +24,7 @@ SIZES = [pow(2, n) for n in range(1, NVALUES)]
 SIZES_IDS = [f"{i:05d}" for i in SIZES]
 
 
-# Initialize our seed
+# Initialize the seed
 seed(1)
 
 # Create the random value generator

@@ -1,4 +1,4 @@
-"""The Python implementation of the REST API Eigen example database."""
+"""Python implementation of the REST API Eigen example database."""
 
 import os
 import sqlite3
@@ -12,11 +12,11 @@ from flask import current_app, g
 
 
 def init_app_db(app):
-    """Initializer method of a simple DB for storing API REST data."""
+    """Initialize a simple database for storing API REST data."""
     current_app = app
     current_app.app_context().push()
 
-    # We initialize the new App's DB - delete any pre-existing data and build it from scracth
+    # Initialize the new app's DB, deleting any pre-existing data and build it from scracth
     __init_db()
 
     # Register this function so that it is called whenever a response is returned by the application
@@ -27,12 +27,12 @@ def init_app_db(app):
 
 
 def get_db():
-    """Method in charge of returning the DB instance of our Flask App.
+    """Get the database instance of the Flask app.
 
     Returns
     -------
     Connection
-        The connection to the app's DB.
+        Connection to the app's database.
     """
     if "db" not in g:
         # Check if folder exists... otherwise, create it
@@ -52,7 +52,7 @@ def get_db():
 
 
 def __close_db(*args):
-    """Private method in charge of closing the DB."""
+    """Close the database."""
     db = g.pop("db", None)
 
     if db is not None:
@@ -60,7 +60,7 @@ def __close_db(*args):
 
 
 def __init_db():
-    """Private method in charge of initializing the DB."""
+    """Initialize the database."""
     db = get_db()
 
     with current_app.open_resource("restdb/schema.sql") as f:

@@ -3,7 +3,7 @@
 C++ gRPC subpackage
 ===================
 
-This is the gRPC subpackage which contains the needed elements for client-server interaction using gRPC.
+The C++ gRPC subpackage contains the needed elements for client-server interaction using gRPC.
 
 .. toctree::
    :maxdepth: 4

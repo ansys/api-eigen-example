@@ -3,7 +3,7 @@
 =============
 API reference
 =============
-Discussion on the different API modules at a high level.
+This section describes the different API modules at a high level.
 
 .. currentmodule:: python
 

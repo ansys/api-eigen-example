@@ -3,7 +3,7 @@
 Python gRPC subpackage
 ======================
 
-This is the gRPC subpackage which contains the needed elements for client-server interaction using gRPC.
+The Python gRPC subpackage contains the needed elements for client-server interaction using gRPC.
 
 .. currentmodule:: ansys.eigen.python.grpc
 

@@ -1,4 +1,4 @@
-"""The Python implementation of the REST API Eigen example client."""
+"""Python implementation of the REST API Eigen example client."""
 
 import json
 
@@ -6,12 +6,14 @@ import numpy as np
 import requests
 
 _EXP_DTYPE = np.dtype("float64")
-"""The expected dtype for the numpy arrays."""
+"""Expected dtype for numpy arrays."""
 
 
 class DemoRESTClient:
-    """This class acts as a client to the service provided by the API REST server
-    of this same project. It has several public methods which allow for direct interaction with
+    """Acts as a client to the service provided by the API REST server
+    of this same project.
+    
+    This class has several public methods that allow for direct interaction with
     the server, without having to care about the formatting of the RESTful queries.
     """
 
@@ -20,20 +22,20 @@ class DemoRESTClient:
     # =================================================================================================
 
     def __init__(self, host, port, user=None, pwd=None, client=None):
-        """The class initializer method.
+        """Initialize the client.
 
         Parameters
         ----------
         host : str
-            The host (IP/DNS) where the destination server is located.
+            Host (IP/DNS) where the destination server is located.
         port : int
-            The port which is exposed by the destination server.
+            Port that is exposed by the destination server.
         user : str, optional
-            The username to be used in basic authentication, by default None.
+            Username to use in basic authentication. The default is ``None``.
         pwd : str, optional
-            The password to be used in basic authentication, by default None
+            Password to use in basic authentication. The default is ``None``.
         client : FlaskClient
-            The Flask client (to be used only for testing purposes).
+            Flask client, which is to be used only for testing purposes. The default is ``None``.
         """
         self._host = host
         self._port = port
@@ -73,20 +75,20 @@ class DemoRESTClient:
             print(">>> Pwd: " + self._pwd)
 
     def add(self, arg1, arg2):
-        """Perform the "add" operation of two numpy.ndarrays using the Eigen library
+        """Add two numpy.ndarrays using the Eigen library
         (C++), which is exposed via the destination RESTful server.
 
         Parameters
         ----------
         arg1 : numpy.ndarray
-            The first numpy.ndarray to be considered in the operation.
+            First numpy.ndarray to consider in the operation.
         arg2 : numpy.ndarray
-            The second numpy.ndarray to be considered in the operation.
+            Second numpy.ndarray to consider in the operation.
 
         Returns
         -------
         numpy.ndarray
-            The result of the addition of arg1 and arg2 (i.e. arg1 + arg2).
+            Sum of adding arg1 and arg2 (arg1 + arg2).
         """
         # Check that the provided arguments are inline with the handled parameters by our service
         arg_dim = self.__check_args(arg1, arg2)
@@ -95,20 +97,20 @@ class DemoRESTClient:
         return self.__perform_operation(arg1, arg2, arg_dim, "add")
 
     def subtract(self, arg1, arg2):
-        """Perform the "subtract" operation of two numpy.ndarrays using the Eigen library
+        """Subtract two numpy.ndarrays using the Eigen library
         (C++), which is exposed via the destination RESTful server.
 
         Parameters
         ----------
         arg1 : numpy.ndarray
-            The first numpy.ndarray to be considered in the operation.
+            First numpy.ndarray to consider in the operation.
         arg2 : numpy.ndarray
-            The second numpy.ndarray to be considered in the operation.
+            Second numpy.ndarray to consider in the operation.
 
         Returns
         -------
         numpy.ndarray
-            The result of the subtraction of arg1 and arg2 (i.e. arg1 - arg2).
+            The result of subtracting arg2 from arg1 (arg1 - arg2).
         """
         # Check that the provided arguments are inline with the handled parameters by our service
         arg_dim = self.__check_args(arg1, arg2)
@@ -118,20 +120,20 @@ class DemoRESTClient:
         return self.__perform_operation(arg1, np.negative(arg2), arg_dim, "add")
 
     def multiply(self, arg1, arg2):
-        """Perform the "multiplication" operation of two numpy.ndarrays using the Eigen library
+        """Multiply two numpy.ndarrays using the Eigen library
         (C++), which is exposed via the destination RESTful server.
 
         Parameters
         ----------
         arg1 : numpy.ndarray
-            The first numpy.ndarray to be considered in the operation.
+            First numpy.ndarray to consider in the operation.
         arg2 : numpy.ndarray
-            The second numpy.ndarray to be considered in the operation.
+            Second numpy.ndarray to consider in the operation.
 
         Returns
         -------
         numpy.ndarray
-            The result of the multiplication of arg1 and arg2 (i.e. arg1 * arg2).
+            The result of multiplyng arg1 and arg2 (arg1 * arg2).
         """
         # Check that the provided arguments are inline with the handled parameters by our service
         arg_dim = self.__check_args(arg1, arg2)
@@ -144,20 +146,21 @@ class DemoRESTClient:
     # =================================================================================================
 
     def __check_args(self, arg1, arg2):
-        """Sanity-checks private method to ensure that the provided arguments respect
-        the expected inputs by the server (to avoid destination server error-throw, whenever possible).
+        """Check that provided arguments respect the expected inputs by the server.
+        
+        This goal of this private method is to avoid destination server error-throw, whenever possible.
 
         Parameters
         ----------
         arg1 : numpy.ndarray
-            The first numpy.ndarray to be considered in the operation.
+            First numpy.ndarray to consider in the operation.
         arg2 : numpy.ndarray
-            The second numpy.ndarray to be considered in the operation.
+            Second numpy.ndarray to consider in the operation.
 
         Returns
         -------
         int
-            The shape of the involved numpy.ndarrays.
+            Shape of the involved numpy.ndarrays.
 
         Raises
         ------
@@ -201,18 +204,18 @@ class DemoRESTClient:
         Parameters
         ----------
         arg1 : numpy.ndarray
-            The first numpy.ndarray to be considered in the operation.
+            First numpy.ndarray to consider in the operation.
         arg2 : numpy.ndarray
-            The second numpy.ndarray to be considered in the operation.
+            Second numpy.ndarray to consider in the operation.
         arg_dim : int
-            The shape of the involved numpy.ndarrays.
+            Shape of the involved numpy.ndarrays.
         ops : str
-            The type of operation to be carried out (i.e. "add", "multiply").
+            Type of operation to carry out. For example, "add" or "multiply".
 
         Returns
         -------
         numpy.ndarray
-            The result of the operation requested between arg1 and arg2.
+            Tesult of the operation requested between arg1 and arg2.
         """
         # At this point we must check if we are dealing with a vector or a matrix...
         # and proceed to perform the requested operation
@@ -231,14 +234,14 @@ class DemoRESTClient:
         Parameters
         ----------
         arg : numpy.ndarray
-            The numpy.ndarray to be posted to the destination server.
+            The numpy.ndarray to post to the destination server.
         resource : str
-            The type of resource where the posting will be performed.
+            Type of resource where the posting is to be performed.
 
         Returns
         -------
         int
-            The ID of the posted object.
+            ID of the posted object.
 
         Raises
         ------
@@ -279,18 +282,18 @@ class DemoRESTClient:
         Parameters
         ----------
         id1 : int
-            The ID (in the destination server) of the first argument involved in the operation.
+            ID (in the destination server) of the first argument in the operation.
         id2 : int
-            The ID (in the destination server) of the second argument involved in the operation.
+            ID (in the destination server) of the second argument in the operation.
         ops : str
-            The type of operation to be performed.
+            Type of operation to performe.
         resource : str
-            The type of resource involved in the requested operation.
+            Type of resource involved in the operation.
 
         Returns
         -------
         numpy.ndarray
-            The result of the operation requested.
+            Result of the operation requested.
 
         Raises
         ------
@@ -339,14 +342,14 @@ class DemoRESTClient:
         Parameters
         ----------
         search_dict : dict
-            The dict/multidict we want to search in.
+            Dictionary or multiple dictionaries to search.
         key : str
-            The key we are interested in looking for.
+            Key to search for.
 
         Returns
         -------
         Any
-            The value we are interested in.
+            Value of interest.
         """
         for elem in search_dict:
             if elem == key:
