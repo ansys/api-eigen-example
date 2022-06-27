@@ -10,11 +10,9 @@ _EXP_DTYPE = np.dtype("float64")
 
 
 class DemoRESTClient:
-    """Acts as a client to the service provided by the API REST server
-    of this same project.
-    
-    This class has several public methods that allow for direct interaction with
-    the server, without having to care about the formatting of the RESTful queries.
+    """Acts as a client to the service provided by the API REST server of this same project.
+    This class has several public methods that allow for direct interaction with the server,
+    without having to care about the formatting of the RESTful queries.
     """
 
     # =================================================================================================
@@ -75,8 +73,7 @@ class DemoRESTClient:
             print(">>> Pwd: " + self._pwd)
 
     def add(self, arg1, arg2):
-        """Add two numpy.ndarrays using the Eigen library
-        (C++), which is exposed via the destination RESTful server.
+        """Add two numpy.ndarrays using the Eigen library (C++), which is exposed via the destination RESTful server.
 
         Parameters
         ----------
@@ -120,8 +117,7 @@ class DemoRESTClient:
         return self.__perform_operation(arg1, np.negative(arg2), arg_dim, "add")
 
     def multiply(self, arg1, arg2):
-        """Multiply two numpy.ndarrays using the Eigen library
-        (C++), which is exposed via the destination RESTful server.
+        """Multiply two numpy.ndarrays using the Eigen library (C++), which is exposed via the destination RESTful server.
 
         Parameters
         ----------
@@ -146,9 +142,8 @@ class DemoRESTClient:
     # =================================================================================================
 
     def __check_args(self, arg1, arg2):
-        """Check that provided arguments respect the expected inputs by the server.
-        
-        This goal of this private method is to avoid destination server error-throw, whenever possible.
+        """Check that provided arguments respect the expected inputs by the server. The goal of this
+        private method is to avoid destination server error-throw whenever possible.
 
         Parameters
         ----------
