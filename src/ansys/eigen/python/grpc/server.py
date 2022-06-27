@@ -190,7 +190,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         grpcdemo_pb2.Vector
             Vector message.
         """
-        click.echo("Vector dot product requested)
+        click.echo("Vector dot product requested")
 
         # Process the metadata
         md = self._read_client_metadata(context)
