@@ -4,24 +4,27 @@
 ************
 User's guide
 ************
-This guide contains pertinent information regarding the use of the API Eigen Example
-demo package and its constituent modules and components.
+This guide describes how to use the API Eigen Example package and its modules
+and components.
 
 =================================================
 Understanding the API Eigen Example Python module
 =================================================
-Within this project, the "ansys.eigen.python" package is the one which contains the necessary objects for
-testing the different protocols (API REST, gRPC), implemented in Python. There are two other extra packages:
+The``ansys.eigen.python`` package contains the necessary objects for testing the API REST
+and gRPC communication protocols, which are implemented in Python. It also includes two
+additional Python packages:
 
-- The REST package: ``ansys.eigen.python.rest``
-- The gRPC package: ``ansys.eigen.python.grpc``
+- REST package: ``ansys.eigen.python.rest``
+- gRPC package: ``ansys.eigen.python.grpc``
 
-Each of these two packages also contains two modules: ``client`` and ``server`` which are the key modules for
-performing the demos. This section is subdivided into each of the two packages (REST and gRPC).
+Each of these packages contains two key modules for performing the demos: ``client``
+and ``server``. This section is divided into REST and gRPC package subsections.
 
 ----------------------------------------
 The API REST Eigen Example Python module
 ----------------------------------------
+
+Import the API REST Python server and client with:
 
 .. code:: python
 
@@ -29,33 +32,33 @@ The API REST Eigen Example Python module
    import ansys.eigen.python.rest.client as rest_client
 
 
-The API REST Python server is characterized for being a Flask app, which
-contains a SQLite DB. This server is intended to be run easily with the following
-commands (in the terminal). If you were located at the root directory of the repository, and you wanted to
-deploy the API REST version of the server, you could do the following:
+The API REST Python server is a Flask app that contains a SQLite database (DB). You can easily
+deploy this server by running commands in the terminal. If you are located at the root directory
+of the repository, you can deploy this version of the server with:
 
 .. code:: bash
 
    export FLASK_APP="src/ansys/eigen/python/rest/server.py"
    flask run
 
-This deploys the server by its default parameters, though you can always deploy it manually if you prefer by
-calling the ``create_app()`` method, which returns the Flask App, and then running (that is, ``app.run(...)``):
+While the preceding commands deploy the server with default parameters, you can deploy it manually by
+calling the ``create_app()`` method to return the Flask app and then run it using the ``app.run()``
+method:
 
 .. code:: python
 
    app = rest_server.create_app()
    app.run("127.0.0.1", 1234)
 
-The Python client contains a class called ``DemoRESTClient``, which basically provide the end-user the tools to interact
-directly with the previously deployed server. For example, if the creation of an API REST client for interacting with
-the previously deployed server is wanted, then:
+The Python client contains a class called ``DemoRESTClient`` that provides tools for interacting
+directly with the deployed server. For example, to create an API REST client for interacting with
+the previously deployed server, you would run:
 
 .. code:: python
 
    client = rest_client.DemoRESTClient("127.0.0.1", 1234)
 
-This way, the client is made available to perform operations such as the following:
+The client is then made available to perform operations such as:
 
 .. code:: python
 
@@ -70,37 +73,38 @@ This way, the client is made available to perform operations such as the followi
 The API gRPC Eigen Example Python module
 ----------------------------------------
 
+Import the API gRPC Python server and client with:
+
 .. code:: python
 
    import ansys.eigen.python.grpc.server as grpc_server
    import ansys.eigen.python.grpc.client as grpc_client
 
 
-The API gRPC Python server is characterized for being a standalone gRPC app, with no DB.
-This server is intended to be run easily with the following commands (in the terminal). If you were located
-at the root directory of the repository, and you wanted to deploy the API gRPC version of the server, you 
-could do the following:
+The API gRPC Python server is a standalone gRPC app with no DB. You can easily deploy this server
+by running commands in the terminal. If you are located at the root directory of the repository, you
+can deploy this version of the server with:
 
 .. code:: bash
 
    python src/ansys/eigen/python/grpc/server.py
 
-This deploys the server by its default parameters, though you can always deploy it manually if you prefer by
+While the preceding command deploys the server with default parameters, you can deploy it manually by
 calling the ``serve()`` method inside the module:
 
 .. code:: python
 
    grpc_server.serve()
 
-The Python client contains a class called ``DemoGRPCClient``, which basically provide the end-user the tools to interact
-directly with the previously deployed server. For example, if the creation of an API gRPC client for interacting with
-the previously deployed server is wanted, then:
+The Python client contains a class called ``DemoGRPCClient`` that provides tools for interacting
+directly with the deployed server. For example, to create an API gRPC client for interacting with
+the previously deployed server, you would run:
 
 .. code:: python
 
    cli = grpc_client.DemoGRPCClient(ip="127.0.0.1", port=50051)
 
-This way, the client is made available to perform operations such as the following:
+The client is then made available to perform operations such as:
 
 .. code:: python
 
@@ -115,23 +119,22 @@ This way, the client is made available to perform operations such as the followi
 Understanding the API Eigen Example C++ module
 ==============================================
 
-Within this project, apart from Python packages, there are also C++ projects. These projects are basically the C++ implementations
-of the previously explained Python packages. They can be found within the repository in the following directories:
+The``ansys.eigen.python`` package also includes two C++ projects, which are C++ implementations of the
+previously explained Python packages:
 
-- The C++ REST projects: ``src/ansys/eigen/cpp/rest``
-- The C++ gRPC projects: ``src/ansys/eigen/cpp/grpc``
+- C++ REST projects: ``src/ansys/eigen/cpp/rest``
+- C++ gRPC projects: ``src/ansys/eigen/cpp/grpc``
 
-Each of these two directories also contains two projects: ``client`` and ``server`` which are the key modules for
-performing the demos. This section is subdivided into each of the two sets of projects (REST and gRPC).
+Each of these C++ packages contains two key modules for performing the demos: ``client`` and ``server``.
+This section is divided into REST and gRPC project subsections.
 
 ---------------------------------------
 The API REST Eigen Example C++ projects
 ---------------------------------------
 
-First of all, you would need to install the projects. In order to do so, please follow the instructions in
-:ref:`getting_started`
+First you must install the projects as per the instructions in :ref:`getting_started`.
 
-Assuming you have already installed them, start by doing some simple includes:
+Once projects are installed, run these ``include`` commands:
 
 .. code:: cpp
 
@@ -139,11 +142,10 @@ Assuming you have already installed them, start by doing some simple includes:
    #include <apieigen/rest/RestServer.hpp>
 
 
-The API REST C++ server is characterized for being a CrowCpp app, which
-contains a SQLite DB. This server is intended to be run easily with the following
-commands. 
+The API REST C++ server is a CrowCpp app that contains a SQLite DB. You can easily deploy this server by running
+commands in the terminal.
 
-If you created a simple ``server.cpp`` file, you could do the following:
+If you create a simple ``server.cpp`` file, you can do the following:
 
 .. code:: cpp
 
@@ -157,19 +159,19 @@ If you created a simple ``server.cpp`` file, you could do the following:
       server.serve();
    }
 
-If you know compiled the ``server.cpp`` file once the library is installed such that:
+Once the library is installed, you can compile the ``server.cpp`` file:
 
 .. code:: bash
 
    g++ -o myServer server.cpp -lapi_eigen_example_rest_server
 
-You would just have to run the outcoming executable from the compilation:
+You can then run the executable that results from the compilation:
 
 .. code:: bash
    
    ./myServer
 
-And now, your server would be deployed.
+You see these messages as your server is being deployed:
 
 .. code:: bash
 
@@ -180,13 +182,13 @@ And now, your server would be deployed.
    >>> (2022-05-13 08:48:54) [INFO    ] Crow/1.0 server is running at http://0.0.0.0:18080 using 16 threads
    >>> (2022-05-13 08:48:54) [INFO    ] Call `app.loglevel(crow::LogLevel::Warning)` to hide Info level logs.
 
-This deploys the server by its default parameters, though you can always deploy it with your own custom
-parameters, by providing the optional inputs in the ``serve(...)`` method.
+While the preceding command deploys the server with default parameters, you can deploy it with your own custom
+parameters by providing optional inputs in the ``serve()`` method.
 
-The C++ client contains a class called ``EigenClient``, which basically provide the end-user the tools to interact
-directly with the previously deployed server. For example, if the creation of an API REST client for interacting with
-the previously deployed server is wanted, write the following code snippet in a new C++ file to be called,
-for example, ``client.cpp``:
+The C++ client contains a class called ``EigenClient`` that provides tools for interacting
+directly with the deployed server. For example, to create an API REST client for interacting with
+the previously deployed server, you could write the following code snippet in a new C++ file (for example, ``client.cpp``)
+and then call it:
 
 .. code:: cpp
 
@@ -222,16 +224,16 @@ for example, ``client.cpp``:
    }
 
 
-The previous client, for example, would deal with a vector addition operation via REST API interaction
+The client then deals with a vector addition operation via REST API interaction
 with the server, apart from requesting a greeting.
 
-In order to compile the client, one should do as follows:
+You compile the client with:
 
 .. code:: bash
 
    g++ -o myClientApp client.cpp -lapi_eigen_example_rest_client
 
-And then you would just have to run the outcoming executable from the compilation:
+You then run the executable that results from the compilation:
 
 .. code:: bash
    
@@ -243,10 +245,9 @@ Enjoy creating your own apps.
 The API gRPC Eigen Example C++ projects
 ---------------------------------------
 
-First of all, you would need to install the projects. In order to do so, please follow the instructions in
-:ref:`getting_started`
+First you must install the projects as per the instructions in :ref:`getting_started`.
 
-Assuming you have already installed them, start by doing some simple includes:
+Once projects are installed, run these ``include`` commands:
 
 .. code:: cpp
 
@@ -254,10 +255,10 @@ Assuming you have already installed them, start by doing some simple includes:
    #include <apieigen/grpc/GRPCServer.hpp>
 
 
-The API gRPC C++ server is characterized for being a standalone gRPC app. This server is intended
-to be run easily with the following commands. 
+The API gRPC C++ server is a standalone gRPC app. You can easily deploy this server by running
+commands in the terminal. 
 
-If you created a simple ``server.cpp`` file, you could do the following:
+If you create a simple ``server.cpp`` file, you can do the following:
 
 .. code:: cpp
 
@@ -271,19 +272,19 @@ If you created a simple ``server.cpp`` file, you could do the following:
       server.serve();
    }
 
-If you know compiled the ``server.cpp`` file once the library is installed such that:
+Once the library is installed, you can compile the ``server.cpp`` file:
 
 .. code:: bash
 
    g++ -o myServer server.cpp -lapi_eigen_example_grpc_server
 
-You would just have to run the outcoming executable from the compilation:
+You then run the executable that results from the compilation:
 
 .. code:: bash
    
    ./myServer
 
-And now, your server would be deployed.
+You see these messages as your server is being deployed:
 
 .. code:: bash
 
@@ -291,13 +292,13 @@ And now, your server would be deployed.
    >>> GRPCService object created.
    >>> Server listening on 0.0.0.0:50000
 
-This deploys the server by its default parameters, though you can always deploy it with your own custom
-parameters, by providing the optional inputs in the ``serve(...)`` method.
+While the preceding command deploys the server with default parameters, you can deploy it with your own custom
+parameters by providing optional inputs in the ``serve()`` method.
 
-The C++ client contains a class called ``GRPCClient``, which basically provide the end-user the tools to interact
-directly with the previously deployed server. For example, if the creation of an API gRPC client for interacting with
-the previously deployed server is wanted, write the following code snippet in a new C++ file to be called,
-for example, ``client.cpp``:
+The C++ client contains a class called ``GRPCClient`` that provides tools for interacting
+directly with the server. For example, if you wanted to create an API gRPC client for interacting with
+the previously deployed server, you would write the following code snippet in a new C++ file (for example, ``client.cpp``)
+and then call it:
 
 .. code:: cpp
 
@@ -333,20 +334,23 @@ for example, ``client.cpp``:
    }
 
 
-The previous client, for example, would deal with a vector addition operation via gRPC API interaction
+The client then deals with a vector addition operation via gRPC API interaction
 with the server, apart from requesting a greeting.
 
-In order to compile the client app, one should do as follows:
+You compile the client app with:
 
 .. code:: bash
 
    g++ -o myClientApp client.cpp -lapi_eigen_example_grpc_client
 
-And then you would just have to run the outcoming executable from the compilation:
+You then run the executable that results from the recompilation:
 
 .. code:: bash
    
    ./myClientApp
+
+
+You see these messages as your server is being deployed:
 
 .. code:: bash
 
@@ -357,7 +361,7 @@ And then you would just have to run the outcoming executable from the compilatio
    >>>> Server vector addition successful! Retrieving vector.
    GRPCClient object destroyed.
 
-And on the server side you would be seeing these logs:
+On the server side, you see these logs:
 
 .. code:: bash
 

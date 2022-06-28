@@ -1,4 +1,4 @@
-"""The Python implementation of the REST API Eigen example server."""
+"""Python implementation of the REST API Eigen example server."""
 
 import json
 from math import floor
@@ -35,12 +35,12 @@ HUMAN_SIZES = ["B", "KB", "MB", "GB", "TB"]
 
 
 def create_app():
-    """REST API Server initializer.
+    """Initialize the REST API server.
 
     Returns
     -------
     Flask
-        The instance of our application.
+        Instance of the application.
 
     Raises
     ------
@@ -60,7 +60,7 @@ def create_app():
         DATABASE=os.path.join(app.instance_path, "app.sqlite"),
     )
 
-    # Teardown previous DB and initialize it!
+    # Tear down previous database and initialize it
     init_app_db(app)
 
     # =================================================================================================
@@ -69,12 +69,12 @@ def create_app():
 
     @app.route("/Vectors", methods=["POST"])
     def post_vector():
-        """Method which handles the app's (service) behavior when accessing the "Vectors" resource.
+        """Handles the app's (service's) behavior when accessing the ``Vectors`` resource.
 
         Returns
         -------
         Response
-            Response object containing the ID of the recently posted Vector.
+            Response object containing the ID of the recently posted vector.
         """
         # Perform the POST operation using the general method (to avoid code duplications)
         response_body = __post_eigen_object("vector")
@@ -84,8 +84,8 @@ def create_app():
 
     @app.route("/add/Vectors", methods=["GET"])
     def add_vectors():
-        """Method which handles the app's (service) behavior when accessing the "addition"
-        operation for "Vectors" resource.
+        """Handles the app's (service's) behavior when accessing the addition
+        operation for the ``Vectors`` resource.
 
         Returns
         -------
@@ -100,8 +100,8 @@ def create_app():
 
     @app.route("/multiply/Vectors", methods=["GET"])
     def multiply_vectors():
-        """Method which handles the app's (service) behavior when accessing the "multiplication"
-        operation for "Vectors" resource.
+        """Handles the app's (service's) behavior when accessing the multiplication
+        operation for the ``Vectors`` resource.
 
         Returns
         -------
@@ -116,12 +116,12 @@ def create_app():
 
     @app.route("/Matrices", methods=["POST"])
     def post_matrix():
-        """Method which handles the app's (service) behavior when accessing the "Matrices" resource
+        """Handles the app's (service's) behavior when accessing the ``Matrices`` resource
 
         Returns
         -------
         Response
-            Response object containing the ID of the recently posted Matrix
+            Response object containing the ID of the recently posted matrix.
         """
         # Perform the POST operation using the general method (to avoid code duplications)
         response_body = __post_eigen_object("matrix")
@@ -131,8 +131,8 @@ def create_app():
 
     @app.route("/add/Matrices", methods=["GET"])
     def add_matrices():
-        """Method which handles the app's (service) behavior when accessing the "addition"
-        operation for "Matrix" resource.
+        """Handles the app's (service's) behavior when accessing the addition
+        operation for the ``Matrix`` resource.
 
         Returns
         -------
@@ -147,8 +147,8 @@ def create_app():
 
     @app.route("/multiply/Matrices", methods=["GET"])
     def multiply_matrices():
-        """Method which handles the app's (service) behavior when accessing the "multiplication"
-        operation for "Matrix" resource.
+        """Handles the app's (service's) behavior when accessing the multiplication
+        operation for the ``Matrix`` resource.
 
         Returns
         -------
@@ -162,12 +162,12 @@ def create_app():
         return response_body, 200
 
     class InvalidUsage(Exception):
-        """Server error class for the API REST Server.
+        """Provides the server error class for the API REST server.
 
         Parameters
         ----------
         Exception : class
-            The class from which it inherits
+            Class from which it inherits.
 
         Returns
         -------
@@ -191,17 +191,17 @@ def create_app():
 
     @app.errorhandler(InvalidUsage)
     def handle_invalid_usage(error):
-        """Handler for error messages to generate adequate HTTP response.
+        """Handles error messages for generating adequate HTTP responses.
 
         Parameters
         ----------
         error : InvalidUsage
-            The incoming error which has been raised
+            Incoming error that has been raised.
 
         Returns
         -------
         Response
-            The HTTP response with the error information and associated Status Code.
+            HTTP response with the error information and associated status code.
         """
 
         response = jsonify(error.to_dict())
@@ -213,19 +213,18 @@ def create_app():
     # =================================================================================================
 
     def __post_eigen_object(type):
-        """Private method in charge of inserting one of the possible binded objects of Eigen
-        (Vector, Matrix) into the server's DB.
+        """Inserts a possible binded object of Eigen (vector or matrix) into the server's database.
 
         Parameters
         ----------
         type : parameter
-            The type of object to be inserted into the DB. It has to be available within the
-            ALLOWED_TYPES tuple and it has to be a string.
+            Type of object to insert into the database. It has to be available within the
+            ``ALLOWED_TYPES`` tuple and to be a string.
 
         Returns
         -------
         str
-            JSON Formatted string which contains the ID of the recently inserted object.
+            JSON-formatted string that contains the ID of the recently inserted object.
 
         Raises
         ------
@@ -281,7 +280,7 @@ def create_app():
         db_conn.commit()
         id_in_db = cur.lastrowid
 
-        # Finally, announce that the object has been added to the DB and..-
+        # Announce that the object has been added to the DB and..-
         click.echo(
             str_type.capitalize()
             + " with id "
@@ -296,29 +295,28 @@ def create_app():
         return json.dumps({str_type: {"id": id_in_db}})
 
     def __ops_eigen_objects(type, ops):
-        """Private method in charge of performing a certain operation of the type of
-        objects provided.
+        """Handles performing a certain operation on the type of objects provided.
 
         Parameters
         ----------
         type : parameter
-            The type of object to be considered in the operation. It has to be available
-            within the ALLOWED_TYPES tuple and it has to be a string.
+            Type of object to consider in the operation. It has to be available
+            within the ``ALLOWED_TYPES`` tuple and to be a string.
         ops : parameter
-            The operation to be carried out. It has to be available within the ALLOWED_OPS
-            tuple and it has to be a string.
+            Operation to carry out. It has to be available within the ``ALLOWED_OPS``
+            tuple and to be a string.
 
         Returns
         -------
         str
-            JSON Formatted string which contains the result of the operation.
+            JSON-formatted string that contains the result of the operation.
 
         Raises
         ------
         InvalidUsage
             In case no JSON-format request body was provided.
         InvalidUsage
-            In case no 'id's are provided within the request body.
+            In case no IDs are provided within the request body.
         """
         # Check the arguments of this method
         str_type = __check_value(type, ALLOWED_TYPES)
@@ -327,7 +325,7 @@ def create_app():
         # Retrieve the body of the request silently
         body = request.get_json(silent=True)
 
-        # First check that the request content is in application/json format and
+        # Check that the request content is in application/json format and
         # that there are at least some contents within.
         if body is None:
             raise InvalidUsage(
@@ -338,7 +336,7 @@ def create_app():
         id1 = body.get("id1", None)
         id2 = body.get("id2", None)
 
-        # Check that the object IDs have been indeed provided in the request body
+        # Check that the object IDs have been provided in the request body
         if id1 is None or id2 is None:
             raise InvalidUsage(
                 "Arguments for "
@@ -355,22 +353,22 @@ def create_app():
         return json.dumps({str_type + "-" + str_ops: {"result": value}})
 
     def __check_value(value, allowed_values):
-        """Sanity-check method to ensure that the provided value is in the ALLOWED_* tuple
-        and it is a string.
+        """Check to ensure that the provided value is in the ``ALLOWED_*`` tuple
+        and that it is a string.
 
         Parameters
         ----------
         value : parameter
-            The value to be processed. It has to be available within the ALLOWED_* tuples
-            provided and it has to be a string.
+            Value to process. It has to be available within the ``ALLOWED_*`` tuples
+            provided and has to be a string.
 
         allowed_values : parameter
-            The ALLOWED_* tuple to be considered for evaluation.
+            ``ALLOWED_*`` tuple to consider for evaluation.
 
         Returns
         -------
         str
-            The value argument as a string object
+            Value argument as a string object.
 
         Raises
         ------
@@ -401,26 +399,26 @@ def create_app():
         return str_value
 
     def __perform_operation(str_type, str_ops, id1, id2):
-        """Private method for retrieving the data from the DB and performing a certain
+        """Retrieve the data from the database DB for performing a certain
         operation with the eigen-wrapper.
 
         Parameters
         ----------
         str_type : str
-            The type/nature of the objects involved in the operation (i.e. vector, matrix).
+            Type of the objects involved in the operation (vector or matrix).
         str_ops : str
-            The type of operation to be performed (i.e. addition, multiplication).
+            Type of operation to perform. For example, addition or multiplication.
         id1 : int
-            The DB identifier for the first object.
+            Dataase identifier for the first object.
         id2 : int
-            The DB identifier for the second object.
+            Database identifier for the second object.
 
         Returns
         -------
         double/List(double)
-            The result of the operation.
+            Result of the operation.
         """
-        # First, get the values from the DB given the ids (as strings)
+        # Get the values from the DB given the ids (as strings)
         db_conn = get_db()
         cur = db_conn.cursor()
         cur.execute(
@@ -428,13 +426,13 @@ def create_app():
             (id1, str_type.upper()),
         )
 
-        # Ensure that we have retrieved a value for ID1
+        # Ensure that a value is retrieved for ID1
         try:
             str_value1 = cur.fetchone()[0]
         except TypeError as error:
             click.echo(error)
             raise InvalidUsage(
-                "Unexpected error... No values in the DB for id "
+                "Unexpected error... No values in the database for ID "
                 + str(id1)
                 + " and type "
                 + str_type.capitalize()
@@ -446,13 +444,13 @@ def create_app():
             (id2, str_type.upper()),
         )
 
-        # Ensure that we have retrieved a value for ID2
+        # Ensure that a value is retrieved for ID2
         try:
             str_value2 = cur.fetchone()[0]
         except TypeError as error:
             click.echo(error)
             raise InvalidUsage(
-                "Unexpected error... No values in the DB for id "
+                "Unexpected error... No values in the database for ID "
                 + str(id2)
                 + " and type "
                 + str_type.capitalize()
@@ -477,17 +475,17 @@ def create_app():
             return None
 
     def __human_size(content_length: int):
-        """Method to show the size of the message in human-readable format.
+        """Show the size of the message in human-readable format.
 
         Parameters
         ----------
         content_length : int
-            The content length of the message.
+            Content length of the message.
 
         Returns
         -------
         str
-            The size of the message received in human-readable format.
+            Size of the message in human-readable format.
         """
         idx = 0
         while True:
@@ -498,7 +496,7 @@ def create_app():
                 break
 
         if idx >= len(HUMAN_SIZES):
-            raise InvalidUsage("Message content above TB level... Not handled!")
+            raise InvalidUsage("Message content above TB level... is not handled.")
 
         return str(content_length) + HUMAN_SIZES[idx]
 

@@ -10,8 +10,8 @@ class GRPCDemoStub(object):
     DEMO SERVICE for API Eigen Example
     ================================================================================
 
-    Interface exported by the server. Different to REST... we do not require to post
-    (i.e. store) in the end server the Objects of the interface (e.g. Vector, Matrix)
+    Interface exported by the server. Different from REST. You do not need to post
+    (store) in the end server the objects of the interface (such as Vector, Matrix).
     """
 
     def __init__(self, channel):
@@ -57,51 +57,51 @@ class GRPCDemoServicer(object):
     DEMO SERVICE for API Eigen Example
     ================================================================================
 
-    Interface exported by the server. Different to REST... we do not require to post
-    (i.e. store) in the end server the Objects of the interface (e.g. Vector, Matrix)
+    Interface exported by the server. Different from REST. You do not need to post
+    (store) in the end server the objects of the interface (such as Vector, Matrix).
     """
 
     def SayHello(self, request, context):
-        """Sends a greeting
+        """Send a greeting.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details('Method is not implemented.')
+        raise NotImplementedError('Method is not implemented.')
 
     def FlipVector(self, request_iterator, context):
-        """Flips a vector [A, B, C, D] --> [D, C, B, A]
+        """Flip a vector [A, B, C, D] --> [D, C, B, A].
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details('Method is not implemented.')
+        raise NotImplementedError('Method is not implemented.')
 
     def AddVectors(self, request_iterator, context):
-        """Adds two vectors
+        """Add two vectors.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details('Method is not implemented.')
+        raise NotImplementedError('Method is not implemented.')
 
     def MultiplyVectors(self, request_iterator, context):
-        """Vector dot product
+        """Multiple two vectors.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details('Method is not implemented.')
+        raise NotImplementedError('Method is not implemented.')
 
     def AddMatrices(self, request_iterator, context):
-        """Adds two matrices
+        """Adds two matrices.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details('Method not implemented.')
+        raise NotImplementedError('Method is not implemented.')
 
     def MultiplyMatrices(self, request_iterator, context):
-        """Multiplies two matrices
+        """Multiplies two matrices.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details('Method is not implemented.')
+        raise NotImplementedError('Method is not implemented.')
 
 
 def add_GRPCDemoServicer_to_server(servicer, server):
@@ -148,8 +148,8 @@ class GRPCDemo(object):
     DEMO SERVICE for API Eigen Example
     ================================================================================
 
-    Interface exported by the server. Different to REST... we do not require to post
-    (i.e. store) in the end server the Objects of the interface (e.g. Vector, Matrix)
+    Interface exported by the server. Different from REST. You do not need to post
+    (store) in the end server the objects of the interface (such as Vector, Matrix).
     """
 
     @staticmethod

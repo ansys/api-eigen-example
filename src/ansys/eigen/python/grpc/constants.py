@@ -1,4 +1,4 @@
-"""Python script for storing common constants for both gRPC server and client"""
+"""Python script for storing common constants for both gRPC server and client."""
 
 from math import floor
 from sys import getsizeof
@@ -6,7 +6,7 @@ from sys import getsizeof
 import numpy as np
 
 MAX_CHUNKSIZE = 1024 * 1024 * 3
-"""The maximum chunk size for transmitting in gRPC."""
+"""Maximum chunk size for transmitting in gRPC."""
 
 NP_DTYPE_TO_DATATYPE = {np.int32: "INTEGER", np.float64: "DOUBLE"}
 """Dictionary of constants showing the translation between the handled numpy dtypes and the gRPC DataType enum values."""
@@ -21,12 +21,12 @@ def human_size(content: object):
     Parameters
     ----------
     content : object
-        The content of the message.
+        Content of the message.
 
     Returns
     -------
     str
-        The size of the message received in human-readable format.
+        Size of the message received in human-readable format.
     """
     idx = 0
     content_length = getsizeof(content)

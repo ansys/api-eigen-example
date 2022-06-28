@@ -1,12 +1,13 @@
-# API Eigen example project
+# API Eigen Example project
 
-## IMPORTANT NOTE!!
+## IMPORTANT
 
 This repository is **for demonstration purposes only**. It is not intended to expose the
-Eigen Library as a service, nor is it expected to be used as a product. This demo is intended to be used for demonstrating
-the REST and gRPC protocols via client-server interaction, with interactive examples, documentation and resources.
+Eigen library as a service, nor is it expected to be used as a product. This demo is for demonstrating
+the REST and gRPC communication protocols via client-server interactions, with interactive examples,
+documentation, and resources.
 
-It provides a baseline (or guidelines) for future projects which may have to deal with API protocols such as REST and gRPC, in different languages,
+The repository provides a baseline (or guidelines) for future projects that have to deal with API protocols such as REST and gRPC, in different languages,
 with a higher level of complexity than a simple "Hello World" project.
 
 
@@ -27,61 +28,60 @@ with a higher level of complexity than a simple "Hello World" project.
 
 ## Introduction
 
-The API Eigen example package is a simple project which intends to show PyAnsys
-users and developers the differences existing between API REST communication protocol
-and the well-known gRPC protocol, extensively used through the PyAnsys community.
+The API Eigen Example package is a simple packing for showing PyAnsys
+users and developers the differences between the API REST communication protocol
+and the gRPC communication protocol that is used extensively in PyAnsys libraries.
 
 The main goal of this demo is to expose the [Eigen library](https://eigen.tuxfamily.org/index.php?title=Main_Page)
-to end users via a client-server interaction, which may be implemented using API REST or gRPC communication protocols.
+to end users via a client-server interaction that can be implemented using API REST
+or gRPC communication protocols.
 
-The server will expose certain functionalities of the Eigen Library, such as adding and
+The server exposes certain functionalities of the Eigen library, such as adding and
 multiplying ``Eigen::VectorXd`` and ``Eigen::MatrixXd`` objects. The computational operations are
-performed in the Eigen Library installed within the server and the results are returned to the
-end-user (or client). Thus, it is not necessary for the client to have the Eigen Library installed,
-for example.
+performed in the Eigen library installed within the server, and results are returned to the
+end user (or client). Thus, it is not necessary for the client to have the Eigen library installed.
 
-The client is intended to aid the end-users since it provides them with the tools for
+The client is intended to aid end users because it provides them with tools for
 communicating with the server without needing to know the specifics of the protocol implemented.
-However, feel free to interact directly by your own means with the server (e.g. API REST communication 
-can also be easily performed using CURL commands).
+However, you can use CURL commands to interact directly with the server via API REST communication.
 
 ## Documentation
 
-An automatically generated version of the project's documentation is published every night under the following [link](https://apieigen.docs.ansys.com/).
+An automatically generated version of the project's documentation is published every night at [link](https://apieigen.docs.ansys.com/).
+You can search the documentation for more specific information on the project itself.
 
-Please, feel free to search on it more specific documentation of the project itself.
+## Getting started with the Python packages
 
-## Getting Started with the Python packages
-
-To use the API Eigen Example Python project you do not need any specific requirements or
-additional software, apart from the ones to be installed via the requirements --all-files
+To use the API Eigen Example Python project in its Python version, you do not need any specific requirements or
+additional software, apart from the ones that are installed via the requirements ``--all-files``
 and a CMake version of the Eigen library.
 
 ### Installation
 
-First of all, it is necessary to install the Eigen library (and CMake if not present). For Ubuntu
-distributions it is as easy as running the following:
+First install the Eigen library (and CMake if it is not present). For Ubuntu distributions, it is as easy as running:
 
 ```
     sudo apt install cmake libeigen3-dev
 ```
 
-To install a local version of the API Eigen Example project, you need to clone the repository through
-GitHub (https://github.com/ansys/api-eigen-example). Other Ansys Python packages are also available
-here or through www.pypi.org. 
+To install a local version of the API Eigen Example project, clone the `repository <https://github.com/ansys/api-eigen-example>`_ through
+the Ansys GitHub Enterprise account:
 
 ```
     git clone https://github.com/ansys/api-eigen-example.git
 ```
 
-In case we wanted to use the Python versions of the API Eigen Example project, it is necessary
-that we first install the demo-eigen-wrapper (a wrapper to the Eigen library using pybind11).
+**Note**: 
+Other Ansys Python packages are available through the Ansys GitHub Enterprise account or
+through `PyPI <https://www.pypi.org>`_. 
+
+If you want to use Python versions of the API Eigen Example project, install the demo-eigen-wrapper, which is a wrapper to the Eigen library that uses pybind11:
 
 ```
     pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
 ```
 
-And finally, you can install the project by doing as follows:
+Finally, install the project with:
 
 ```
     pip install -r requirements/requirements_build.txt .
@@ -89,8 +89,8 @@ And finally, you can install the project by doing as follows:
 
 ### Starting to use it
 
-Once the API Eigen Example project has been installed, we can start to make use of the Python
-packages by importing them as follows
+Once the API Eigen Example project has been installed, start to make use of the Python
+packages by importing them:
 
 ```
     >>> import ansys.eigen.python.rest.server as rest_server
@@ -101,17 +101,17 @@ packages by importing them as follows
 
 ## Getting Started with the C++ packages
 To use the API Eigen Example C++ projects, the installation process is a bit more cumbersome.
-First of all, you would need to install the following packaged libraries: cmake.
+First install the packaged library ``cmake``:
 
 ```bash
     sudo apt install cmake
 ```
 
-Now depending on the C++ project, the dependencies may vary. Go into your sections of interest from the ones below!
+Depending on the C++ project, dependencies vary. Go to your sections of interest from those that follow.
 
-### Installing the C++ REST Server
+### Installing the C++ REST server
 
-Installing the C++ REST server manually is a very simple process. Just run the following command lines from
+Installing the C++ REST server manually is a simple process. Run the following commands from
 the root of the repository.
 
 ```bash
@@ -120,7 +120,7 @@ the root of the repository.
     conan install .. && cmake .. && cmake --build . && sudo make install
 ```
 
-You are ready to go with the C++ REST Server! Start writing your own C++ ``main.cpp`` file and
+Once dependencies are installed, you can use the C++ REST server. Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 ```cpp
@@ -135,44 +135,44 @@ include the project header files as follows:
     }
 ```
 
-For compiling, just link the library as follows:
+For compiling, link the library with:
 
 ```bash
     g++ -o myServer main.cpp -lapi_eigen_example_rest_server
 ```
 
-And run your server!
+You can run your server with:
 
 ```bash
     ./myServer
 ```
 
-### Installing the C++ REST Client
+### Installing the C++ REST client
 
-Installing the C++ REST client manually is a little bit more complex process. We will have to install some
-development libraries and compile (in place) some additional external libraries.
+Installing the C++ REST client manually is a bit more complex. You must install some
+development libraries and compile in place some additional external libraries.
 
-First, we need to install a ``dev`` version of ``libcurl``. Using an Ubuntu package manager as ``apt``, one should have to do as follows:
+First, install a ``dev`` version of ``libcurl``. Using the Ubuntu package manager ``apt``, you can run:
 
 ```bash
     sudo apt install libcurl4-openssl-dev
 ```
 
-Once we have ``libcurl-dev`` installed, we now have to compile some external projects. These external projects have been frozen at a given version
-within this repository and they can be found in the ``external`` folder. To install them, just follow the next steps:
+Once  ``libcurl-dev`` is installed, you must compile some external projects. These external projects have been frozen at a given version
+within this repository. You can find them in the ``external`` folder. To install them, run these commands:
 
 ```bash
     sudo apt update && sudo apt install libcurl4-openssl-dev && cd external/restclient-cpp-v0.5.2 && ./autogen.sh && ./configure && sudo make install && cd -
     sudo apt update && cd external/jsoncpp-v1.9.5/build && cmake -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp .. && sudo make install && cd - 
 ```
 
-Now, once we have all dependencies installed, we will build and install the client library!
+Once dependencies are installed, you can build and install the client library with:
 
 ```bash
     cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build . && sudo make install && cd -
 ```
 
-And that's it! You are ready to use the REST C++ Client library. Start writing your own C++ ``client.cpp`` file and
+You can now use the REST C++ client library. Start writing your own C++ ``client.cpp`` file and
 include the project header files as follows:
 
 ```cpp
@@ -198,13 +198,13 @@ include the project header files as follows:
    }
 ```
 
-For compiling, just link the library as follows:
+For compiling, link the library as follows:
 
 ```bash
     g++ -o myClientApp client.cpp -lapi_eigen_example_rest_client
 ```
 
-And run your client application!
+You can run your client app with:
 
 ```bash
     ./myClientApp
@@ -212,17 +212,17 @@ And run your client application!
 
 ### Installing the C++ gRPC Server
 
-Installing the C++ gRPC server manually is a very simple process. Just run the following command lines from
-the root of the repository. It will use the [conan](https://conan.io/) package manager to install its dependencies.
+Installing the C++ gRPC server manually is a simple process. To use the [conan](https://conan.io/) package manager
+to install dependencies, run the following command lines from the root of the repository:
 
 ```bash
     cd src/ansys/eigen/cpp/grpc/server/
     make compile && make install && ./deploy_dependencies.sh
 ```
 
-You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
+You might need to run the previous ``install`` and ``deploy`` commands with root privileges.
 
-Once installed, you are ready to go with the C++ gRPC server! Start writing your own C++ ``main.cpp`` file and
+Once dependencies are installed, you can use the C++ gRPC server. Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 ```cpp
@@ -237,13 +237,13 @@ include the project header files as follows:
     }
 ```
 
-For compiling, just link the library as follows:
+For compiling, link the library as follows:
 
 ```bash
     g++ -o myServer main.cpp -lapi_eigen_example_grpc_server
 ```
 
-And run your server!
+You can run your server with:
 
 ```bash
     ./myServer
@@ -251,17 +251,17 @@ And run your server!
 
 ### Installing the C++ gRPC Client
 
-Installing the C++ gRPC client manually is a very simple process. Just run the following command lines from
-the root of the repository. It will use the [conan](https://conan.io/) package manager to install its dependencies.
+Installing the C++ gRPC client manually is a simple process. To use the [conan](https://conan.io/) package manager
+to install its dependencies, run the following commands from the root of the repository:
 
 ```bash
     cd src/ansys/eigen/cpp/grpc/client/
     make compile && make install && ./deploy_dependencies.sh
 ```
 
-You may need to run the previous ``install`` and ``deploy`` related commands with root privileges.
+You might need to run the previous ``install`` and ``deploy`` commands with root privileges.
 
-Once installed, you are ready to go with the C++ gRPC client! Start writing your own C++ ``main.cpp`` file and
+Once dependencies are installed, you can use the C++ gRPC client. Start writing your own C++ ``main.cpp`` file and
 include the project header files as follows:
 
 ```cpp
@@ -296,13 +296,13 @@ include the project header files as follows:
     }
 ```
 
-For compiling, just link the library as follows:
+For compiling, link the library as follows:
 
 ```bash
     g++ -o myClientApp main.cpp -lapi_eigen_example_grpc_client
 ```
 
-And run your client!
+You can run your client with:
 
 ```bash
     ./myClientApp

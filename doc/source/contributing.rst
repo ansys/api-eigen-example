@@ -35,9 +35,9 @@ directory of the repository:
     cd doc
     make html
 
-After the build completes the HTML documentation is located in the
-``_builds/html`` directory and you can load the ``index.html`` into a web
-browser. To clean the documentation you can execute this command:
+After the build completes, the HTML documentation is located in the
+``_builds/html`` directory. You can load the ``index.html`` into a web
+browser. To clear the documentation directory, you can run:
 
 .. code::
 
@@ -51,18 +51,18 @@ submit questions, report bugs, and request new features.
 
 Code style
 ----------
-API Eigen Examples is compliant with `PyAnsys Development Code Style Guide
+API Eigen Examples is compliant with the `PyAnsys Development Code Style Guide
 <https://dev.docs.pyansys.com/coding_style/index.html>`_.  Code style is checked
 by making use of `pre-commit <https://pre-commit.com/>`_. Install this tool and
-activate it executing the following commands:
+activate it with:
 
 .. code::
 
    python -m pip install pre-commit
    pre-commit install
 
-Then, you can make used of the available configuration file ``.pre-commit-config.yml``,
-which will be automatically detected by pre-commit:
+Then, you can make use of the available configuration file ``.pre-commit-config.yml``,
+which is automatically detected by pre-commit:
 
 .. code::
 

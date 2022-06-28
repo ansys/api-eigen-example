@@ -3,7 +3,7 @@
 Python REST subpackage
 ======================
 
-This is the REST subpackage which contains the needed elements for client-server interaction using REST.
+The Python REST subpackage contains the needed elements for client-server interaction using REST.
 
 .. currentmodule:: ansys.eigen.python.rest
 

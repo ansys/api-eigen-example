@@ -3,7 +3,7 @@
 C++ REST subpackage
 ===================
 
-This is the REST subpackage which contains the needed elements for client-server interaction using REST.
+The C++ REST subpackage contains the needed elements for client-server interaction using REST.
 
 .. toctree::
    :maxdepth: 4
