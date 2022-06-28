@@ -236,7 +236,7 @@ class DemoGRPCClient:
                     last_idx_chunk.append(i * max_elems)
 
                 # Take into account that if there is a remainder, include
-                # one last partial vector or mMatrix message
+                # one last partial vector or matrix message
                 if remainder != 0:
                     last_idx_chunk.append(arg.size)
 
