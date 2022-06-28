@@ -65,7 +65,7 @@ First install the Eigen library (and CMake if it is not present). For Ubuntu dis
 ```
 
 To install a local version of the API Eigen Example project, clone the `repository <https://github.com/ansys/api-eigen-example>`_ through
-the Ansys GitHun Enterprise account:
+the Ansys GitHub Enterprise account:
 
 ```
     git clone https://github.com/ansys/api-eigen-example.git
@@ -75,8 +75,7 @@ the Ansys GitHun Enterprise account:
 Other Ansys Python packages are available through the Ansys GitHub Enterprise account or
 through `PyPI <https://www.pypi.org>`_. 
 
-If you want to use Python versions of the API Eigen Example project,install the demo-eigen-wrapper, which is a wrapper
-to the Eigen library that uses pybind11:
+If you want to use Python versions of the API Eigen Example project, install the demo-eigen-wrapper, which is a wrapper to the Eigen library that uses pybind11:
 
 ```
     pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
@@ -173,7 +172,7 @@ Once dependencies are installed, you can build and install the client library wi
     cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build . && sudo make install && cd -
 ```
 
-You can now use the REST C++ Client library. Start writing your own C++ ``client.cpp`` file and
+You can now use the REST C++ client library. Start writing your own C++ ``client.cpp`` file and
 include the project header files as follows:
 
 ```cpp
@@ -205,7 +204,7 @@ For compiling, link the library as follows:
     g++ -o myClientApp client.cpp -lapi_eigen_example_rest_client
 ```
 
-You can run your client appl with:
+You can run your client app with:
 
 ```bash
     ./myClientApp

@@ -16,7 +16,7 @@ tests for both protocols:
 * Multiplying two matrices of multiple sizes
 
 Graphs show the parametrized sizes for these benchmark tests. The graphs are basically a sequence of powers of 2 (that is,
-2, 4, 8, 16, and so on.). The final value is currently set to 128, but it is easily adaptable.
+2, 4, 8, 16, and so on). The final value is currently set to 2048, but it is easily adaptable.
 
 **********************
 Benchmark test results

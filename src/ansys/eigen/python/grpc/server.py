@@ -168,7 +168,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
         # Add all provided vectors using the Eigen library
         for vector in vector_list:
             # Casting is needed due to interface with Eigen library... Not the desired approach,
-            # but works. Ideally, wvectors should be passed directly, but errors appear
+            # but works. Ideally, vectors should be passed directly, but errors appear
             cast_vector = np.array(vector, dtype=dtype)
             result = demo_eigen_wrapper.add_vectors(result, cast_vector)
 

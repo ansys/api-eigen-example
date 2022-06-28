@@ -59,7 +59,7 @@ print("=========================")
 my_client_ba.get_connection_details()
 
 ###############################################################################
-# Now, perform a simple operation like adding two 1D numpy.ndarrays. First, start by defining them:
+# Now, perform a simple operation like adding two 1D numpy.ndarrays. Start by defining them:
 
 import numpy as np
 

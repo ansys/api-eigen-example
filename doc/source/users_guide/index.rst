@@ -17,7 +17,7 @@ additional Python packages:
 - REST package: ``ansys.eigen.python.rest``
 - gRPC package: ``ansys.eigen.python.grpc``
 
-Each of these additional packages contains two key modules for performing the demos: ``client``
+Each of these packages contains two key modules for performing the demos: ``client``
 and ``server``. This section is divided into REST and gRPC package subsections.
 
 ----------------------------------------

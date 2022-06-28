@@ -84,7 +84,7 @@ def create_app():
 
     @app.route("/add/Vectors", methods=["GET"])
     def add_vectors():
-        """Handles the app's (service;s) behavior when accessing the addition
+        """Handles the app's (service's) behavior when accessing the addition
         operation for the ``Vectors`` resource.
 
         Returns
@@ -363,7 +363,7 @@ def create_app():
             provided and has to be a string.
 
         allowed_values : parameter
-            ``ALLOWED_* tuple`` to consider for evaluation.
+            ``ALLOWED_*`` tuple to consider for evaluation.
 
         Returns
         -------
