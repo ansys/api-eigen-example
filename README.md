@@ -48,7 +48,7 @@ However, you can use CURL commands to interact directly with the server via API 
 ## Documentation
 
 An automatically generated version of the project's documentation is published every night at [link](https://apieigen.docs.ansys.com/).
-You can search the documenttion for more specific information on the project itself.
+You can search the documentation for more specific information on the project itself.
 
 ## Getting started with the Python packages
 
