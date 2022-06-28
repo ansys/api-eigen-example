@@ -161,12 +161,12 @@ def test_server_main_error_cases(testing_client):
     assert response.status_code == 400
     assert (
         json.loads(response.text)["message"]
-        == "Unexpected error... No values in the DB for id 0 and type Matrix."
+        == "Unexpected error... No values in the database for ID 0 and type Matrix."
     )
 
     response = testing_client.get("/add/Matrices", json={"id1": id_1, "id2": 0})
     assert response.status_code == 400
     assert (
         json.loads(response.text)["message"]
-        == "Unexpected error... No values in the DB for id 0 and type Matrix."
+        == "Unexpected error... No values in the database for ID 0 and type Matrix."
     )
