@@ -525,7 +525,7 @@ class GRPCDemoServicer(grpcdemo_pb2_grpc.GRPCDemoServicer):
                 for i in range(1, bulk_chunks + 1):
                     last_idx_chunk.append(i * max_elems)
 
-                # Take into account that if there is a remainder, 
+                # Take into account that if there is a remainder,
                 # include one last partial vector or matrix message.
                 if remainder != 0:
                     last_idx_chunk.append(arg.size)
