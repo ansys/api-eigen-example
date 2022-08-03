@@ -1,0 +1,609 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ansys.eigen.python.rest.client &#8212; API Eigen Example</title>
+    
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sg_gallery-rendered-html.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    
+        <link href="../../../../../_static/css/breadcrumbs.css" rel="stylesheet">
+    
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/thebelab-helper.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><style>
+    .navbar-light {
+        background-color: black !important;
+    }
+</style>
+
+<div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="https://www.ansys.com/">
+  <img src="../../../../../_static/ansys_logo_black_cropped.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" >
+      <i class="fas fa-bars" style="color:#fff; font-size:28px;"></i>
+    </span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../getting_started/index.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../users_guide/index.html">
+  User’s guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../api/index.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../docker/index.html">
+  Docker examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../examples/index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../benchmark/index.html">
+  Benchmark results
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../contributing.html">
+  Contributing
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ansys/api-eigen-example" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+    </nav>
+    
+    
+        <div class="container-xl">
+    <div class="row">
+        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+          
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+    
+        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
+    
+    
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">API Eigen Example</a> » </li>
+    
+
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">ansys.eigen.python.rest.client</a></li> 
+      </ul>
+    </div>
+        </div>
+  </div>
+</div>
+    
+
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for ansys.eigen.python.rest.client</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Python implementation of the REST API Eigen example client.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">_EXP_DTYPE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Expected dtype for numpy arrays.&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="DemoRESTClient"><a class="viewcode-back" href="../../../../../api/python-rest/client.html#ansys.eigen.python.rest.client.DemoRESTClient">[docs]</a><span class="k">class</span> <span class="nc">DemoRESTClient</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Acts as a client to the service provided by the API REST server of this same project.</span>
+<span class="sd">    This class has several public methods that allow for direct interaction with the server,</span>
+<span class="sd">    without having to care about the formatting of the RESTful queries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># =================================================================================================</span>
+    <span class="c1"># PUBLIC METHODS for Client operations</span>
+    <span class="c1"># =================================================================================================</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pwd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the client.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        host : str</span>
+<span class="sd">            Host (IP/DNS) where the destination server is located.</span>
+<span class="sd">        port : int</span>
+<span class="sd">            Port that is exposed by the destination server.</span>
+<span class="sd">        user : str, optional</span>
+<span class="sd">            Username to use in basic authentication. The default is ``None``.</span>
+<span class="sd">        pwd : str, optional</span>
+<span class="sd">            Password to use in basic authentication. The default is ``None``.</span>
+<span class="sd">        client : FlaskClient</span>
+<span class="sd">            Flask client, which is to be used only for testing purposes. The default is ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pwd</span> <span class="o">=</span> <span class="n">pwd</span>
+
+        <span class="c1"># Depending if we are testing or not... it may be needed to pass the</span>
+        <span class="c1"># FlaskClient directly...</span>
+        <span class="k">if</span> <span class="n">client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_test_client</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_test_client</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="DemoRESTClient.get_connection_details"><a class="viewcode-back" href="../../../../../api/python-rest/client.html#ansys.eigen.python.rest.client.DemoRESTClient.get_connection_details">[docs]</a>    <span class="k">def</span> <span class="nf">get_connection_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get a simple summary of the connection details.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Check that we are not using a test client</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_test_client</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using a test client. Unnecessary info.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># First, print the basic details of the connection</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Connection to host &quot;</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span>
+            <span class="o">+</span> <span class="s2">&quot; through port &quot;</span>
+            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot; for using the demo-eigen-wrapper package as a REST Service.&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Add, as well, credential details if available</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; User: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pwd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; Pwd: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pwd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DemoRESTClient.add"><a class="viewcode-back" href="../../../../../api/python-rest/client.html#ansys.eigen.python.rest.client.DemoRESTClient.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add two numpy.ndarrays using the Eigen library (C++), which is exposed via the destination RESTful server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg1 : numpy.ndarray</span>
+<span class="sd">            First numpy.ndarray to consider in the operation.</span>
+<span class="sd">        arg2 : numpy.ndarray</span>
+<span class="sd">            Second numpy.ndarray to consider in the operation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Sum of adding arg1 and arg2 (arg1 + arg2).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check that the provided arguments are inline with the handled parameters by our service</span>
+        <span class="n">arg_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_args</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+
+        <span class="c1"># Perform the server-related operations</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__perform_operation</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg_dim</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DemoRESTClient.subtract"><a class="viewcode-back" href="../../../../../api/python-rest/client.html#ansys.eigen.python.rest.client.DemoRESTClient.subtract">[docs]</a>    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Subtract two numpy.ndarrays using the Eigen library</span>
+<span class="sd">        (C++), which is exposed via the destination RESTful server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg1 : numpy.ndarray</span>
+<span class="sd">            First numpy.ndarray to consider in the operation.</span>
+<span class="sd">        arg2 : numpy.ndarray</span>
+<span class="sd">            Second numpy.ndarray to consider in the operation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            The result of subtracting arg2 from arg1 (arg1 - arg2).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check that the provided arguments are inline with the handled parameters by our service</span>
+        <span class="n">arg_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_args</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+
+        <span class="c1"># This operation is not even required to be implemented in the server side...</span>
+        <span class="c1"># Just negate arg2... and perform the server-related operations. Pretty easy!</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__perform_operation</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">negative</span><span class="p">(</span><span class="n">arg2</span><span class="p">),</span> <span class="n">arg_dim</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DemoRESTClient.multiply"><a class="viewcode-back" href="../../../../../api/python-rest/client.html#ansys.eigen.python.rest.client.DemoRESTClient.multiply">[docs]</a>    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Multiply two numpy.ndarrays using the Eigen library (C++), which is exposed via the destination RESTful server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg1 : numpy.ndarray</span>
+<span class="sd">            First numpy.ndarray to consider in the operation.</span>
+<span class="sd">        arg2 : numpy.ndarray</span>
+<span class="sd">            Second numpy.ndarray to consider in the operation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            The result of multiplyng arg1 and arg2 (arg1 * arg2).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check that the provided arguments are inline with the handled parameters by our service</span>
+        <span class="n">arg_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_args</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+
+        <span class="c1"># Perform the server-related operations</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__perform_operation</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg_dim</span><span class="p">,</span> <span class="s2">&quot;multiply&quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># =================================================================================================</span>
+    <span class="c1"># PRIVATE METHODS for Client operations</span>
+    <span class="c1"># =================================================================================================</span>
+
+    <span class="k">def</span> <span class="nf">__check_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check that provided arguments respect the expected inputs by the server. The goal of this</span>
+<span class="sd">        private method is to avoid destination server error-throw whenever possible.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg1 : numpy.ndarray</span>
+<span class="sd">            First numpy.ndarray to consider in the operation.</span>
+<span class="sd">        arg2 : numpy.ndarray</span>
+<span class="sd">            Second numpy.ndarray to consider in the operation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            Shape of the involved numpy.ndarrays.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the first argument (arg1) is not a numpy.ndarray of type numpy.float64.</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the second argument (arg1) is not a numpy.ndarray of type numpy.float64.</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the arguments have different shapes.</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the dimensions of the arguments are not handled by the destination server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Ensure that both arg1 and arg2 are np.ndarrays</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">arg1</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_EXP_DTYPE</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;First argument is not a numpy.ndarray of dtype numpy.float64. Check inputs.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">arg2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">arg2</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_EXP_DTYPE</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Second argument is not a numpy.ndarray of dtype numpy.float64. Check inputs.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check as well that both numpy.ndarrays are of the same shape</span>
+        <span class="k">if</span> <span class="n">arg1</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">arg2</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="n">arg_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Arguments have different shapes. Check inputs.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Return the dimension of the arguments (if it is of the handled types)</span>
+        <span class="k">if</span> <span class="n">arg_dim</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">arg_dim</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Only numpy.ndarrays of 1D (i.e. vectors) or 2D (i.e. matrices) are allowed. Check inputs.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__perform_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg_dim</span><span class="p">,</span> <span class="n">ops</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generalistic private method to handle operations with resources Vectors and Matrices of</span>
+<span class="sd">        the destination server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg1 : numpy.ndarray</span>
+<span class="sd">            First numpy.ndarray to consider in the operation.</span>
+<span class="sd">        arg2 : numpy.ndarray</span>
+<span class="sd">            Second numpy.ndarray to consider in the operation.</span>
+<span class="sd">        arg_dim : int</span>
+<span class="sd">            Shape of the involved numpy.ndarrays.</span>
+<span class="sd">        ops : str</span>
+<span class="sd">            Type of operation to carry out. For example, &quot;add&quot; or &quot;multiply&quot;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Tesult of the operation requested between arg1 and arg2.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># At this point we must check if we are dealing with a vector or a matrix...</span>
+        <span class="c1"># and proceed to perform the requested operation</span>
+        <span class="k">if</span> <span class="n">arg_dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">id1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__post_resource</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="s2">&quot;Vectors&quot;</span><span class="p">)</span>
+            <span class="n">id2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__post_resource</span><span class="p">(</span><span class="n">arg2</span><span class="p">,</span> <span class="s2">&quot;Vectors&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_ops_resource</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="s2">&quot;Vectors&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">id1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__post_resource</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="s2">&quot;Matrices&quot;</span><span class="p">)</span>
+            <span class="n">id2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__post_resource</span><span class="p">(</span><span class="n">arg2</span><span class="p">,</span> <span class="s2">&quot;Matrices&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_ops_resource</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="s2">&quot;Matrices&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__post_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generalistic private method to handle the posting of objects to the destination server.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg : numpy.ndarray</span>
+<span class="sd">            The numpy.ndarray to post to the destination server.</span>
+<span class="sd">        resource : str</span>
+<span class="sd">            Type of resource where the posting is to be performed.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            ID of the posted object.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the Client failed to connect to the destination server.</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the Client failed to post the argument to the destination server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Perform the post request</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_test_client</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span>
+                    <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">tolist</span><span class="p">()},</span>
+                    <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pwd</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                    <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span>
+                    <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">tolist</span><span class="p">()},</span>
+                    <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pwd</span><span class="p">),</span>
+                <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Could not connect to server... Check server status or connection details.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check that the status of the response is correct</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">201</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Client failed to post object in destination Server...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># If everything went well... extract the id of the posted object</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_val</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__get_ops_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;_summary_</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id1 : int</span>
+<span class="sd">            ID (in the destination server) of the first argument in the operation.</span>
+<span class="sd">        id2 : int</span>
+<span class="sd">            ID (in the destination server) of the second argument in the operation.</span>
+<span class="sd">        ops : str</span>
+<span class="sd">            Type of operation to perform.</span>
+<span class="sd">        resource : str</span>
+<span class="sd">            Type of resource involved in the operation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Result of the operation requested.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the Client failed to connect to the destination server.</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the Client failed to perform the operation in the destination server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Perform the get request</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_test_client</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">ops</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span>
+                    <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;id1&quot;</span><span class="p">:</span> <span class="n">id1</span><span class="p">,</span> <span class="s2">&quot;id2&quot;</span><span class="p">:</span> <span class="n">id2</span><span class="p">},</span>
+                    <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pwd</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">ops</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">resource</span><span class="p">,</span>
+                    <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;id1&quot;</span><span class="p">:</span> <span class="n">id1</span><span class="p">,</span> <span class="s2">&quot;id2&quot;</span><span class="p">:</span> <span class="n">id2</span><span class="p">},</span>
+                    <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pwd</span><span class="p">),</span>
+                <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Could not connect to server... Check server status or connection details.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check that the status of the response is correct</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Client failed to perform operation in destination Server...&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># If everything went well... extract the result of the operation</span>
+        <span class="n">result_aslist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_val</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="s2">&quot;result&quot;</span><span class="p">)</span>
+
+        <span class="c1"># From the JSON response, when parsed, the result will be considered as a simple</span>
+        <span class="c1"># Python object (double, list of doubles...). Convert it to a numpy.ndarray object</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result_aslist</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__get_val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_dict</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Private method to iterate recursively inside a multidict.</span>
+
+<span class="sd">        This method has been gratefully used from https://stackoverflow.com/a/66668504</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        search_dict : dict</span>
+<span class="sd">            Dictionary or multiple dictionaries to search.</span>
+<span class="sd">        key : str</span>
+<span class="sd">            Key to search for.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Any</span>
+<span class="sd">            Value of interest.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">search_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">elem</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">search_dict</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">search_dict</span><span class="p">[</span><span class="n">elem</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_val</span><span class="p">(</span><span class="n">search_dict</span><span class="p">[</span><span class="n">elem</span><span class="p">],</span> <span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">retval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">retval</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

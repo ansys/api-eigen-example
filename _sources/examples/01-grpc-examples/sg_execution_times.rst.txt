@@ -1,0 +1,12 @@
+
+:orphan:
+
+.. _sphx_glr_examples_01-grpc-examples_sg_execution_times:
+
+Computation times
+=================
+**00:00.024** total execution time for **examples_01-grpc-examples** files:
+
++-----------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_examples_01-grpc-examples_python_grpc_demo.py` (``python_grpc_demo.py``) | 00:00.024 | 0.0 MB |
++-----------------------------------------------------------------------------------------+-----------+--------+

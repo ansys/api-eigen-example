@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>API Eigen Example - gRPC Demo using Python &#8212; API Eigen Example</title>
+    
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    
+        <link href="../../_static/css/breadcrumbs.css" rel="stylesheet">
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Benchmark results" href="../../benchmark/index.html" />
+    <link rel="prev" title="API Eigen Example - REST Demo using Python" href="../00-rest-examples/python_rest_demo.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><style>
+    .navbar-light {
+        background-color: black !important;
+    }
+</style>
+
+<div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="https://www.ansys.com/">
+  <img src="../../_static/ansys_logo_black_cropped.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" >
+      <i class="fas fa-bars" style="color:#fff; font-size:28px;"></i>
+    </span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting_started/index.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../users_guide/index.html">
+  User’s guide
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../api/index.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../docker/index.html">
+  Docker examples
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../benchmark/index.html">
+  Benchmark results
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../contributing.html">
+  Contributing
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ansys/api-eigen-example" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+    </nav>
+    
+    
+        <div class="container-xl">
+    <div class="row">
+        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+          
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+    
+        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
+    
+    
+        <li class="nav-item nav-item-0"><a href="../../index.html">API Eigen Example</a> » </li>
+    
+
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Examples</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">API Eigen Example - gRPC Demo using Python</a></li> 
+      </ul>
+    </div>
+        </div>
+  </div>
+</div>
+    
+
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../00-rest-examples/python_rest_demo.html">
+   API Eigen Example - REST Demo using Python
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   API Eigen Example - gRPC Demo using Python
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-demogrpcclient">
+   The DemoGRPCClient
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#performing-grpc-interaction">
+   Performing gRPC interaction
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-01-grpc-examples-python-grpc-demo-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="api-eigen-example-grpc-demo-using-python">
+<span id="ref-grpc-demo-python"></span><span id="sphx-glr-examples-01-grpc-examples-python-grpc-demo-py"></span><h1>API Eigen Example - gRPC Demo using Python<a class="headerlink" href="#api-eigen-example-grpc-demo-using-python" title="Permalink to this headline">#</a></h1>
+<p>This tutorial shows how you can use the Python gRPC Client of the API Eigen Example
+project to communicate with the gRPC Server.</p>
+<p>In the following demo, we will be showing the basics of API gRPC protocol by means of a
+simple library we have created. This library basically contains two elements in its Python version:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>A server which basically implements an API gRPC interface to communicate with an installed library within</dt><dd><p>it, in our case the Eigen library. This API gRPC interface basically exposes certain functionalities such as
+adding, subtracting and multiplying <code class="docutils literal notranslate"><span class="pre">Eigen::VectorXd</span></code> and <code class="docutils literal notranslate"><span class="pre">Eigen::MatrixXd</span></code> in a simple way. By using Protobuf,
+we have created certain messages which both the server and the client know how to encode and decode.</p>
+</dd>
+</dl>
+</li>
+<li><p>A client in charge of easing the interaction with the server by means of API gRPC interface specific methods.</p></li>
+</ul>
+<p>In order to run this demo, it is necessary to deploy a server. When the docs are generated
+(via workflows), the server is deployed as a service to compile the example. However, if you
+are planning on running the example on your own, it is necessary to deploy it manually. In order to
+do so, please run this on a different Python terminal:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ansys.eigen.python.grpc.server</span> <span class="k">as</span> <span class="nn">grpc_server</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">grpc_server</span><span class="o">.</span><span class="n">serve</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now, once the server is up and running. Let us import our client!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ansys.eigen.python.grpc.client</span> <span class="kn">import</span> <span class="n">DemoGRPCClient</span>
+</pre></div>
+</div>
+<section id="the-demogrpcclient">
+<h2>The DemoGRPCClient<a class="headerlink" href="#the-demogrpcclient" title="Permalink to this headline">#</a></h2>
+<p>This <code class="docutils literal notranslate"><span class="pre">DemoGRPCClient</span></code> class is basically the one which will handle the API gRPC interface with the server,
+together with the connection itself, the formatting of the request and so on. When constructing the class we
+must provide as inputs the <code class="docutils literal notranslate"><span class="pre">ip</span></code> and the <code class="docutils literal notranslate"><span class="pre">port</span></code> of the server. For this demo we are running, since we
+already deployed the server (either manually or as a container), we will provide the following arguments:</p>
+<ul class="simple">
+<li><p>IP(or DNS): 127.0.0.1</p></li>
+<li><p>Port: 50051</p></li>
+</ul>
+<p>The server is exposed by <strong>IP 127.0.0.1</strong> and <strong>port 50051</strong> as per defined in the Dockerfile of the server and
+the server itself. Thus, the previous inputs should be provided, although they are also the default values. Nonetheless,
+in the IP field we could also provide the DNS for the sake of showing that DNS values are also accepted. In this case,
+by inserting <code class="docutils literal notranslate"><span class="pre">localhost</span></code> the connection would also be established.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=========================&quot;</span><span class="p">)</span>
+<span class="n">my_client</span> <span class="o">=</span> <span class="n">DemoGRPCClient</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">50051</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=========================&quot;</span><span class="p">)</span>
+<span class="n">my_client_dns</span> <span class="o">=</span> <span class="n">DemoGRPCClient</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">50051</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>=========================
+Connected to server at 127.0.0.1:50051
+=========================
+Connected to server at localhost:50051
+</pre></div>
+</div>
+<p>This <code class="docutils literal notranslate"><span class="pre">DemoGRPCClient</span></code> also has a method for verifying the connection to out client, which is a simple
+handshake/greeting, when we provide our name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=========================&quot;</span><span class="p">)</span>
+<span class="n">my_client</span><span class="o">.</span><span class="n">request_greeting</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>=========================
+The server answered: Hello, User!
+</pre></div>
+</div>
+<p>This will let us verify that the connection to the server is adequate and communication is favorable.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Now, we will proceed to perform a simple operation like adding two 1D numpy.ndarrays. First, let us start by defining them:</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_1</span></a> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">np</span><span class="o">.</span><span class="n">float64</span></a><span class="p">)</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_2</span></a> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">np</span><span class="o">.</span><span class="n">float64</span></a><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="performing-grpc-interaction">
+<h2>Performing gRPC interaction<a class="headerlink" href="#performing-grpc-interaction" title="Permalink to this headline">#</a></h2>
+<p>Now, we will call the client method <code class="docutils literal notranslate"><span class="pre">add_vectors(...)</span></code>, and we will explain the typical process of all interface methods (<code class="docutils literal notranslate"><span class="pre">add_XXXX(...)</span></code> and <code class="docutils literal notranslate"><span class="pre">multiply_XXXX(...)</span></code>):</p>
+<ul>
+<li><p>The client performs some sanity checks to confirm that the inputs provided are as expected. This Demo has some limitations such as: only 1D, 2D numpy.ndarrays are allowed; they must be of type float64. Direct interaction with the server (i.e. without a client) and using gRPC is out of the scope of this demo. Doing so could be considered as “impossible” since you would have to serialize your message on your own, following the standard defined in the proto files.</p></li>
+<li><dl>
+<dt>The client serializes the messages with the inputs provided using generator functions. Our end server is characterized for receiving <code class="docutils literal notranslate"><span class="pre">streams</span></code> of messages, which basically represent a list of messages. Each of these messages are serialized following the interface proposed by the proto files, thanks to the automatically generated source code by protobuf.</dt><dd><ul>
+<li><p>For example our <code class="docutils literal notranslate"><span class="pre">Vector</span></code> message is characterized for having the following structure:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">enum</span> <span class="pre">DataType</span> <span class="pre">{INTEGER</span> <span class="pre">=</span> <span class="pre">0;DOUBLE</span> <span class="pre">=</span> <span class="pre">1;}</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">message</span> <span class="pre">Vector</span> <span class="pre">{DataType</span> <span class="pre">data_type</span> <span class="pre">=</span> <span class="pre">1;</span> <span class="pre">int32</span> <span class="pre">vector_size</span> <span class="pre">=</span> <span class="pre">2;</span> <span class="pre">bytes</span> <span class="pre">vector_as_chunk</span> <span class="pre">=</span> <span class="pre">3;}</span></code></p>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>When the server receives the messages, it deserializes them and interprets each of the previous fields. Thus, it is easily converted into a numpy.ndarray of the adequate type. Then, the desired vectors to be added are passed to the Eigen library via our <code class="docutils literal notranslate"><span class="pre">demo_eigen_wrapper</span></code> for the resolution of the demanded operation.</p></li>
+<li><dl>
+<dt>Once the results of the operation are available, the server serializes the result and responds with the adequate message to the client.</dt><dd><ul>
+<li><p>For example, according to the proto file, our server receives a stream of Vector messages, and returns a single Vector message (which contains the result of the requested operation):</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">rpc</span> <span class="pre">AddVectors(stream</span> <span class="pre">Vector)</span> <span class="pre">returns</span> <span class="pre">(Vector)</span> <span class="pre">{}</span></code></p>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>The client then receives the response, deserializes the message and returns the corresponding result to the end-user as numpy.ndarray. Thus, the entire process is like a black-box for the end-user, and does not require to understand what is happening behind the scenes, since the end-user is only interested in the end-result.</p></li>
+</ul>
+<p>Let us now call the method!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Call the client to perform your desired operation</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_add</span></a> <span class="o">=</span> <span class="n">my_client</span><span class="o">.</span><span class="n">add_vectors</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_1</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_2</span></a><span class="p">)</span>
+
+<span class="c1"># Show the result!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector addition!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;================&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_add</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Vector addition!
+================
+[6. 6. 5. 4.]
+</pre></div>
+</div>
+<p>As mentioned before, there are several other methods implemented:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Call the client to perform your desired operation</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_flip</span></a> <span class="o">=</span> <span class="n">my_client</span><span class="o">.</span><span class="n">flip_vector</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_1</span></a><span class="p">)</span>
+
+<span class="c1"># Show the result!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector position-flip!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;====================&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_flip</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Vector position-flip!
+====================
+[4. 3. 2. 1.]
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Call the client to perform your desired operation</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_mul</span></a> <span class="o">=</span> <span class="n">my_client</span><span class="o">.</span><span class="n">multiply_vectors</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_1</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_2</span></a><span class="p">)</span>
+
+<span class="c1"># Show the result!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector dot product!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===================&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vec_mul</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Vector dot product!
+===================
+[19.]
+</pre></div>
+</div>
+<p>Let us show as well operations with 2D numpy.ndarrays (i.e. Matrices)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define your matrices</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_1</span></a> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">np</span><span class="o">.</span><span class="n">float64</span></a><span class="p">)</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_2</span></a> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">np</span><span class="o">.</span><span class="n">float64</span></a><span class="p">)</span>
+
+<span class="c1"># Call the client to perform your desired operation</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_add</span></a> <span class="o">=</span> <span class="n">my_client</span><span class="o">.</span><span class="n">add_matrices</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_1</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_2</span></a><span class="p">)</span>
+
+<span class="c1"># Show the result!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adding matrices!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;================&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_add</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Adding matrices!
+================
+[[6. 6.]
+ [5. 4.]]
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Call the client to perform your desired operation</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_mul</span></a> <span class="o">=</span> <span class="n">my_client</span><span class="o">.</span><span class="n">multiply_matrices</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_1</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_2</span></a><span class="p">)</span>
+
+<span class="c1"># Show the result!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Multiplying matrices!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=====================&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mat_mul</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Multiplying matrices!
+=====================
+[[ 9.  4.]
+ [23. 12.]]
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.024 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-grpc-examples-python-grpc-demo-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/dad6ac4f52d725b760de848f4f0b44da/python_grpc_demo.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">python_grpc_demo.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/967b100e19dcb771aaca8aa0990f760c/python_grpc_demo.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">python_grpc_demo.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,740 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C++ gRPC client module &#8212; API Eigen Example</title>
+    
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    
+        <link href="../../_static/css/breadcrumbs.css" rel="stylesheet">
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Docker examples" href="../../docker/index.html" />
+    <link rel="prev" title="C++ REST service module" href="service.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><style>
+    .navbar-light {
+        background-color: black !important;
+    }
+</style>
+
+<div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="https://www.ansys.com/">
+  <img src="../../_static/ansys_logo_black_cropped.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" >
+      <i class="fas fa-bars" style="color:#fff; font-size:28px;"></i>
+    </span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting_started/index.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../users_guide/index.html">
+  User’s guide
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../docker/index.html">
+  Docker examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../examples/index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../benchmark/index.html">
+  Benchmark results
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../contributing.html">
+  Contributing
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ansys/api-eigen-example" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+    </nav>
+    
+    
+        <div class="container-xl">
+    <div class="row">
+        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+          
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+    
+        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
+    
+    
+        <li class="nav-item nav-item-0"><a href="../../index.html">API Eigen Example</a> » </li>
+    
+
+          <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">C++ gRPC subpackage</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">C++ gRPC client module</a></li> 
+      </ul>
+    </div>
+        </div>
+  </div>
+</div>
+    
+
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python-rest/index.html">
+   Python REST subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/server.html">
+     Python REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/client.html">
+     Python REST client module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/restdb.html">
+     Python REST database module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python-grpc/index.html">
+   Python gRPC subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-grpc/server.html">
+     Python gRPC server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-grpc/client.html">
+     Python gRPC client module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cpp-rest/index.html">
+   C++ REST subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-rest/server.html">
+     C++ REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-rest/client.html">
+     C++ REST client module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-rest/restdb.html">
+     C++ REST database module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-rest/eigen.html">
+     C++ REST Eigen-binder module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   C++ gRPC subpackage
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="server.html">
+     C++ REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="service.html">
+     C++ REST service module
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     C++ gRPC client module
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="c-grpc-client-module">
+<span id="ref-cpp-grpc-client"></span><h1>C++ gRPC client module<a class="headerlink" href="#c-grpc-client-module" title="Permalink to this headline">#</a></h1>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6clientE">
+<span id="_CPPv3N5ansys4grpc6clientE"></span><span id="_CPPv2N5ansys4grpc6clientE"></span><span id="ansys::grpc::client"></span><span class="target" id="namespaceansys_1_1grpc_1_1client"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">client</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4grpc6clientE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Namespace including the API Eigen Example Client implemented in C++. </p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClientE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClientE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClientE"></span><span id="ansys::grpc::client::GRPCClient"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GRPCClient</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClientE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Class containing the basic functionalities to interact with the API Eigen Example server. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient10GRPCClientEKNSt6stringEKiKb">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient10GRPCClientEKNSt6stringEKiKb"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient10GRPCClientEKNSt6stringEKiKb"></span><span id="ansys::grpc::client::GRPCClient::GRPCClient__ssC.iC.bC"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1aeccb94b17fcc62ac52f911473ac5760f"></span><span class="sig-name descname"><span class="n"><span class="pre">GRPCClient</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">host</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">{</span></span><span class="s"><span class="pre">&quot;0.0.0.0&quot;</span></span><span class="p"><span class="pre">}</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">port</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">50000</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">debug_log</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient10GRPCClientEKNSt6stringEKiKb" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Construct a new GRPC Client object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> – the host (DNS/IP) where the server is located. Default: 0.0.0.0. </p></li>
+<li><p><strong>port</strong> – the port through which the server is exposed. Default: 50000. </p></li>
+<li><p><strong>debug_log</strong> – whether to show the enhanced debugging logs or not. Default: false. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClientD0Ev">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClientD0Ev"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClientD0Ev"></span><span id="ansys::grpc::client::GRPCClient::~GRPCClient"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a7587062de74659bccea066042fb787bc"></span><span class="sig-name descname"><span class="n"><span class="pre">~GRPCClient</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClientD0Ev" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Destroy the GRPC Client object. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient16request_greetingERKNSt6stringE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient16request_greetingERKNSt6stringE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient16request_greetingERKNSt6stringE"></span><span id="ansys::grpc::client::GRPCClient::request_greeting__ssCR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a721378e59ba4fb185c15144b44d117bb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">request_greeting</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient16request_greetingERKNSt6stringE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method to request a greeting from the endpoint server. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – the name of the entity requesting the greeting (i.e. us). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient11flip_vectorERKNSt6vectorIdEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient11flip_vectorERKNSt6vectorIdEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient11flip_vectorERKNSt6vectorIdEE"></span><span id="ansys::grpc::client::GRPCClient::flip_vector__std::vector:double:CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a26eb19d10f8d305e3e836248bcfe0ff0"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flip_vector</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient11flip_vectorERKNSt6vectorIdEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of requesting a vector position flip to the endpoint server. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vec</strong> – the first vector involved in the operation. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;double&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient11add_vectorsERKNSt6vectorIdEERKNSt6vectorIdEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient11add_vectorsERKNSt6vectorIdEERKNSt6vectorIdEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient11add_vectorsERKNSt6vectorIdEERKNSt6vectorIdEE"></span><span id="ansys::grpc::client::GRPCClient::add_vectors__std::vector:double:CR.std::vector:double:CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a5568cc95b5ada23160fca053b8295f07"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">add_vectors</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec1</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient11add_vectorsERKNSt6vectorIdEERKNSt6vectorIdEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of requesting a vector addition to the endpoint server. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vec1</strong> – the first vector involved in the operation. </p></li>
+<li><p><strong>vec2</strong> – the second vector involved in the operation. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;double&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient16multiply_vectorsERKNSt6vectorIdEERKNSt6vectorIdEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient16multiply_vectorsERKNSt6vectorIdEERKNSt6vectorIdEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient16multiply_vectorsERKNSt6vectorIdEERKNSt6vectorIdEE"></span><span id="ansys::grpc::client::GRPCClient::multiply_vectors__std::vector:double:CR.std::vector:double:CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a6245e001a03b46657b2bf2f4946e4703"></span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">multiply_vectors</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec1</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient16multiply_vectorsERKNSt6vectorIdEERKNSt6vectorIdEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of requesting a vector dot product to the endpoint server. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vec1</strong> – the first vector involved in the operation. </p></li>
+<li><p><strong>vec2</strong> – the second vector involved in the operation. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>double </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient12add_matricesERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient12add_matricesERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient12add_matricesERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE"></span><span id="ansys::grpc::client::GRPCClient::add_matrices__std::vector:std::vector:double::CR.std::vector:std::vector:double::CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a9217867394c057a79df2befec9b8fff2"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">add_matrices</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mat1</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mat2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient12add_matricesERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of requesting a matrix addition to the endpoint server. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mat1</strong> – the first matrix involved in the operation. </p></li>
+<li><p><strong>mat2</strong> – the second matrix involved in the operation. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;std::vector&lt;double&gt;&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient17multiply_matricesERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient17multiply_matricesERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient17multiply_matricesERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE"></span><span id="ansys::grpc::client::GRPCClient::multiply_matrices__std::vector:std::vector:double::CR.std::vector:std::vector:double::CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1aa54d70d7e1c6040749c8faea1b0f6acd"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">multiply_matrices</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mat1</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mat2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient17multiply_matricesERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of requesting a matrix multiplication to the endpoint server. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mat1</strong> – the first matrix involved in the operation. </p></li>
+<li><p><strong>mat2</strong> – the second matrix involved in the operation. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;std::vector&lt;double&gt;&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient25define_vecstream_metadataEPN4grpc13ClientContextERKNSt6vectorIdEERKNSt6vectorIdEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient25define_vecstream_metadataEPN4grpc13ClientContextERKNSt6vectorIdEERKNSt6vectorIdEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient25define_vecstream_metadataEPN4grpc13ClientContextERKNSt6vectorIdEERKNSt6vectorIdEE"></span><span id="ansys::grpc::client::GRPCClient::define_vecstream_metadata__grpc::ClientContextP.std::vector:double:CR.std::vector:double:CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1abf15cabaf90e57f6f04ac79fa4b92abf"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">define_vecstream_metadata</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientContext</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">context</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec1</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec2</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="p"><span class="pre">}</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient25define_vecstream_metadataEPN4grpc13ClientContextERKNSt6vectorIdEERKNSt6vectorIdEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of defining the Client Metadata in the bidirectional stream transfer of Vector messages. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – the gRPC context. </p></li>
+<li><p><strong>vec1</strong> – the vector to be transmitted. </p></li>
+<li><p><strong>vec2</strong> – (optional) the second vector to be transmitted. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;std::vector&lt;int&gt;&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient19set_vector_metadataEPN4grpc13ClientContextERKNSt6vectorIdEERKNSt6stringE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient19set_vector_metadataEPN4grpc13ClientContextERKNSt6vectorIdEERKNSt6stringE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient19set_vector_metadataEPN4grpc13ClientContextERKNSt6vectorIdEERKNSt6stringE"></span><span id="ansys::grpc::client::GRPCClient::set_vector_metadata__grpc::ClientContextP.std::vector:double:CR.ssCR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1ab0e6a1c9a600eea7922f6e61bc7851af"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_vector_metadata</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientContext</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">context</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec_name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient19set_vector_metadataEPN4grpc13ClientContextERKNSt6vectorIdEERKNSt6stringE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Set the Vector-specific message metadata (i.e. how many partial Vector messages constitute an entire Vector). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – the gRPC context. </p></li>
+<li><p><strong>vec</strong> – the vector to be transmitted. </p></li>
+<li><p><strong>vec_name</strong> – the identifier of the vector. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;int&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient25define_matstream_metadataEPN4grpc13ClientContextERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient25define_matstream_metadataEPN4grpc13ClientContextERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient25define_matstream_metadataEPN4grpc13ClientContextERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE"></span><span id="ansys::grpc::client::GRPCClient::define_matstream_metadata__grpc::ClientContextP.std::vector:std::vector:double::CR.std::vector:std::vector:double::CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a029c847410461f5a127279099c662f3d"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">define_matstream_metadata</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientContext</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">context</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mat1</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mat2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient25define_matstream_metadataEPN4grpc13ClientContextERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorINSt6vectorIdEEEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of defining the Client Metadata in the bidirectional stream transfer of Matrix messages. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – the gRPC context. </p></li>
+<li><p><strong>mat1</strong> – the first matrix to be transmitted. </p></li>
+<li><p><strong>mat2</strong> – the second matrix to be transmitted. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;std::vector&lt;int&gt;&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient19set_matrix_metadataEPN4grpc13ClientContextERKNSt6vectorINSt6vectorIdEEEERKNSt6stringE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient19set_matrix_metadataEPN4grpc13ClientContextERKNSt6vectorINSt6vectorIdEEEERKNSt6stringE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient19set_matrix_metadataEPN4grpc13ClientContextERKNSt6vectorINSt6vectorIdEEEERKNSt6stringE"></span><span id="ansys::grpc::client::GRPCClient::set_matrix_metadata__grpc::ClientContextP.std::vector:std::vector:double::CR.ssCR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a61138a565b6e1ccc6edd224e253fc5c3"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_matrix_metadata</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientContext</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">context</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mat</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">mat_name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient19set_matrix_metadataEPN4grpc13ClientContextERKNSt6vectorINSt6vectorIdEEEERKNSt6stringE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Set the Matrix-specific message metadata (i.e. how many partial Matrix messages constitute an entire Matrix). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> – the gRPC context. </p></li>
+<li><p><strong>mat</strong> – the matrix to be transmitted. </p></li>
+<li><p><strong>mat_name</strong> – the identifier of the matrix. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;int&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient18deserialize_vectorERKNSt6stringEKiN8grpcdemo8DataTypeE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient18deserialize_vectorERKNSt6stringEKiN8grpcdemo8DataTypeE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient18deserialize_vectorERKNSt6stringEKiN8grpcdemo8DataTypeE"></span><span id="ansys::grpc::client::GRPCClient::deserialize_vector__ssCR.iC.grpcdemo::DataType"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1ab6fae2a7390d9175272d60db2b5595fd"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">deserialize_vector</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bytes</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span>, <span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">DataType</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient18deserialize_vectorERKNSt6stringEKiN8grpcdemo8DataTypeE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method used to deserialize a Vector message into an std::vector&lt;double&gt; object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bytes</strong> – the chunk of bytes from where the vector is deserialized. </p></li>
+<li><p><strong>length</strong> – the length of the vector we are deserializing. </p></li>
+<li><p><strong>type</strong> – the type of data inside the vector (e.g. double, int…). </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;double&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient16serialize_vectorERKNSt6vectorIdEEKiKi">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient16serialize_vectorERKNSt6vectorIdEEKiKi"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient16serialize_vectorERKNSt6vectorIdEEKiKi"></span><span id="ansys::grpc::client::GRPCClient::serialize_vector__std::vector:double:CR.iC.iC"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a0da6ca7c3fcf91cac5d980a6ba07f7f6"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">serialize_vector</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vector</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">start</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">end</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient16serialize_vectorERKNSt6vectorIdEEKiKi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method used to serialize an std::vector&lt;double&gt; object into a Vector message. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vector</strong> – the std::vector&lt;double&gt; to be serialized. </p></li>
+<li><p><strong>start</strong> – the starting index to serialize. </p></li>
+<li><p><strong>end</strong> – the last index to serialize (not included). </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient18deserialize_matrixERKNSt6stringEKiKiN8grpcdemo8DataTypeE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient18deserialize_matrixERKNSt6stringEKiKiN8grpcdemo8DataTypeE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient18deserialize_matrixERKNSt6stringEKiKiN8grpcdemo8DataTypeE"></span><span id="ansys::grpc::client::GRPCClient::deserialize_matrix__ssCR.iC.iC.grpcdemo::DataType"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1aa995cca565fb3577fa82fd61cf8e0b3b"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">deserialize_matrix</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bytes</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">rows</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">cols</span></span>, <span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">DataType</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient18deserialize_matrixERKNSt6stringEKiKiN8grpcdemo8DataTypeE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method used to deserialize a Matrix message into an std::vector&lt;std::vector&lt;double&gt;&gt; object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bytes</strong> – the chunk of bytes from where the matrix is deserialized. </p></li>
+<li><p><strong>rows</strong> – the number of rows of the matrix we are deserializing. </p></li>
+<li><p><strong>cols</strong> – the number of columns of the matrix we are deserializing. </p></li>
+<li><p><strong>type</strong> – the type of data inside the matrix (e.g. double, int…). </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;std::vector&lt;double&gt;&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient16serialize_matrixERKNSt6vectorINSt6vectorIdEEEEKiKi">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient16serialize_matrixERKNSt6vectorINSt6vectorIdEEEEKiKi"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient16serialize_matrixERKNSt6vectorINSt6vectorIdEEEEKiKi"></span><span id="ansys::grpc::client::GRPCClient::serialize_matrix__std::vector:std::vector:double::CR.iC.iC"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a1c13c395702c3704bf061c2644d64c51"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">serialize_matrix</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">matrix</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">start</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">end</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient16serialize_matrixERKNSt6vectorINSt6vectorIdEEEEKiKi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method used to serialize an std::vector&lt;std::vector&lt;double&gt;&gt; object into a Matrix message. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> – the std::vector&lt;std::vector&lt;double&gt;&gt; to be serialized. </p></li>
+<li><p><strong>start</strong> – the starting row index to serialize. </p></li>
+<li><p><strong>end</strong> – the last row index to serialize (not included). </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient11send_vectorERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6VectorEN8grpcdemo6VectorEEEEERKNSt6vectorIdEERKNSt6vectorIiEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient11send_vectorERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6VectorEN8grpcdemo6VectorEEEEERKNSt6vectorIdEERKNSt6vectorIiEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient11send_vectorERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6VectorEN8grpcdemo6VectorEEEEERKNSt6vectorIdEERKNSt6vectorIiEE"></span><span id="ansys::grpc::client::GRPCClient::send_vector__std::unique_ptr:grpc::ClientReaderWriter:grpcdemo::Vector.grpcdemo::Vector::R.std::vector:double:CR.std::vector:i:CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1abf116df83e155a21f7dbc500a0d86693"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">send_vector</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unique_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientReaderWriter</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">reader_writer</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vector</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">chunks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient11send_vectorERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6VectorEN8grpcdemo6VectorEEEEERKNSt6vectorIdEERKNSt6vectorIiEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of sending a message for stream-based inputs in RPC method. Targeted to Vector messages. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reader_writer</strong> – the writer used for streaming the messages. </p></li>
+<li><p><strong>vector</strong> – the message to be streamed. </p></li>
+<li><p><strong>chunks</strong> – number of elements in each individual Vector message. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient11send_matrixERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6MatrixEN8grpcdemo6MatrixEEEEERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorIiEE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient11send_matrixERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6MatrixEN8grpcdemo6MatrixEEEEERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorIiEE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient11send_matrixERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6MatrixEN8grpcdemo6MatrixEEEEERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorIiEE"></span><span id="ansys::grpc::client::GRPCClient::send_matrix__std::unique_ptr:grpc::ClientReaderWriter:grpcdemo::Matrix.grpcdemo::Matrix::R.std::vector:std::vector:double::CR.std::vector:i:CR"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1ad26f166adc6ec3052ba5796da6a1998b"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">send_matrix</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unique_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientReaderWriter</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Matrix</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Matrix</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">reader_writer</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">matrix</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">int</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">chunks</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient11send_matrixERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6MatrixEN8grpcdemo6MatrixEEEEERKNSt6vectorINSt6vectorIdEEEERKNSt6vectorIiEE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of sending a message for stream-based inputs in RPC method. Targeted to Matrix messages. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reader_writer</strong> – the writer used for streaming the messages. </p></li>
+<li><p><strong>matrix</strong> – the message to be streamed. </p></li>
+<li><p><strong>chunks</strong> – number of elements in each individual Vector message. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient14receive_vectorERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6VectorEN8grpcdemo6VectorEEEEEPN4grpc13ClientContextE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient14receive_vectorERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6VectorEN8grpcdemo6VectorEEEEEPN4grpc13ClientContextE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient14receive_vectorERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6VectorEN8grpcdemo6VectorEEEEEPN4grpc13ClientContextE"></span><span id="ansys::grpc::client::GRPCClient::receive_vector__std::unique_ptr:grpc::ClientReaderWriter:grpcdemo::Vector.grpcdemo::Vector::R.grpc::ClientContextP"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a6481fec9315261c8f8cd592f62fb3901"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">receive_vector</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unique_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientReaderWriter</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Vector</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">reader_writer</span></span>, <span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientContext</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">context</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient14receive_vectorERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6VectorEN8grpcdemo6VectorEEEEEPN4grpc13ClientContextE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of providing the resulting Vector of an operation requested to the server from a stream of partial Vector messages. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reader_writer</strong> – the gRPC reader-writer in the bidirectional stream protocol. </p></li>
+<li><p><strong>context</strong> – the gRPC context. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;double&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient14receive_matrixERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6MatrixEN8grpcdemo6MatrixEEEEEPN4grpc13ClientContextE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient14receive_matrixERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6MatrixEN8grpcdemo6MatrixEEEEEPN4grpc13ClientContextE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient14receive_matrixERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6MatrixEN8grpcdemo6MatrixEEEEEPN4grpc13ClientContextE"></span><span id="ansys::grpc::client::GRPCClient::receive_matrix__std::unique_ptr:grpc::ClientReaderWriter:grpcdemo::Matrix.grpcdemo::Matrix::R.grpc::ClientContextP"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1acfe20fc69d88d2e8dda937761d85a14d"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">receive_matrix</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unique_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientReaderWriter</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Matrix</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Matrix</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">reader_writer</span></span>, <span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">grpc</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ClientContext</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">context</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient14receive_matrixERNSt10unique_ptrIN4grpc18ClientReaderWriterIN8grpcdemo6MatrixEN8grpcdemo6MatrixEEEEEPN4grpc13ClientContextE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of providing the resulting Matrix of an operation requested to the server from a stream of partial Matrix messages. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reader_writer</strong> – the gRPC reader-writer in the bidirectional stream protocol. </p></li>
+<li><p><strong>context</strong> – the gRPC context. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::vector&lt;std::vector&lt;double&gt;&gt; </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient5_stubE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient5_stubE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient5_stubE"></span><span id="ansys::grpc::client::GRPCClient::_stub__std::unique_ptr:grpcdemo::GRPCDemo::Stub:"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a54599240473ea1aec9fbdd80dcce1209"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">unique_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">grpcdemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">GRPCDemo</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Stub</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_stub</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient5_stubE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>A unique pointer to the stub which defines the gRPC connection (Channel). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4grpc6client10GRPCClient10_debug_logE">
+<span id="_CPPv3N5ansys4grpc6client10GRPCClient10_debug_logE"></span><span id="_CPPv2N5ansys4grpc6client10GRPCClient10_debug_logE"></span><span id="ansys::grpc::client::GRPCClient::_debug_log__b"></span><span class="target" id="classansys_1_1grpc_1_1client_1_1GRPCClient_1a90455fb7ba371913b317e6072b129233"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_debug_log</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4grpc6client10GRPCClient10_debug_logE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Boolean indicating whether to show the debugging logs or not. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

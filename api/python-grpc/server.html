@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Python gRPC server module &#8212; API Eigen Example</title>
+    
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    
+        <link href="../../_static/css/breadcrumbs.css" rel="stylesheet">
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Python gRPC client module" href="client.html" />
+    <link rel="prev" title="Python gRPC subpackage" href="index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><style>
+    .navbar-light {
+        background-color: black !important;
+    }
+</style>
+
+<div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="https://www.ansys.com/">
+  <img src="../../_static/ansys_logo_black_cropped.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" >
+      <i class="fas fa-bars" style="color:#fff; font-size:28px;"></i>
+    </span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting_started/index.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../users_guide/index.html">
+  User’s guide
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../docker/index.html">
+  Docker examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../examples/index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../benchmark/index.html">
+  Benchmark results
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../contributing.html">
+  Contributing
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ansys/api-eigen-example" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+    </nav>
+    
+    
+        <div class="container-xl">
+    <div class="row">
+        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+          
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+    
+        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
+    
+    
+        <li class="nav-item nav-item-0"><a href="../../index.html">API Eigen Example</a> » </li>
+    
+
+          <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Python gRPC subpackage</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">Python gRPC server module</a></li> 
+      </ul>
+    </div>
+        </div>
+  </div>
+</div>
+    
+
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python-rest/index.html">
+   Python REST subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/server.html">
+     Python REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/client.html">
+     Python REST client module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/restdb.html">
+     Python REST database module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   Python gRPC subpackage
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Python gRPC server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="client.html">
+     Python gRPC client module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cpp-rest/index.html">
+   C++ REST subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-rest/server.html">
+     C++ REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-rest/client.html">
+     C++ REST client module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-rest/restdb.html">
+     C++ REST database module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-rest/eigen.html">
+     C++ REST Eigen-binder module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cpp-grpc/index.html">
+   C++ gRPC subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/server.html">
+     C++ REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/service.html">
+     C++ REST service module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/client.html">
+     C++ gRPC client module
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="module-ansys.eigen.python.grpc.server">
+<span id="python-grpc-server-module"></span><span id="ref-python-grpc-server"></span><h1>Python gRPC server module<a class="headerlink" href="#module-ansys.eigen.python.grpc.server" title="Permalink to this headline">#</a></h1>
+<p>Python implementation of the gRPC API Eigen example server.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.GRPCDemoServicer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ansys.eigen.python.grpc.server.</span></span><span class="sig-name descname"><span class="pre">GRPCDemoServicer</span></span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#GRPCDemoServicer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.GRPCDemoServicer" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ansys.eigen.python.grpc.generated.grpcdemo_pb2_grpc.GRPCDemoServicer</span></code></p>
+<p>Provides methods that implement functionality of the API Eigen Example server.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.GRPCDemoServicer.AddMatrices">
+<span class="sig-name descname"><span class="pre">AddMatrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_iterator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#GRPCDemoServicer.AddMatrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.GRPCDemoServicer.AddMatrices" title="Permalink to this definition">#</a></dt>
+<dd><p>Add matrices.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_iterator</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterator</span></code></span></dt><dd><p>Iterator to the stream of matrix messages provided.</p>
+</dd>
+<dt><strong>context</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpc.ServicerContext</span></code></span></dt><dd><p>gRPC-specific information.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpcdemo_pb2.Matrix</span></code></dt><dd><p>Matrix message.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.GRPCDemoServicer.AddVectors">
+<span class="sig-name descname"><span class="pre">AddVectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_iterator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#GRPCDemoServicer.AddVectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.GRPCDemoServicer.AddVectors" title="Permalink to this definition">#</a></dt>
+<dd><p>Add vectors.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_iterator</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterator</span></code></span></dt><dd><p>Iterator to the stream of vector messages provided.</p>
+</dd>
+<dt><strong>context</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpc.ServicerContext</span></code></span></dt><dd><p>gRPC-specific information.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpcdemo_pb2.Vector</span></code></dt><dd><p>Vector message.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.GRPCDemoServicer.FlipVector">
+<span class="sig-name descname"><span class="pre">FlipVector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_iterator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#GRPCDemoServicer.FlipVector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.GRPCDemoServicer.FlipVector" title="Permalink to this definition">#</a></dt>
+<dd><p>Flip a given vector.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_iterator</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterator</span></code></span></dt><dd><p>Iterator to the stream of vector messages provided.</p>
+</dd>
+<dt><strong>context</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpc.ServicerContext</span></code></span></dt><dd><p>gRPC-specific information.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpcdemo_pb2.Vector</span></code></dt><dd><p>Flipped vector message.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.GRPCDemoServicer.MultiplyMatrices">
+<span class="sig-name descname"><span class="pre">MultiplyMatrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_iterator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#GRPCDemoServicer.MultiplyMatrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.GRPCDemoServicer.MultiplyMatrices" title="Permalink to this definition">#</a></dt>
+<dd><p>Multiply two matrices.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_iterator</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterator</span></code></span></dt><dd><p>Iterator to the stream of Matrix messages provided.</p>
+</dd>
+<dt><strong>context</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpc.ServicerContext</span></code></span></dt><dd><p>gRPC-specific information.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpcdemo_pb2.Matrix</span></code></dt><dd><p>Matrix message.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.GRPCDemoServicer.MultiplyVectors">
+<span class="sig-name descname"><span class="pre">MultiplyVectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_iterator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#GRPCDemoServicer.MultiplyVectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.GRPCDemoServicer.MultiplyVectors" title="Permalink to this definition">#</a></dt>
+<dd><p>Multiply two vectors.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_iterator</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iterator</span></code></span></dt><dd><p>Iterator to the stream of vector messages provided.</p>
+</dd>
+<dt><strong>context</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpc.ServicerContext</span></code></span></dt><dd><p>gRPC-specific information.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpcdemo_pb2.Vector</span></code></dt><dd><p>Vector message.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.GRPCDemoServicer.SayHello">
+<span class="sig-name descname"><span class="pre">SayHello</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#GRPCDemoServicer.SayHello"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.GRPCDemoServicer.SayHello" title="Permalink to this definition">#</a></dt>
+<dd><p>Test the greeter method to see if the server is up and running correctly.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HelloRequest</span></code></span></dt><dd><p>Greeting request sent by the client.</p>
+</dd>
+<dt><strong>context</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpc.ServicerContext</span></code></span></dt><dd><p>gRPC-specific information.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">grpcdemo_pb2.HelloReply</span></code></dt><dd><p>Reply to greeting by the server.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.check_data_type">
+<span class="sig-prename descclassname"><span class="pre">ansys.eigen.python.grpc.server.</span></span><span class="sig-name descname"><span class="pre">check_data_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_dtype</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#check_data_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.check_data_type" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if the new data type is the same as the previous data type.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>dtype</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.type</span></code></span></dt><dd><p>Type of the numpy array before processing.</p>
+</dd>
+<dt><strong>new_dtype</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.type</span></code></span></dt><dd><p>Type of the numpy array to be processed.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.type</span></code></dt><dd><p>Type of the numpy array.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#RuntimeError" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeError</span></code></a></dt><dd><p>In case there is already a type and it does not match that of the new_type argument.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.check_size">
+<span class="sig-prename descclassname"><span class="pre">ansys.eigen.python.grpc.server.</span></span><span class="sig-name descname"><span class="pre">check_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#check_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.check_size" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if the new parsed size is the same as the previous size.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>size</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a></span></dt><dd><p>Size of the numpy array before processing.</p>
+</dd>
+<dt><strong>new_size</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_type_</span></code></span></dt><dd><p>Size of the numpy array to process.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/dev/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a></dt><dd><p>Size of the numpy array.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/dev/library/exceptions.html#RuntimeError" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RuntimeError</span></code></a></dt><dd><p>In case there is already a size and it does not match that of the new_size argument.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ansys.eigen.python.grpc.server.serve">
+<span class="sig-prename descclassname"><span class="pre">ansys.eigen.python.grpc.server.</span></span><span class="sig-name descname"><span class="pre">serve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ansys/eigen/python/grpc/server.html#serve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ansys.eigen.python.grpc.server.serve" title="Permalink to this definition">#</a></dt>
+<dd><p>Deploy the API Eigen Example server.</p>
+</dd></dl>
+
+</section>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

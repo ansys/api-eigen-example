@@ -1,0 +1,12 @@
+
+:orphan:
+
+.. _sphx_glr_examples_00-rest-examples_sg_execution_times:
+
+Computation times
+=================
+**00:00.095** total execution time for **examples_00-rest-examples** files:
+
++-----------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_examples_00-rest-examples_python_rest_demo.py` (``python_rest_demo.py``) | 00:00.095 | 0.0 MB |
++-----------------------------------------------------------------------------------------+-----------+--------+

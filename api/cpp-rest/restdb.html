@@ -1,0 +1,521 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C++ REST database module &#8212; API Eigen Example</title>
+    
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    
+        <link href="../../_static/css/breadcrumbs.css" rel="stylesheet">
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="C++ REST Eigen-binder module" href="eigen.html" />
+    <link rel="prev" title="C++ REST client module" href="client.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><style>
+    .navbar-light {
+        background-color: black !important;
+    }
+</style>
+
+<div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="https://www.ansys.com/">
+  <img src="../../_static/ansys_logo_black_cropped.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" >
+      <i class="fas fa-bars" style="color:#fff; font-size:28px;"></i>
+    </span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting_started/index.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../users_guide/index.html">
+  User’s guide
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../docker/index.html">
+  Docker examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../examples/index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../benchmark/index.html">
+  Benchmark results
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../contributing.html">
+  Contributing
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ansys/api-eigen-example" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+    </nav>
+    
+    
+        <div class="container-xl">
+    <div class="row">
+        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+          
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+    
+        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
+    
+    
+        <li class="nav-item nav-item-0"><a href="../../index.html">API Eigen Example</a> » </li>
+    
+
+          <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">C++ REST subpackage</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">C++ REST database module</a></li> 
+      </ul>
+    </div>
+        </div>
+  </div>
+</div>
+    
+
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python-rest/index.html">
+   Python REST subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/server.html">
+     Python REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/client.html">
+     Python REST client module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/restdb.html">
+     Python REST database module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python-grpc/index.html">
+   Python gRPC subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-grpc/server.html">
+     Python gRPC server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-grpc/client.html">
+     Python gRPC client module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   C++ REST subpackage
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="server.html">
+     C++ REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="client.html">
+     C++ REST client module
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     C++ REST database module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigen.html">
+     C++ REST Eigen-binder module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cpp-grpc/index.html">
+   C++ gRPC subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/server.html">
+     C++ REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/service.html">
+     C++ REST service module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/client.html">
+     C++ gRPC client module
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="c-rest-database-module">
+<span id="ref-cpp-rest-restdb"></span><h1>C++ REST database module<a class="headerlink" href="#c-rest-database-module" title="Permalink to this headline">#</a></h1>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2dbE">
+<span id="_CPPv3N5ansys4rest2dbE"></span><span id="_CPPv2N5ansys4rest2dbE"></span><span id="ansys::rest::db"></span><span class="target" id="namespaceansys_1_1rest_1_1db"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">db</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4rest2dbE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Namespace including the API Eigen Example Server REST DB functionalities. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db7DbTypesE">
+<span id="_CPPv3N5ansys4rest2db7DbTypesE"></span><span id="_CPPv2N5ansys4rest2db7DbTypesE"></span><span class="target" id="namespaceansys_1_1rest_1_1db_1a267c457e84d0e47509f26967f64ce6d8"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DbTypes</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4rest2db7DbTypesE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Enum holding the types of variables handled. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db7DbTypes6VECTORE">
+<span id="_CPPv3N5ansys4rest2db7DbTypes6VECTORE"></span><span id="_CPPv2N5ansys4rest2db7DbTypes6VECTORE"></span><span class="target" id="namespaceansys_1_1rest_1_1db_1a267c457e84d0e47509f26967f64ce6d8a87752381b583740610f1dfeb07fdad7e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VECTOR</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4rest2db7DbTypes6VECTORE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>The Vector type. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db7DbTypes6MATRIXE">
+<span id="_CPPv3N5ansys4rest2db7DbTypes6MATRIXE"></span><span id="_CPPv2N5ansys4rest2db7DbTypes6MATRIXE"></span><span class="target" id="namespaceansys_1_1rest_1_1db_1a267c457e84d0e47509f26967f64ce6d8a38ef5fe49a654647519ee8c498c49664"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MATRIX</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4rest2db7DbTypes6MATRIXE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>The Matrix type. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db13dbtype_to_strERK7DbTypes">
+<span id="_CPPv3N5ansys4rest2db13dbtype_to_strERK7DbTypes"></span><span id="_CPPv2N5ansys4rest2db13dbtype_to_strERK7DbTypes"></span><span id="ansys::rest::db::dbtype_to_str__DbTypesCR"></span><span class="target" id="namespaceansys_1_1rest_1_1db_1a1882b46ba43c7e38d89cd2f921565301"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dbtype_to_str</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5ansys4rest2db7DbTypesE" title="ansys::rest::db::DbTypes"><span class="n"><span class="pre">DbTypes</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4rest2db13dbtype_to_strERK7DbTypes" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method for returning the enum value as a std::string. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – the enum value we want as a std::string. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::string </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db8callbackEPviPPcPPc">
+<span id="_CPPv3N5ansys4rest2db8callbackEPviPPcPPc"></span><span id="_CPPv2N5ansys4rest2db8callbackEPviPPcPPc"></span><span id="ansys::rest::db::callback__voidP.i.cPP.cPP"></span><span class="target" id="namespaceansys_1_1rest_1_1db_1a073b20675604c9716cdf3cd72ed9aee3"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">callback</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">value</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">argc</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">argv</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">azColName</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4rest2db8callbackEPviPPcPPc" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Callback to be executed after function is complete. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – pointer to the argument passed in sqlite3_exec. </p></li>
+<li><p><strong>argc</strong> – number of callbacks to process. </p></li>
+<li><p><strong>argv</strong> – values in each callback. </p></li>
+<li><p><strong>azColName</strong> – name of the cols in the callback. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>int </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db6RestDbE">
+<span id="_CPPv3N5ansys4rest2db6RestDbE"></span><span id="_CPPv2N5ansys4rest2db6RestDbE"></span><span id="ansys::rest::db::RestDb"></span><span class="target" id="classansys_1_1rest_1_1db_1_1RestDb"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RestDb</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4rest2db6RestDbE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Class for establishing a connection with the REST DB and interacting with it. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db6RestDb6RestDbEv">
+<span id="_CPPv3N5ansys4rest2db6RestDb6RestDbEv"></span><span id="_CPPv2N5ansys4rest2db6RestDb6RestDbEv"></span><span id="ansys::rest::db::RestDb::RestDb"></span><span class="target" id="classansys_1_1rest_1_1db_1_1RestDb_1a8e2cf99dff4371cf836441fb78a4c069"></span><span class="sig-name descname"><span class="n"><span class="pre">RestDb</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4rest2db6RestDb6RestDbEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Construct a new Rest Db object. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db6RestDbD0Ev">
+<span id="_CPPv3N5ansys4rest2db6RestDbD0Ev"></span><span id="_CPPv2N5ansys4rest2db6RestDbD0Ev"></span><span id="ansys::rest::db::RestDb::~RestDb"></span><span class="target" id="classansys_1_1rest_1_1db_1_1RestDb_1ab83dbf4440d5a00e7520eff3ba7d7f49"></span><span class="sig-name descname"><span class="n"><span class="pre">~RestDb</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4rest2db6RestDbD0Ev" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Destroy the Rest Db object. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db6RestDb14store_resourceERK7DbTypesRKNSt6stringE">
+<span id="_CPPv3N5ansys4rest2db6RestDb14store_resourceERK7DbTypesRKNSt6stringE"></span><span id="_CPPv2N5ansys4rest2db6RestDb14store_resourceERK7DbTypesRKNSt6stringE"></span><span id="ansys::rest::db::RestDb::store_resource__DbTypesCR.ssCR"></span><span class="target" id="classansys_1_1rest_1_1db_1_1RestDb_1ae03716a4f1dadb24b5f5f725da3e0440"></span><span class="kt"><span class="pre">long</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">store_resource</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5ansys4rest2db7DbTypesE" title="ansys::rest::db::DbTypes"><span class="n"><span class="pre">DbTypes</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">type</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4rest2db6RestDb14store_resourceERK7DbTypesRKNSt6stringE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method for storing a Resource in the REST DB. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> – the type of resource processed. </p></li>
+<li><p><strong>input</strong> – the JSON request body from where the resource is parsed. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>long - the id of the inserted row in the DB. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db6RestDb13load_resourceERK7DbTypesRKi">
+<span id="_CPPv3N5ansys4rest2db6RestDb13load_resourceERK7DbTypesRKi"></span><span id="_CPPv2N5ansys4rest2db6RestDb13load_resourceERK7DbTypesRKi"></span><span id="ansys::rest::db::RestDb::load_resource__DbTypesCR.iCR"></span><span class="target" id="classansys_1_1rest_1_1db_1_1RestDb_1a4222ea8e355c8c22d13447f06002efc0"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">load_resource</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5ansys4rest2db7DbTypesE" title="ansys::rest::db::DbTypes"><span class="n"><span class="pre">DbTypes</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">type</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4rest2db6RestDb13load_resourceERK7DbTypesRKi" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of loading a stored resource in the DB from a given ID. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> – the type of resource processed. </p></li>
+<li><p><strong>input</strong> – the id of the resource inside the DB. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::string - the resource loaded from the DB (as a string). </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db6RestDb13initialize_dbEv">
+<span id="_CPPv3N5ansys4rest2db6RestDb13initialize_dbEv"></span><span id="_CPPv2N5ansys4rest2db6RestDb13initialize_dbEv"></span><span id="ansys::rest::db::RestDb::initialize_db"></span><span class="target" id="classansys_1_1rest_1_1db_1_1RestDb_1a2f97010c394e57de87c0c50e437562af"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initialize_db</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys4rest2db6RestDb13initialize_dbEv" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method for initializing the REST DB to be used. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys4rest2db6RestDb3_dbE">
+<span id="_CPPv3N5ansys4rest2db6RestDb3_dbE"></span><span id="_CPPv2N5ansys4rest2db6RestDb3_dbE"></span><span id="ansys::rest::db::RestDb::_db__sqlite3P"></span><span class="target" id="classansys_1_1rest_1_1db_1_1RestDb_1a6aba631b19a5d6d87dcc9b12fb243677"></span><span class="n"><span class="pre">sqlite3</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_db</span></span></span><a class="headerlink" href="#_CPPv4N5ansys4rest2db6RestDb3_dbE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>A pointer to the DB connection. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

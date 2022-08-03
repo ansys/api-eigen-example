@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C++ REST Eigen-binder module &#8212; API Eigen Example</title>
+    
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/ansys_sphinx_theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    
+        <link href="../../_static/css/breadcrumbs.css" rel="stylesheet">
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="C++ gRPC subpackage" href="../cpp-grpc/index.html" />
+    <link rel="prev" title="C++ REST database module" href="restdb.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><style>
+    .navbar-light {
+        background-color: black !important;
+    }
+</style>
+
+<div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="https://www.ansys.com/">
+  <img src="../../_static/ansys_logo_black_cropped.jpg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" >
+      <i class="fas fa-bars" style="color:#fff; font-size:28px;"></i>
+    </span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting_started/index.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../users_guide/index.html">
+  User’s guide
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../docker/index.html">
+  Docker examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../examples/index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../benchmark/index.html">
+  Benchmark results
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../contributing.html">
+  Contributing
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ansys/api-eigen-example" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+    </nav>
+    
+    
+        <div class="container-xl">
+    <div class="row">
+        <div class="col-12 col-md-3" id="breadcrumbs-spacer"></div>
+        <div class="col-12 col-md-11 col-xl-9" id="breadcrumbs">
+          
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+    
+        <li class="nav-item nav-item-additional-breadcrumb"><a href="https://docs.pyansys.com/">PyAnsys</a> » </li>
+    
+    
+        <li class="nav-item nav-item-0"><a href="../../index.html">API Eigen Example</a> » </li>
+    
+
+          <li class="nav-item nav-item-1"><a href="../index.html" >API reference</a> » </li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">C++ REST subpackage</a> » </li>
+        <li class="nav-item nav-item-this"><a href="">C++ REST Eigen-binder module</a></li> 
+      </ul>
+    </div>
+        </div>
+  </div>
+</div>
+    
+
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python-rest/index.html">
+   Python REST subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/server.html">
+     Python REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/client.html">
+     Python REST client module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-rest/restdb.html">
+     Python REST database module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python-grpc/index.html">
+   Python gRPC subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-grpc/server.html">
+     Python gRPC server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python-grpc/client.html">
+     Python gRPC client module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   C++ REST subpackage
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="server.html">
+     C++ REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="client.html">
+     C++ REST client module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="restdb.html">
+     C++ REST database module
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     C++ REST Eigen-binder module
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../cpp-grpc/index.html">
+   C++ gRPC subpackage
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/server.html">
+     C++ REST server module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/service.html">
+     C++ REST service module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../cpp-grpc/client.html">
+     C++ gRPC client module
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="c-rest-eigen-binder-module">
+<span id="ref-cpp-rest-eigen"></span><h1>C++ REST Eigen-binder module<a class="headerlink" href="#c-rest-eigen-binder-module" title="Permalink to this headline">#</a></h1>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigenE">
+<span id="_CPPv3N5ansys5eigenE"></span><span id="_CPPv2N5ansys5eigenE"></span><span id="ansys::eigen"></span><span class="target" id="namespaceansys_1_1eigen"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eigen</span></span></span><a class="headerlink" href="#_CPPv4N5ansys5eigenE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Namespace exposing functionalities of interest from the Eigen library for the API Eigen Example project. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigen17multiply_matricesERKN5Eigen8MatrixXdERKN5Eigen8MatrixXdE">
+<span id="_CPPv3N5ansys5eigen17multiply_matricesERKN5Eigen8MatrixXdERKN5Eigen8MatrixXdE"></span><span id="_CPPv2N5ansys5eigen17multiply_matricesERKN5Eigen8MatrixXdERKN5Eigen8MatrixXdE"></span><span id="ansys::eigen::multiply_matrices__Eigen::MatrixXdCR.Eigen::MatrixXdCR"></span><span class="target" id="namespaceansys_1_1eigen_1a71be26668625fa21dd89a2f73a901e83"></span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">multiply_matrices</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys5eigen17multiply_matricesERKN5Eigen8MatrixXdERKN5Eigen8MatrixXdE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Wrapper method to Matrix multiplication carried out by Eigen operators. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – The first matrix. </p></li>
+<li><p><strong>b</strong> – The second matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Eigen::MatrixXd </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigen12add_matricesERKN5Eigen8MatrixXdERKN5Eigen8MatrixXdE">
+<span id="_CPPv3N5ansys5eigen12add_matricesERKN5Eigen8MatrixXdERKN5Eigen8MatrixXdE"></span><span id="_CPPv2N5ansys5eigen12add_matricesERKN5Eigen8MatrixXdERKN5Eigen8MatrixXdE"></span><span id="ansys::eigen::add_matrices__Eigen::MatrixXdCR.Eigen::MatrixXdCR"></span><span class="target" id="namespaceansys_1_1eigen_1ac957ac38a1cdb3fccc5bb351e65ff56a"></span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">add_matrices</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys5eigen12add_matricesERKN5Eigen8MatrixXdERKN5Eigen8MatrixXdE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Wrapper method to Matrix addition carried out by Eigen operators. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – The first matrix. </p></li>
+<li><p><strong>b</strong> – The second matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Eigen::MatrixXd </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigen16multiply_vectorsERKN5Eigen8VectorXdERKN5Eigen8VectorXdE">
+<span id="_CPPv3N5ansys5eigen16multiply_vectorsERKN5Eigen8VectorXdERKN5Eigen8VectorXdE"></span><span id="_CPPv2N5ansys5eigen16multiply_vectorsERKN5Eigen8VectorXdERKN5Eigen8VectorXdE"></span><span id="ansys::eigen::multiply_vectors__Eigen::VectorXdCR.Eigen::VectorXdCR"></span><span class="target" id="namespaceansys_1_1eigen_1a9d37efd0cfe58169850322f44187ac54"></span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">multiply_vectors</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VectorXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">v</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VectorXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">w</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys5eigen16multiply_vectorsERKN5Eigen8VectorXdERKN5Eigen8VectorXdE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Wrapper method to Vector multiplication (dot product) carried out by Eigen operators. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v</strong> – The first vector. </p></li>
+<li><p><strong>w</strong> – The second vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>double </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigen11add_vectorsERKN5Eigen8VectorXdERKN5Eigen8VectorXdE">
+<span id="_CPPv3N5ansys5eigen11add_vectorsERKN5Eigen8VectorXdERKN5Eigen8VectorXdE"></span><span id="_CPPv2N5ansys5eigen11add_vectorsERKN5Eigen8VectorXdERKN5Eigen8VectorXdE"></span><span id="ansys::eigen::add_vectors__Eigen::VectorXdCR.Eigen::VectorXdCR"></span><span class="target" id="namespaceansys_1_1eigen_1ab9cf5c79931a49442ae5b934427ae17e"></span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VectorXd</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">add_vectors</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VectorXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">v</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VectorXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">w</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys5eigen11add_vectorsERKN5Eigen8VectorXdERKN5Eigen8VectorXdE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Wrapper method to Vector addition carried out by Eigen operators. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v</strong> – The first vector. </p></li>
+<li><p><strong>w</strong> – The second vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Eigen::VectorXd </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigen11read_vectorERKNSt6stringE">
+<span id="_CPPv3N5ansys5eigen11read_vectorERKNSt6stringE"></span><span id="_CPPv2N5ansys5eigen11read_vectorERKNSt6stringE"></span><span id="ansys::eigen::read_vector__ssCR"></span><span class="target" id="namespaceansys_1_1eigen_1a0975aeb432c37f692532ad5c4d03def5"></span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VectorXd</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read_vector</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys5eigen11read_vectorERKNSt6stringE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of parsing the JSON list to a vector. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> – the JSON list. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Eigen::VectorXd </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigen11read_matrixERKNSt6stringE">
+<span id="_CPPv3N5ansys5eigen11read_matrixERKNSt6stringE"></span><span id="_CPPv2N5ansys5eigen11read_matrixERKNSt6stringE"></span><span id="ansys::eigen::read_matrix__ssCR"></span><span class="target" id="namespaceansys_1_1eigen_1ab2a00737683711e3395085ca40a1b25d"></span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read_matrix</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys5eigen11read_matrixERKNSt6stringE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of parsing the JSON list of lists to a matrix. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> – the JSON list of lists. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Eigen::MatrixXd </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigen12write_vectorERKN5Eigen8VectorXdE">
+<span id="_CPPv3N5ansys5eigen12write_vectorERKN5Eigen8VectorXdE"></span><span id="_CPPv2N5ansys5eigen12write_vectorERKN5Eigen8VectorXdE"></span><span id="ansys::eigen::write_vector__Eigen::VectorXdCR"></span><span class="target" id="namespaceansys_1_1eigen_1a2c16c5eb38c433e69173621025f3ea13"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write_vector</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">VectorXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys5eigen12write_vectorERKN5Eigen8VectorXdE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of writing a JSON list from the Eigen::VectorXd object given. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> – the Eigen::VectorXd. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::string - representing the Vector as a JSON list. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5ansys5eigen12write_matrixERKN5Eigen8MatrixXdE">
+<span id="_CPPv3N5ansys5eigen12write_matrixERKN5Eigen8MatrixXdE"></span><span id="_CPPv2N5ansys5eigen12write_matrixERKN5Eigen8MatrixXdE"></span><span id="ansys::eigen::write_matrix__Eigen::MatrixXdCR"></span><span class="target" id="namespaceansys_1_1eigen_1ab03ce064319ad03a3cca270499fddb5d"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write_matrix</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5ansys5eigen12write_matrixERKN5Eigen8MatrixXdE" title="Permalink to this definition">#</a><br /></dt>
+<dd><p>Method in charge of writing a JSON list from the Eigen::MatrixXd object given. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> – the Eigen::MatrixXd. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>std::string - representing the Matrix as a JSON list. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright (c) 2022 ANSYS, Inc. All rights reserved.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
