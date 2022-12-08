@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-eigen-example
+  description: Ansys API Eigen example
+  annotations:
+    github.com/project-slug: 'ansys/api-eigen-example'
+  tags:
+    - grpc
+    - python
+    - api
+spec:
+  type: service
+  lifecycle: production
+  owner: hackaton
