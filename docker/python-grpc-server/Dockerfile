@@ -19,7 +19,7 @@ RUN pip install ansys/eigen/cpp/eigen-wrapper
 RUN pip install -r requirements/requirements_build.txt
 RUN pip install .
 
-# Define the necessary env variables and exposed port for accesssing the server
+# Define the necessary env variables and exposed port for accessing the server
 EXPOSE 50051
 
 # Define our container entry command - Basically run the server

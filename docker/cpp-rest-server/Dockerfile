@@ -17,7 +17,7 @@ RUN conan install ..
 RUN cmake ..
 RUN cmake --build .
 
-# Define the necessary env variables and exposed port for accesssing the server
+# Define the necessary env variables and exposed port for accessing the server
 EXPOSE 18080
 
 # Define our container entry command - Basically run the server

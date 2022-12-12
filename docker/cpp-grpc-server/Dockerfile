@@ -13,7 +13,7 @@ ADD src/ansys/eigen/protos /server/project/protos
 # Next in line, we will build our server (lib installation is not required)
 RUN cd /server/project/cpp/grpc/server && make compile && cd -
 
-# Define the necessary env variables and exposed port for accesssing the server
+# Define the necessary env variables and exposed port for accessing the server
 EXPOSE 50000
 
 # Define our container entry command - Basically run the server
