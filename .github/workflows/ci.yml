@@ -177,8 +177,8 @@ jobs:
     needs:
       - docs-style
       - python-build-test
-      - cpp_build-test-rest
-      - cpp_build-test-grpc
+      - cpp-build-test-rest
+      - cpp-build-test-grpc
     runs-on: ubuntu-latest
 
     services:
