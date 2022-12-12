@@ -16,7 +16,7 @@ add_custom_target(BeginMessage ALL
 
 set(CMAKE_DEBUG_POSTFIX d)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
 

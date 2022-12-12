@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.4...3.18)
 project(api_eigen_example_grpc_client VERSION 1.0 DESCRIPTION "The API Eigen Example project gRPC client implemented in C++")
 
 # Specify the C++ standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 

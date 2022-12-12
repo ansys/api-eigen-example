@@ -13,50 +13,35 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  MAIN_PYTHON_VERSION: '3.9'
+
 jobs:
-  stylecheck:
-    name: Style Check
+  style:
+    name: Code style
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup Python
-        uses: actions/setup-python@v2.2.2
+      - name: PyAnsys code style checks
+        uses: pyansys/actions/code-style@v1
         with:
-          python-version: 3.9
-
-      - name: Install pre-commit
-        run: pip install pre-commit
-
-      - name: Run pre-commit
-        run: pre-commit run --all-files || ( git status --short ; git diff ; exit 1 )
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
   docs-style:
     name: Documentation Style Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Running Vale
-        uses: errata-ai/vale-action@reviewdog
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: PyAnsys documentation style checks
+        uses: pyansys/actions/doc-style@v1
         with:
-          files: doc
-          reporter: github-pr-check
-          level: error
-          filter_mode: nofilter
-          fail_on_error: true
-          vale_flags: "--config=doc/.vale.ini"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-  python_test_import:
+  python-smoke-test:
     name: Python - Smoke Tests
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        # os: [windows-latest, ubuntu-latest]
-        os: [ubuntu-latest]
-        python-version: ["3.7", "3.8", "3.9"]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
 
     steps:
       - uses: actions/checkout@v2
@@ -92,11 +77,9 @@ jobs:
         run: |
           python -c "from ansys.eigen.python.rest.client import DemoRESTClient; cli = DemoRESTClient('0.0.0.0', 5000); cli.get_connection_details()"
 
-  python_build_test:
+  python-build-test:
     name: Python - Build and Unit Testing
-    needs:
-      - python_test_import
-      - stylecheck
+    needs: [python-smoke-test, style]
     runs-on: ubuntu-latest
 
     steps:
@@ -105,7 +88,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: Install OS packages
         run: |
@@ -135,10 +118,9 @@ jobs:
           path: cov_html
           retention-days: 7
 
-  cpp_build_test_rest:
+  cpp-build-test-rest:
     name: C++ - Build and Unit Testing - REST
-    needs:
-      - stylecheck
+    needs: [style]
     runs-on: ubuntu-latest
 
     steps:
@@ -147,7 +129,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: Install conan
         run: pip install conan
@@ -164,12 +146,12 @@ jobs:
           sudo apt update && cd external/jsoncpp-v1.9.5/build && cmake -DCMAKE_INSTALL_INCLUDEDIR=include/jsoncpp .. && sudo make install && cd - 
           cd src/ansys/eigen/cpp/rest/client/build/ && cmake .. && cmake --build .
 
-  cpp_build_test_grpc:
+  cpp-build-test-grpc:
     name: C++ - Build and Unit Testing - gRPC
-    needs:
-      - stylecheck
+    needs: [style]
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         package: [client, server]
 
@@ -179,20 +161,16 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: Build C++ gRPC ${{ matrix.package }}
         run: |
           cd src/ansys/eigen/cpp/grpc/${{ matrix.package }}/
           make compile
 
-  build_doc:
+  build-doc:
     name: Build Documentation
-    needs:
-      - docs-style
-      - python_build_test
-      - cpp_build_test_rest
-      - cpp_build_test_grpc
+    needs: [docs-style, python-build-test, cpp-build-test-rest, cpp-build-test-grpc]
     runs-on: ubuntu-latest
 
     services:
@@ -211,7 +189,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: Linux pip cache
         uses: actions/cache@v2
