@@ -55,7 +55,7 @@ def test_greeting_grpc(capsys, grpc_stub):
     captured = capsys.readouterr()
     assert (
         captured.out
-        == "Greeting requested! Requested by: Michael\nSize of message: 96B\nThe server answered: Hello, Michael!\n"
+        == "Greeting requested! Requested by: Michael\nSize of message: 80B\nThe server answered: Hello, Michael!\n"
     )
 
 
