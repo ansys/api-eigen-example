@@ -112,7 +112,7 @@ jobs:
           pytest -v --cov=python --cov-report html:cov_html --cov-report xml
 
       - name: Upload Coverage Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: HTML-Coverage
           path: cov_html
@@ -212,7 +212,7 @@ jobs:
           make -C doc html
 
       - name: Upload documentation
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: HTML-Documentation
           path: doc/_build/html
