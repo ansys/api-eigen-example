@@ -79,9 +79,7 @@ jobs:
 
   python-build-test:
     name: Python - Build and Unit Testing
-    needs:
-      - python-smoke-test
-      - style
+    needs: [python-smoke-test, style]
     runs-on: ubuntu-latest
 
     steps:
@@ -122,8 +120,7 @@ jobs:
 
   cpp-build-test-rest:
     name: C++ - Build and Unit Testing - REST
-    needs:
-      - style
+    needs: [style]
     runs-on: ubuntu-latest
 
     steps:
@@ -151,8 +148,7 @@ jobs:
 
   cpp-build-test-grpc:
     name: C++ - Build and Unit Testing - gRPC
-    needs:
-      - style
+    needs: [style]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -174,11 +170,7 @@ jobs:
 
   build-doc:
     name: Build Documentation
-    needs:
-      - docs-style
-      - python-build-test
-      - cpp-build-test-rest
-      - cpp-build-test-grpc
+    needs: [docs-style, python-build-test, cpp-build-test-rest, cpp-build-test-grpc]
     runs-on: ubuntu-latest
 
     services:
