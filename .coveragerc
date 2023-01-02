@@ -1,2 +1,2 @@
-[run]
-omit = **grpcdemo_pb2*, **run_codegen.py
+[report]
+omit = */ansys/eigen/python/grpc/generated/*, */ansys/eigen/python/grpc/run_codegen.py
