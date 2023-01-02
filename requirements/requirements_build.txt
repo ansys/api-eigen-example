@@ -1,6 +1,6 @@
 setuptools>=41.0.0
 wheel>=0.33.0
-pybind11-global==2.10.1
+pybind11-global==2.10.2
 demo_eigen_wrapper==0.0.1
 Click>=7.0
 Flask==2.2.2
