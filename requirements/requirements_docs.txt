@@ -13,5 +13,5 @@ sphinxcontrib-websupport==1.2.4
 sphinxemoji==0.2.0
 pandas==1.5.2
 pandoc>=2.1
-matplotlib==3.6.2
+matplotlib==3.6.3
 breathe>=4.33.1
