@@ -137,7 +137,7 @@ jobs:
       - name: Build C++ REST Server
         run: |
           cd src/ansys/eigen/cpp/rest/server/build/
-          conan install .. && cmake .. && cmake --build .
+          conan profile detect && conan install .. && cmake .. && cmake --build .
 
       #  Requires installing restclient-cpp and jsoncpp libs manually - not available in conan.io
       - name: Build C++ REST Client
