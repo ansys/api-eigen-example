@@ -20,14 +20,14 @@ jobs:
       fail-fast: false
       matrix:
         image: [
-          'python-rest-server',
-          'python-rest-client',
-          'python-grpc-server',
-          'python-grpc-client',
-          'cpp-rest-server',
-          'cpp-rest-client',
-          'cpp-grpc-server',
-          'cpp-grpc-client',
+          'api-eigen-example/python-rest-server',
+          'api-eigen-example/python-rest-client',
+          'api-eigen-example/python-grpc-server',
+          'api-eigen-example/python-grpc-client',
+          'api-eigen-example/cpp-rest-server',
+          'api-eigen-example/cpp-rest-client',
+          'api-eigen-example/cpp-grpc-server',
+          'api-eigen-example/cpp-grpc-client',
           ]
     env:
       PACKAGE_DELETION_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -37,7 +37,7 @@ jobs:
     - name: "Perform versions cleanup - except certain tags"
       uses: pyansys/actions/hk-package-clean-except@v4
       with:
-        package-org: 'ansys/api-eigen-example'
+        package-org: 'ansys'
         package-name: ${{ matrix.image }}
         token: ${{ secrets.GITHUB_TOKEN }}
         tags-kept: 'latest'
