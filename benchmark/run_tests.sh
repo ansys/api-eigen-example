@@ -49,8 +49,8 @@ rm -rf data/*.svg data/*.txt data/*.csv
 # 
 # Run the Docker containers for the servers
 # -------------------------------------------------------------------------
-docker run -d -p  5000:5000  -it --name bm-python-rest-server ghcr.io/ansys/api-eigen-example-python-rest-server:latest
-docker run -d -p 50051:50051 -it --name bm-python-grpc-server ghcr.io/ansys/api-eigen-example-python-grpc-server:latest
+docker run -d -p  5000:5000  -it --name bm-python-rest-server ghcr.io/ansys/api-eigen-example/python-rest-server:latest
+docker run -d -p 50051:50051 -it --name bm-python-grpc-server ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
 
 # Start running the benchmarks
 echo "Benchmarking api-eigen-example Python packages"
@@ -72,8 +72,8 @@ docker stop bm-python-grpc-server bm-python-rest-server && docker rm bm-python-g
 # 
 # Run the Docker containers for the servers
 # -------------------------------------------------------------------------
-docker run -d -p 18080:18080 -it --name bm-cpp-rest-server    ghcr.io/ansys/api-eigen-example-cpp-rest-server:latest 
-docker run -d -p 50000:50000 -it --name bm-cpp-grpc-server    ghcr.io/ansys/api-eigen-example-cpp-grpc-server:latest
+docker run -d -p 18080:18080 -it --name bm-cpp-rest-server    ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest 
+docker run -d -p 50000:50000 -it --name bm-cpp-grpc-server    ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
 
 echo "Benchmarking api-eigen-example C++ packages"
 cd tests/cpp/build

@@ -166,11 +166,11 @@ jobs:
 
     services:
       python-rest-server:
-        image: ghcr.io/ansys/api-eigen-example-python-rest-server:latest
+        image: ghcr.io/ansys/api-eigen-example/python-rest-server:latest
         ports:
           - 5000:5000
       python-grpc-server:
-        image: ghcr.io/ansys/api-eigen-example-python-grpc-server:latest
+        image: ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
         ports:
           - 50051:50051
 
