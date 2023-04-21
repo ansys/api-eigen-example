@@ -7,14 +7,14 @@ For this case scenario, there are 2 Docker containers, which have to be built th
 
 In order to build them, run from the root directory of the repository the following command:
 ```
-docker image build -t ghcr.io/ansys/api-eigen-example/python-rest-client:latest -f docker/python-rest-client/Dockerfile .
-docker image build -t ghcr.io/ansys/api-eigen-example/python-rest-server:latest -f docker/python-rest-server/Dockerfile .
+docker image build -t ghcr.io/ansys/api-eigen-example-python-rest-client:latest -f docker/python-rest-client/Dockerfile .
+docker image build -t ghcr.io/ansys/api-eigen-example-python-rest-server:latest -f docker/python-rest-server/Dockerfile .
 ```
 
 Or you can just pull them from the GitHub Container Registry repository:
 ```
-docker pull ghcr.io/ansys/api-eigen-example/python-rest-server:latest
-docker pull ghcr.io/ansys/api-eigen-example/python-rest-client:latest
+docker pull ghcr.io/ansys/api-eigen-example-python-rest-server:latest
+docker pull ghcr.io/ansys/api-eigen-example-python-rest-client:latest
 ```
 
 In case you wanted to access the Docker-compose demo, please do as follows:
@@ -41,14 +41,14 @@ For this case scenario, there are 2 Docker containers, which have to be built th
 
 In order to build them, run from the root directory of the repository the following command:
 ```
-docker image build -t ghcr.io/ansys/api-eigen-example/python-grpc-client:latest -f docker/python-grpc-client/Dockerfile .
-docker image build -t ghcr.io/ansys/api-eigen-example/python-grpc-server:latest -f docker/python-grpc-server/Dockerfile .
+docker image build -t ghcr.io/ansys/api-eigen-example-python-grpc-client:latest -f docker/python-grpc-client/Dockerfile .
+docker image build -t ghcr.io/ansys/api-eigen-example-python-grpc-server:latest -f docker/python-grpc-server/Dockerfile .
 ```
 
 Or you can just pull them from the GitHub Container Registry repository:
 ```
-docker pull ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
-docker pull ghcr.io/ansys/api-eigen-example/python-grpc-client:latest
+docker pull ghcr.io/ansys/api-eigen-example-python-grpc-server:latest
+docker pull ghcr.io/ansys/api-eigen-example-python-grpc-client:latest
 ```
 In case you wanted to access the Docker-compose demo, please do as follows:
 ```
@@ -73,14 +73,14 @@ For this case scenario, there are 2 Docker containers, which have to be built th
 
 In order to build them, run from the root directory of the repository the following command:
 ```
-docker image build -t ghcr.io/ansys/api-eigen-example/cpp-rest-client:latest -f docker/cpp-rest-client/Dockerfile .
-docker image build -t ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest -f docker/cpp-rest-server/Dockerfile .
+docker image build -t ghcr.io/ansys/api-eigen-example-cpp-rest-client:latest -f docker/cpp-rest-client/Dockerfile .
+docker image build -t ghcr.io/ansys/api-eigen-example-cpp-rest-server:latest -f docker/cpp-rest-server/Dockerfile .
 ```
 
 Or you can just pull them from the GitHub Container Registry repository:
 ```
-docker pull ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest
-docker pull ghcr.io/ansys/api-eigen-example/cpp-rest-client:latest
+docker pull ghcr.io/ansys/api-eigen-example-cpp-rest-server:latest
+docker pull ghcr.io/ansys/api-eigen-example-cpp-rest-client:latest
 ```
 
 In case you wanted to access the Docker-compose demo, please do as follows:
@@ -113,14 +113,14 @@ For this case scenario, there are 2 Docker containers, which have to be built th
 
 In order to build them, run from the root directory of the repository the following command:
 ```
-docker image build -t ghcr.io/ansys/api-eigen-example/cpp-grpc-client:latest -f docker/cpp-grpc-client/Dockerfile .
-docker image build -t ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest -f docker/cpp-grpc-server/Dockerfile .
+docker image build -t ghcr.io/ansys/api-eigen-example-cpp-grpc-client:latest -f docker/cpp-grpc-client/Dockerfile .
+docker image build -t ghcr.io/ansys/api-eigen-example-cpp-grpc-server:latest -f docker/cpp-grpc-server/Dockerfile .
 ```
 
 Or you can just pull them from the GitHub Container Registry repository:
 ```
-docker pull ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
-docker pull ghcr.io/ansys/api-eigen-example/cpp-grpc-client:latest
+docker pull ghcr.io/ansys/api-eigen-example-cpp-grpc-server:latest
+docker pull ghcr.io/ansys/api-eigen-example-cpp-grpc-client:latest
 ```
 
 In case you wanted to access the Docker-compose demo, please do as follows:

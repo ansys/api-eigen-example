@@ -20,15 +20,15 @@ These Docker containers are available at the GitHub Container Registry. You can 
 
 .. code:: bash
 
-    docker pull ghcr.io/ansys/api-eigen-example/python-rest-server:latest
-    docker pull ghcr.io/ansys/api-eigen-example/python-rest-client:latest
+    docker pull ghcr.io/ansys/api-eigen-example-python-rest-server:latest
+    docker pull ghcr.io/ansys/api-eigen-example-python-rest-client:latest
 
 However, you can also build these Docker containers manually from the root directory of the repository with:
 
 .. code:: bash
 
-    docker image build -t ghcr.io/ansys/api-eigen-example/python-rest-server -f docker/python-rest-server/Dockerfile .
-    docker image build -t ghcr.io/ansys/api-eigen-example/python-rest-client -f docker/python-rest-client/Dockerfile .
+    docker image build -t ghcr.io/ansys/api-eigen-example-python-rest-server -f docker/python-rest-server/Dockerfile .
+    docker image build -t ghcr.io/ansys/api-eigen-example-python-rest-client -f docker/python-rest-client/Dockerfile .
 
 The server Docker image is a standalone Flask app that starts whenever the image is run. This way,
 you do not have to perform any other operation apart from running the Docker image.
@@ -37,7 +37,7 @@ To run the server Docker image manually, you must run:
 
 .. code:: bash
 
-    docker run -d -p 5000:5000 -it ghcr.io/ansys/api-eigen-example/python-rest-server:latest
+    docker run -d -p 5000:5000 -it ghcr.io/ansys/api-eigen-example-python-rest-server:latest
 
 The client Docker image is a standalone JupyterLab app that starts whenever the image is run. This JupyterLab
 app contains a demo Jupyter Notebook that you can run to test the client itself. Furthermore, you can open a new
@@ -47,7 +47,7 @@ To run the client Docker image manually, you must run:
 
 .. code:: bash
 
-    docker run -d -p 8888:8888 -it ghcr.io/ansys/api-eigen-example/python-rest-client:latest
+    docker run -d -p 8888:8888 -it ghcr.io/ansys/api-eigen-example-python-rest-client:latest
 
 However, deploying Docker containers manually is not the easiest way to test them. To start playing around with
 them, you can use the docker-compose task at https://github.com/ansys/api-eigen-example/blob/main/docker/python-rest/docker-compose.yml.
@@ -75,15 +75,15 @@ These Docker containers are available at the GitHub Container Registry. You can 
 
 .. code:: bash
 
-    docker pull ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
-    docker pull ghcr.io/ansys/api-eigen-example/python-grpc-client:latest
+    docker pull ghcr.io/ansys/api-eigen-example-python-grpc-server:latest
+    docker pull ghcr.io/ansys/api-eigen-example-python-grpc-client:latest
 
 However, you can also build these Docker containers manually from the root directory of the repository with:
 
 .. code:: bash
 
-    docker image build -t ghcr.io/ansys/api-eigen-example/python-grpc-server -f docker/python-grpc-server/Dockerfile .
-    docker image build -t ghcr.io/ansys/api-eigen-example/python-grpc-client -f docker/python-grpc-client/Dockerfile .
+    docker image build -t ghcr.io/ansys/api-eigen-example-python-grpc-server -f docker/python-grpc-server/Dockerfile .
+    docker image build -t ghcr.io/ansys/api-eigen-example-python-grpc-client -f docker/python-grpc-client/Dockerfile .
 
 The server Docker image is a standalone gRPC server that starts whenever the image is run. This way,
 you do not have to perform any other operation apart from running the Docker image.
@@ -92,7 +92,7 @@ To run the server Docker image manually, you must run:
 
 .. code:: bash
 
-    docker run -d -p 50051:50051 -it ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
+    docker run -d -p 50051:50051 -it ghcr.io/ansys/api-eigen-example-python-grpc-server:latest
 
 The client Docker image is a standalone JupyterLab app that starts whenever the image is run. This JupyterLab
 app contains a demo Jupyter Notebook that you can run to test the client itself. Furthermore, you can open a new
@@ -102,7 +102,7 @@ To run the client Docker image manually, you must run:
 
 .. code:: bash
 
-    docker run -d -p 8888:8888 -it ghcr.io/ansys/api-eigen-example/python-grpc-client:latest
+    docker run -d -p 8888:8888 -it ghcr.io/ansys/api-eigen-example-python-grpc-client:latest
 
 However, deploying Docker containers manually is not the easiest way to test them. To start playing around with
 them, you can use the docker-compose task at https://github.com/ansys/api-eigen-example/blob/main/docker/python-grpc/docker-compose.yml.
@@ -130,15 +130,15 @@ These Docker containers are available at the GitHub Container Registry. You can 
 
 .. code:: bash
 
-    docker pull ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest
-    docker pull ghcr.io/ansys/api-eigen-example/cpp-rest-client:latest
+    docker pull ghcr.io/ansys/api-eigen-example-cpp-rest-server:latest
+    docker pull ghcr.io/ansys/api-eigen-example-cpp-rest-client:latest
 
 However, you can also build these Docker containers manually from the root directory of the repository with:
 
 .. code:: bash
 
-    docker image build -t ghcr.io/ansys/api-eigen-example/cpp-rest-server -f docker/cpp-rest-server/Dockerfile .
-    docker image build -t ghcr.io/ansys/api-eigen-example/cpp-rest-client -f docker/cpp-rest-client/Dockerfile .
+    docker image build -t ghcr.io/ansys/api-eigen-example-cpp-rest-server -f docker/cpp-rest-server/Dockerfile .
+    docker image build -t ghcr.io/ansys/api-eigen-example-cpp-rest-client -f docker/cpp-rest-client/Dockerfile .
 
 The server Docker image is a standalone `CrowCpp <https://crowcpp.org/>`_ app that starts whenever the image is run. This way,
 you do not have to perform any other operation apart from running the Docker image.
@@ -147,7 +147,7 @@ To run the server Docker image manually, you must run:
 
 .. code:: bash
 
-    docker run -d -p 18080:18080 -it ghcr.io/ansys/api-eigen-example/cpp-rest-server:latest
+    docker run -d -p 18080:18080 -it ghcr.io/ansys/api-eigen-example-cpp-rest-server:latest
 
 The client Docker image is a standalone JupyterLab app that starts whenever the image is run. This JupyterLab
 app contains a demo Jupyter Notebook that you can run to test the client itself. Furthermore, you can open a new
@@ -157,7 +157,7 @@ To run the client Docker image manually, you must run:
 
 .. code:: bash
 
-    docker run -d -p 8888:8888 -it ghcr.io/ansys/api-eigen-example/cpp-rest-client:latest
+    docker run -d -p 8888:8888 -it ghcr.io/ansys/api-eigen-example-cpp-rest-client:latest
 
 Even though dealing with a C++ implementation, thanks to `cling <https://root.cern/cling/>`_ and
 `xeus-cling <https://github.com/jupyter-xeus/xeus-cling>`_, this demo is capable of demonstrating
@@ -190,15 +190,15 @@ These Docker containers are available at the GitHub Container Registry. You can 
 
 .. code:: bash
 
-    docker pull ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
-    docker pull ghcr.io/ansys/api-eigen-example/cpp-grpc-client:latest
+    docker pull ghcr.io/ansys/api-eigen-example-cpp-grpc-server:latest
+    docker pull ghcr.io/ansys/api-eigen-example-cpp-grpc-client:latest
 
 However, you can also build these Docker containers manually from the root directory of the repository with:
 
 .. code:: bash
 
-    docker image build -t ghcr.io/ansys/api-eigen-example/cpp-grpc-server -f docker/cpp-grpc-server/Dockerfile .
-    docker image build -t ghcr.io/ansys/api-eigen-example/cpp-grpc-client -f docker/cpp-grpc-client/Dockerfile .
+    docker image build -t ghcr.io/ansys/api-eigen-example-cpp-grpc-server -f docker/cpp-grpc-server/Dockerfile .
+    docker image build -t ghcr.io/ansys/api-eigen-example-cpp-grpc-client -f docker/cpp-grpc-client/Dockerfile .
 
 The server Docker image is a standalone gRPC app that starts whenever the image is run. This way,
 you do not have to perform any other operation apart from running the Docker image.
@@ -207,7 +207,7 @@ To run the server Docker image manually, you must run:
 
 .. code:: bash
 
-    docker run -d -p 50000:50000 -it ghcr.io/ansys/api-eigen-example/cpp-grpc-server:latest
+    docker run -d -p 50000:50000 -it ghcr.io/ansys/api-eigen-example-cpp-grpc-server:latest
 
 The client Docker image is a standalone JupyterLab app that starts whenever the image is run. This JupyterLab
 app contains a demo Jupyter Notebook that you can run to test the client itself. Furthermore, you can open a new Jupyter
@@ -217,7 +217,7 @@ To run the client Docker image manually, you must run:
 
 .. code:: bash
 
-    docker run -d -p 8888:8888 -it ghcr.io/ansys/api-eigen-example/cpp-grpc-client:latest
+    docker run -d -p 8888:8888 -it ghcr.io/ansys/api-eigen-example-cpp-grpc-client:latest
 
 Even though dealing with a C++ implementation, thanks to `cling <https://root.cern/cling/>`_ and
 `xeus-cling <https://github.com/jupyter-xeus/xeus-cling>`_, this demo is capable of demonstrating

@@ -2,10 +2,10 @@ version: "3.1"
 
 services:
   server:
-    image: ghcr.io/ansys/api-eigen-example/python-grpc-server:latest
+    image: ghcr.io/ansys/api-eigen-example-python-grpc-server:latest
 
   client:
-    image: ghcr.io/ansys/api-eigen-example/python-grpc-client:latest
+    image: ghcr.io/ansys/api-eigen-example-python-grpc-client:latest
     # We need to export the client port so that we can access the Jupyter NB
     ports:
       - 8888:8888
