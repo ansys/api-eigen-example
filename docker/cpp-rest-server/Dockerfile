@@ -11,7 +11,7 @@ WORKDIR /server
 ADD src/ansys/eigen/cpp/rest/server /server/project
 
 # Next in line, we will build our server (lib installation is not required)
-RUN pip install conan
+RUN pip install conan<2
 WORKDIR /server/project/build
 RUN conan install ..
 RUN cmake ..
