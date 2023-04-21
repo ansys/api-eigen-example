@@ -33,4 +33,4 @@ chunkdemo_pb2*
 
 # VSCode settings files
 .vscode
-.venv
+.venv*

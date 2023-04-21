@@ -64,7 +64,7 @@ First install the Eigen library (and CMake if it is not present). For Ubuntu dis
     sudo apt install cmake libeigen3-dev
 ```
 
-To install a local version of the API Eigen Example project, clone the `repository <https://github.com/ansys/api-eigen-example>`_ through
+To install a local version of the API Eigen Example project, clone the [repository](https://github.com/ansys/api-eigen-example) through
 the Ansys GitHub Enterprise account:
 
 ```
@@ -73,7 +73,7 @@ the Ansys GitHub Enterprise account:
 
 **Note**: 
 Other Ansys Python packages are available through the Ansys GitHub Enterprise account or
-through `PyPI <https://www.pypi.org>`_. 
+through [PyPI](https://www.pypi.org). 
 
 If you want to use Python versions of the API Eigen Example project, install the demo-eigen-wrapper, which is a wrapper to the Eigen library that uses pybind11:
 
