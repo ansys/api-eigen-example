@@ -182,20 +182,13 @@ jobs:
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
-      - name: Linux pip cache
-        uses: actions/cache@v3
-        if: ${{ runner.os == 'Linux' }}
-        with:
-          path: ~/.cache/pip
-          key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
-          restore-keys: |
-            Python-${{ runner.os }}-${{ matrix.python-version }}
-
       - name: Install project requirements
         run: |
-          sudo apt install libeigen3-dev doxygen graphviz
-          pip install -r requirements/requirements_eigen_wrapper.txt ./src/ansys/eigen/cpp/eigen-wrapper
-          pip install -r requirements/requirements_build.txt .
+          sudo apt install cmake libeigen3-dev doxygen graphviz
+          pip install -r requirements/requirements_eigen_wrapper.txt
+          pip install src/ansys/eigen/cpp/eigen-wrapper
+          pip install -r requirements/requirements_build.txt
+          pip install .
           pip install -r requirements/requirements_docs.txt
 
       - name: Build documentation
