@@ -1,0 +1,44 @@
+name: API Eigen Example - Package cleanup
+on:
+  workflow_dispatch:
+  schedule: # UTC at 0200
+    - cron: "0 2 * * *"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  cleanup:
+    name: Cleaning unnecessary packages
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [
+          'api-eigen-example/python-rest-server',
+          'api-eigen-example/python-rest-client',
+          'api-eigen-example/python-grpc-server',
+          'api-eigen-example/python-grpc-client',
+          'api-eigen-example/cpp-rest-server',
+          'api-eigen-example/cpp-rest-client',
+          'api-eigen-example/cpp-grpc-server',
+          'api-eigen-example/cpp-grpc-client',
+          ]
+    env:
+      PACKAGE_DELETION_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+
+    - name: "Perform versions cleanup - except certain tags"
+      uses: pyansys/actions/hk-package-clean-except@v4
+      with:
+        package-org: 'ansys'
+        package-name: ${{ matrix.image }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tags-kept: 'latest'
+        allow-last-days: '7'
