@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - uses: actions/checkout@v3
@@ -51,19 +51,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Linux pip cache
-        uses: actions/cache@v3
-        if: ${{ runner.os == 'Linux' }}
-        with:
-          path: ~/.cache/pip
-          key: Python-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements/requirements_*.txt') }}
-          restore-keys: |
-            Python-${{ runner.os }}-${{ matrix.python-version }}
-
-      - name: Install eigen library
+      - name: Install cmake and eigen library
         run: |
           sudo apt update
-          sudo apt install libeigen3-dev
+          sudo apt install cmake libeigen3-dev
 
       - name: Install demo-eigen-wrapper
         run: |
