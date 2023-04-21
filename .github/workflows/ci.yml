@@ -123,7 +123,7 @@ jobs:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: Install conan
-        run: pip install conan<2
+        run: pip install 'conan<2'
 
       - name: Build C++ REST Server
         run: |
