@@ -1,8 +1,8 @@
 name: API Eigen Example - Package cleanup
 on:
   workflow_dispatch:
-  schedule: # UTC at 0200
-    - cron: "0 2 * * *"
+#   schedule: # UTC at 0200
+#     - cron: "0 2 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
