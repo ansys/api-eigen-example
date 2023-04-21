@@ -20,14 +20,14 @@ jobs:
       fail-fast: false
       matrix:
         image: [
-          'api-eigen-example%2Fpython-rest-server',
-          'api-eigen-example%2Fpython-rest-client',
-          'api-eigen-example%2Fpython-grpc-server',
-          'api-eigen-example%2Fpython-grpc-client',
-          'api-eigen-example%2Fcpp-rest-server',
-          'api-eigen-example%2Fcpp-rest-client',
-          'api-eigen-example%2Fcpp-grpc-server',
-          'api-eigen-example%2Fcpp-grpc-client',
+          'api-eigen-example%%2Fpython-rest-server',
+          'api-eigen-example%%2Fpython-rest-client',
+          'api-eigen-example%%2Fpython-grpc-server',
+          'api-eigen-example%%2Fpython-grpc-client',
+          'api-eigen-example%%2Fcpp-rest-server',
+          'api-eigen-example%%2Fcpp-rest-client',
+          'api-eigen-example%%2Fcpp-grpc-server',
+          'api-eigen-example%%2Fcpp-grpc-client',
           ]
     env:
       PACKAGE_DELETION_TOKEN: ${{ secrets.GITHUB_TOKEN }}
