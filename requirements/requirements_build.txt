@@ -12,4 +12,4 @@ grpcio-tools==1.54.2
 pytest==7.3.1
 pytest-cov==4.0.0
 pytest-grpc==0.8.0
-conan>=1.48.0,<2
+conan>=1.48.0,<3
