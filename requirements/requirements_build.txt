@@ -6,7 +6,7 @@ Click>=7.0
 Flask==2.3.2
 numpy>=1.21.5
 requests>=2.22.0
-protobuf==4.23.3
+protobuf==4.23.4
 grpcio==1.56.0
 grpcio-tools==1.56.0
 pytest==7.4.0
