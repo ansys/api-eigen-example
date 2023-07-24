@@ -1,14 +1,14 @@
 setuptools>=41.0.0
 wheel>=0.33.0
-pybind11[global]==2.11.0
+pybind11[global]==2.11.1
 demo_eigen_wrapper==0.0.1
 Click>=7.0
 Flask==2.3.2
 numpy>=1.21.5
 requests>=2.22.0
 protobuf==4.23.4
-grpcio==1.56.0
-grpcio-tools==1.56.0
+grpcio==1.56.2
+grpcio-tools==1.56.2
 pytest==7.4.0
 pytest-cov==4.1.0
 pytest-grpc==0.8.0
