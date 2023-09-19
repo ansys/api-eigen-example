@@ -1,7 +1,6 @@
 [requires]
 grpc/1.39.1
 eigen/3.4.0
-boost/1.81.0
 
 [generators]
 cmake
