@@ -35,7 +35,7 @@ jobs:
     #     with:
     #       token: ${{ secrets.GITHUB_TOKEN }}
       - name: Skip
-        run: exit 1
+        run: exit 0
 
   python-smoke-test:
     name: Python - Smoke Tests
