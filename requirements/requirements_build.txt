@@ -3,7 +3,7 @@ wheel>=0.33.0
 pybind11[global]==2.11.1
 demo_eigen_wrapper==0.0.1
 Click>=7.0
-Flask==3.0.0
+Flask==3.0.1
 numpy>=1.21.5
 requests>=2.22.0
 protobuf==4.25.2
