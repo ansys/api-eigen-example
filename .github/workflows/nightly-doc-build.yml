@@ -29,6 +29,7 @@ jobs:
 
       - name: Install project requirements
         run: |
+          sudo apt update
           sudo apt install cmake libeigen3-dev doxygen graphviz
           pip install -r requirements/requirements_eigen_wrapper.txt
           pip install src/ansys/eigen/cpp/eigen-wrapper
