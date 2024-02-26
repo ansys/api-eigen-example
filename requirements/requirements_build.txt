@@ -7,9 +7,9 @@ Flask==3.0.2
 numpy>=1.21.5
 requests>=2.22.0
 protobuf==4.25.3
-grpcio==1.60.1
-grpcio-tools==1.60.1
-pytest==8.0.1
+grpcio==1.62.0
+grpcio-tools==1.62.0
+pytest==8.0.2
 pytest-cov==4.1.0
 pytest-grpc==0.8.0
 conan>=1.48.0,<2

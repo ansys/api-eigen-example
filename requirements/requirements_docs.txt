@@ -11,7 +11,7 @@ sphinx-gallery==0.15.0
 sphinx-notfound-page==1.0.0
 sphinxcontrib-websupport==1.2.7
 sphinxemoji==0.3.1
-pandas==2.2.0
+pandas==2.2.1
 pandoc>=2.1
 matplotlib==3.8.3
 breathe>=4.33.1
