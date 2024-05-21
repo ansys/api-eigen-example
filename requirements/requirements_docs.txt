@@ -1,7 +1,7 @@
 Sphinx==7.3.7
 jupyter_sphinx==0.5.3
 numpydoc==1.7.0
-ansys_sphinx_theme==0.15.2
+ansys_sphinx_theme==0.16.0
 pypandoc==1.13
 pytest-sphinx==0.6.3
 sphinx-autobuild==2024.4.16
@@ -13,5 +13,5 @@ sphinxcontrib-websupport==1.2.7
 sphinxemoji==0.3.1
 pandas==2.2.2
 pandoc>=2.1
-matplotlib==3.8.4
+matplotlib==3.9.0
 breathe>=4.33.1
