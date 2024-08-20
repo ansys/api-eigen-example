@@ -1,7 +1,6 @@
 """Sphinx documentation configuration file."""
 from datetime import datetime
 
-from ansys_sphinx_theme import ansys_logo_black
 from sphinx_gallery.sorting import FileNameSortKey
 
 # -- Project information -----------------------------------------------------
@@ -124,6 +123,7 @@ html_short_title = html_title = "API Eigen Example"
 html_theme = "ansys_sphinx_theme"
 html_logo = ansys_logo_black
 html_theme_options = {
+    "logo": "ansys",
     "github_url": "https://github.com/ansys/api-eigen-example",
     "show_prev_next": False,
     "show_breadcrumbs": True,
