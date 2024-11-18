@@ -3,12 +3,12 @@ wheel>=0.33.0
 pybind11[global]==2.13.6
 demo_eigen_wrapper==0.0.1
 Click>=7.0
-Flask==3.0.3
+Flask==3.1.0
 numpy>=1.21.5
 requests>=2.22.0
 protobuf==5.26.1
-grpcio==1.67.1
-grpcio-tools==1.67.1
+grpcio==1.68.0
+grpcio-tools==1.68.0
 pytest==8.3.3
 pytest-cov==5.0.0
 pytest-grpc==0.8.0
