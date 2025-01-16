@@ -164,7 +164,7 @@ jobs:
   build-doc:
     name: Build Documentation
     needs: [docs-style, python-build-test, cpp-build-test-rest, cpp-build-test-grpc]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     services:
       python-rest-server:
