@@ -114,7 +114,7 @@ jobs:
   cpp-build-test-rest:
     name: C++ - Build and Unit Testing - REST
     needs: [style]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
@@ -142,7 +142,7 @@ jobs:
   cpp-build-test-grpc:
     name: C++ - Build and Unit Testing - gRPC
     needs: [style]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
