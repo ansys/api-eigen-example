@@ -19,7 +19,7 @@ concurrency:
 jobs:
   docker-images:
     name: Build the ${{ matrix.image-names }} docker image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         image-names:
