@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4...3.18)
+cmake_minimum_required(VERSION 3.6...3.18)
 project(demo_eigen_wrapper)
 
 # Add the Eigen library to the CMake project - after being installed as "sudo apt libeigen3dev"
