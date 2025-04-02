@@ -2,9 +2,6 @@
 grpc/1.39.1
 eigen/3.4.0
 
-[tool_requires]
-cmake/3.21.0
-
 [generators]
 cmake
 deploy
@@ -13,6 +10,3 @@ deploy
 bin, protoc* -> . @ root_package=protobuf
 bin, grpc_cpp_plugin -> . @ root_package=grpc
 bin, eigen* -> . @ root_package=eigen
-
-[overrides]
-openssl/1.1.1n
