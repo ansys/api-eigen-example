@@ -49,3 +49,10 @@ repos:
   rev: 0.19.2
   hooks:
     - id: check-github-workflows
+
+- repo: https://github.com/ansys/pre-commit-hooks
+  rev: v0.5.2
+  hooks:
+    - id: add-license-headers
+      args:
+      - --start_year=2023

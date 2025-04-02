@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4...3.18)
+cmake_minimum_required(VERSION 3.6...3.18)
 project(eigen_cpp_client)
 
 # Specify the C++ standard
