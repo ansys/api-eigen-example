@@ -11,3 +11,6 @@ deploy
 [imports]
 bin, protoc* -> . @ root_package=protobuf
 bin, grpc_cpp_plugin -> . @ root_package=grpc
+
+[overrides]
+openssl/1.1.1n
