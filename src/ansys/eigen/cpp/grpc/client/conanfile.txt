@@ -1,6 +1,9 @@
 [requires]
 grpc/1.39.1
 
+[tool_requires]
+cmake/3.21.0
+
 [generators]
 cmake
 deploy

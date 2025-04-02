@@ -2,6 +2,9 @@
 grpc/1.39.1
 eigen/3.4.0
 
+[tool_requires]
+cmake/3.21.0
+
 [generators]
 cmake
 deploy
