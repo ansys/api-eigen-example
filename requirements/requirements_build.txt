@@ -1,5 +1,5 @@
-setuptools>=41.0.0
-wheel>=0.33.0
+setuptools>=41.0.0,<78
+wheel>=0.33.0,<0.46
 pybind11[global]==2.13.6
 demo_eigen_wrapper==0.0.1
 Click>=7.0
