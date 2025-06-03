@@ -44,7 +44,7 @@ MAX = 10.0
 
 # The amount of sizes of numpy.ndarrays to be processed
 SIZES = [pow(2, n) for n in range(1, NVALUES)]
-SIZES_IDS = [f"{i:05d}" for i in SIZES]
+SIZES_IDS = [f"{i:05d}" for i in SIZES]  # noqa: E231
 
 # Initialize our seed
 seed(1)
