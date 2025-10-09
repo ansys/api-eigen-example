@@ -5,6 +5,9 @@ on:
     - cron: "0 3 * * *"
   workflow_dispatch:
 
+env:
+  MAIN_PYTHON_VERSION: 3.12
+
 jobs:
   nightly_docs_build:
     runs-on: ubuntu-22.04
@@ -25,7 +28,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.10'
+          python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
       - name: Install project requirements
         run: |
