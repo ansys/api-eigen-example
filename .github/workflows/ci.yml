@@ -105,7 +105,7 @@ jobs:
           pytest
 
       - name: Upload Coverage Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: HTML-Coverage
           path: cov_html
@@ -199,7 +199,7 @@ jobs:
           make -C doc html
 
       - name: Upload documentation
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: HTML-Documentation
           path: doc/_build/html
