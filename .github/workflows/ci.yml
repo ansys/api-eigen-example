@@ -105,7 +105,7 @@ jobs:
           pytest
 
       - name: Upload Coverage Results
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: HTML-Coverage
           path: cov_html
@@ -199,7 +199,7 @@ jobs:
           make -C doc html
 
       - name: Upload documentation
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: HTML-Documentation
           path: doc/_build/html
@@ -207,7 +207,7 @@ jobs:
 
       - name: Deploy documentation to gh-pages
         if: github.ref == 'refs/heads/main'
-        uses: JamesIves/github-pages-deploy-action@v4.7.4
+        uses: JamesIves/github-pages-deploy-action@v4.7.6
         with:
           token: ${{ secrets.github_token }}
           branch: gh-pages
