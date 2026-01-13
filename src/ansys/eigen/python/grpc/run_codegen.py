@@ -1,4 +1,4 @@
-# Copyright (C) 2023 - 2025 ANSYS, Inc. and/or its affiliates.
+# Copyright (C) 2023 - 2026 ANSYS, Inc. and/or its affiliates.
 # Copyright 2015 gRPC authors.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
