@@ -281,7 +281,7 @@ class DemoRESTClient:
                     json={"value": arg.tolist()},
                     auth=(self._user, self._pwd),
                 )
-        except (requests.exceptions.ConnectionError):
+        except requests.exceptions.ConnectionError:
             raise RuntimeError(
                 "Could not connect to server... Check server status or connection details."
             )
@@ -333,7 +333,7 @@ class DemoRESTClient:
                     json={"id1": id1, "id2": id2},
                     auth=(self._user, self._pwd),
                 )
-        except (requests.exceptions.ConnectionError):
+        except requests.exceptions.ConnectionError:
             raise RuntimeError(
                 "Could not connect to server... Check server status or connection details."
             )

@@ -49,7 +49,7 @@ test_types = [
     "multiply_matrices",
 ]
 
-for (test_type, x_axis) in zip(test_types, x_axis_tests):
+for test_type, x_axis in zip(test_types, x_axis_tests):
 
     print("Plotting %s test..." % test_type)
 

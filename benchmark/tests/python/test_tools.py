@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" Tools for BM tests """
+"""Tools for BM tests"""
 
 from random import random, seed
 
@@ -48,6 +48,7 @@ SIZES_IDS = [f"{i:05d}" for i in SIZES]  # noqa: E231
 
 # Initialize our seed
 seed(1)
+
 
 # Create the random value generator
 def gen_value():

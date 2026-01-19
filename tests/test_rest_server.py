@@ -80,7 +80,8 @@ def test_server_ops_vectors(testing_client):
 
 def test_server_ops_matrices(testing_client):
     """Unit test to verify that the server returns the expected response
-    when performing the addition and multiplication of two numpy arrays (as matrices)."""
+    when performing the addition and multiplication of two numpy arrays (as matrices).
+    """
 
     # Define your matrices
     mat_1 = np.array([[1, 2], [3, 4]], dtype=np.float64)
