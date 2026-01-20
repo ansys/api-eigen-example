@@ -232,7 +232,7 @@ class DemoRESTClient:
         Returns
         -------
         numpy.ndarray
-            Tesult of the operation requested between arg1 and arg2.
+            Result of the operation requested between arg1 and arg2.
         """
         # At this point we must check if we are dealing with a vector or a matrix...
         # and proceed to perform the requested operation
