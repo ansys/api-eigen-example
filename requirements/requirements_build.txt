@@ -1,4 +1,4 @@
-setuptools>=41.0.0,<81
+setuptools>=41.0.0,<83
 wheel>=0.33.0,<0.47
 pybind11[global]==3.0.1
 demo_eigen_wrapper==0.0.1
