@@ -1,8 +1,8 @@
 Sphinx==8.2.3
 jupyter_sphinx==0.5.3
 numpydoc==1.10.0
-ansys_sphinx_theme==1.7.0
-pypandoc==1.16.2
+ansys_sphinx_theme==1.7.2
+pypandoc==1.17
 pytest-sphinx==0.7.1
 sphinx-autobuild==2025.8.25
 sphinx-autodoc-typehints==3.5.2
