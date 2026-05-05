@@ -13,11 +13,11 @@ repos:
   hooks:
   - id: isort
     args: [
-    "--profile", "black",
-    "--force-sort-within-sections",
-    "--filter-files",
-    "--skip-glob", "*__init__.py",
-    "--skip-glob", "*python/grpc/generated*",
+      "--profile", "black",
+      "--force-sort-within-sections",
+      "--filter-files",
+      "--skip-glob", "*__init__.py",
+      "--skip-glob", "*python/grpc/generated*",
     ]
 
 - repo: https://github.com/PyCQA/flake8
