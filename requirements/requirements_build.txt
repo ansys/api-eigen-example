@@ -4,9 +4,10 @@ pybind11[global]==3.0.4
 demo_eigen_wrapper==0.0.1
 Click>=8.3.3
 Flask==3.0.3
-numpy>=2.4.4
+numpy>=2.4.4; python_version > "3.10"
+numpy>=1.21.5; python_version <= "3.10"
 requests>=2.33.1
-protobuf==7.34.1
+protobuf==6.33.6
 grpcio==1.80.0
 grpcio-tools==1.80.0
 pytest==9.0.3
