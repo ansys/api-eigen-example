@@ -23,7 +23,7 @@ jobs:
           - 50051:50051
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.2
 
       - name: Setup Python
         uses: actions/setup-python@v6
