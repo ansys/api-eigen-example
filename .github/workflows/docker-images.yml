@@ -2,6 +2,7 @@ name: Docker images publishing
 
 on:
   workflow_dispatch:
+  pull_request:
   push:
     tags:
       - "*"
@@ -52,6 +53,6 @@ jobs:
         with:
           context: .
           file: docker/${{ matrix.image-names }}/Dockerfile
-          push: true
+          push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ matrix.image-names }}:latest
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/${{ matrix.image-names }}:latest
