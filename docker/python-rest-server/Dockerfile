@@ -12,6 +12,7 @@ ADD src/ansys/eigen/cpp/eigen-wrapper /server/ansys/eigen/cpp/eigen-wrapper
 ADD src/ansys/eigen/python /server/ansys/eigen/python
 ADD pyproject.toml /server/pyproject.toml
 ADD README.md /server/README.md
+ADD LICENSE /server/LICENSE
 
 # Next in line, we will install our requirements
 RUN pip install -r requirements/requirements_eigen_wrapper.txt
