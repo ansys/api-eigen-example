@@ -1,7 +1,7 @@
 exclude: '^.*external.*$'
 repos:
 - repo: https://github.com/psf/black-pre-commit-mirror
-  rev: 26.1.0
+  rev: 26.5.1
   hooks:
   - id: black
     args: [
@@ -9,15 +9,15 @@ repos:
     ]
 
 - repo: https://github.com/pycqa/isort
-  rev: 7.0.0
+  rev: 9.0.0a3
   hooks:
   - id: isort
     args: [
-    "--profile", "black",
-    "--force-sort-within-sections",
-    "--filter-files",
-    "--skip-glob", "*__init__.py",
-    "--skip-glob", "*python/grpc/generated*",
+      "--profile", "black",
+      "--force-sort-within-sections",
+      "--filter-files",
+      "--skip-glob", "*__init__.py",
+      "--skip-glob", "*python/grpc/generated*",
     ]
 
 - repo: https://github.com/PyCQA/flake8
@@ -26,7 +26,7 @@ repos:
   - id: flake8
 
 - repo: https://github.com/codespell-project/codespell
-  rev: v2.4.1
+  rev: v2.4.2
   hooks:
   - id: codespell
 
@@ -46,12 +46,12 @@ repos:
 
 # this validates our github workflow files
 - repo: https://github.com/python-jsonschema/check-jsonschema
-  rev: 0.36.2
+  rev: 0.37.3
   hooks:
     - id: check-github-workflows
 
 - repo: https://github.com/ansys/pre-commit-hooks
-  rev: v0.5.2
+  rev: v0.7.2
   hooks:
     - id: add-license-headers
       args:

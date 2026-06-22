@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: PyAnsys code style checks
-        uses: ansys/actions/code-style@v10
+        uses: ansys/actions/code-style@v10.3.2
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
@@ -46,7 +46,7 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -105,7 +105,7 @@ jobs:
           pytest
 
       - name: Upload Coverage Results
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: HTML-Coverage
           path: cov_html
@@ -117,7 +117,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -149,7 +149,7 @@ jobs:
         package: [client, server]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -177,7 +177,7 @@ jobs:
           - 50051:50051
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -199,7 +199,7 @@ jobs:
           make -C doc html
 
       - name: Upload documentation
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: HTML-Documentation
           path: doc/_build/html
