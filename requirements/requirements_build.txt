@@ -10,7 +10,7 @@ requests>=2.34.2
 protobuf==6.33.6
 grpcio==1.81.1
 grpcio-tools==1.81.1
-pytest==9.0.3
+pytest==9.1.1
 pytest-cov==5.0.0
 pytest-grpc==0.8.0
 conan>=1.48.0,<2
