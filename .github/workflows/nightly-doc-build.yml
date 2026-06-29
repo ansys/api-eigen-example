@@ -23,10 +23,10 @@ jobs:
           - 50051:50051
 
     steps:
-      - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@v7.0.0
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v6.2.0
         with:
           python-version: ${{ env.MAIN_PYTHON_VERSION }}
 
