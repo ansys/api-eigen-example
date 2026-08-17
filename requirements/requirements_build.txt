@@ -1,6 +1,6 @@
 setuptools>=83.0.0,<84
 wheel>=0.47.0,<0.48
-pybind11[global]==3.0.4
+pybind11[global]==3.1.0
 demo_eigen_wrapper==0.0.1
 Click>=8.4.2
 Flask==3.0.3
