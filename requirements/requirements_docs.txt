@@ -7,11 +7,11 @@ pytest-sphinx==0.7.1
 sphinx-autobuild==2025.8.25
 sphinx-autodoc-typehints==3.5.2
 sphinx-copybutton==0.5.2
-sphinx-gallery==0.22.0
+sphinx-gallery==0.22.1
 sphinx-notfound-page==1.1.0
 sphinxcontrib-websupport==2.0.0
 sphinxemoji==0.3.2
 pandas==3.0.6
 pandoc>=2.4
 matplotlib==3.11.2
-breathe>=4.36.0
+breathe>=5.0.0
