@@ -35,7 +35,7 @@ jobs:
     steps:
 
     - name: "Perform versions cleanup - except certain tags"
-      uses: ansys/actions/hk-package-clean-except@v11.1.5
+      uses: ansys/actions/hk-package-clean-except@5a91d7c2c4da2e86f2b3b62ba62daad189a6b77c # v11.2.0
       with:
         package-org: 'ansys'
         package-name: ${{ matrix.image }}

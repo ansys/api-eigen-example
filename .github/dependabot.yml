@@ -43,5 +43,3 @@ updates:
       pre-commit-hooks:
         patterns:
           - "*"
-    assignees:
-      - "RobPasMue"
